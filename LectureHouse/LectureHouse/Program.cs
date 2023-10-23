@@ -2,9 +2,10 @@
 LectureHouse.House MyHouse1 = new LectureHouse.House();
 LectureHouse.House MyHouse2 = new LectureHouse.House();
 
-MyHouse1.SetHauptLichtschalter(true);
-Console.WriteLine("MyHouse1 HauptLichtschalter: {0}", MyHouse1.GetHauptLichtschalter());
-MyHouse1.AllesAus();
-Console.WriteLine("MyHouse1 HauptLichtschalter: {0}", MyHouse1.HauptLichtschalter);
+MyHouse1.StromAn = true;
+Console.WriteLine("MyHouse1 HauptLichtschalter: {0}", MyHouse1.StromAn);
+MyHouse1.StromAn = false;
+MyHouse1.HeizungAn = true;
+Console.WriteLine("MyHouse1 HauptLichtschalter: {0}", MyHouse1.HeizungAn);
 
 Console.WriteLine("Hello, World!");
