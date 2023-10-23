@@ -1,17 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LectureHouse
 {
-    public interface IHouse
+    public interface IRoom
     {
-        public bool GetHauptLichtschalter();
+        public bool LichtAn { get; set; }
 
-        public void Verbrauch(float Menge);
+        public float Temperature { get; set; }
     }
+
+    public class Room : IRoom
+    {
+        bool _LichtAn;
+        float _Temperatur;
+        public bool LichtAn 
+        {
+            get { return _LichtAn; }
+            set { _LichtAn = value; }
+        }
+        public float Temperature 
+        {
+            get { return _Temperatur; }
+            set { _Temperatur = value; }
+        }
+
+        public bool MeinZeug ()
+        {
+            return true;
+        }
+    }
+
+    public class Badezimmer : IRoom 
+    {
+        bool _LichtAn;
+        float _Temperatur;
+        public bool LichtAn
+        {
+            get { return _LichtAn; }
+            set { _LichtAn = value; }
+        }
+        public float Temperature
+        {
+            get { return _Temperatur; }
+            set { _Temperatur = value; }
+        }
+
+        public bool Badezimmermethode ()
+        {
+            return true;
+        }
+    }
+
     public class House
     {
         //bool _HauptAllesschalter;
@@ -26,6 +70,8 @@ namespace LectureHouse
         bool _HeizungAn;
         bool _StromAn;
 
+        List<IRoom> _Rooms;
+
         public House ()
         {
             //_HauptAllesschalter = false;
@@ -34,6 +80,12 @@ namespace LectureHouse
             _HeizungsL = 0.0f;
             _HeizungAn = false;
             _StromAn = false;
+
+            _Rooms = new List<IRoom>();
+            _Rooms.Add(new Room());
+            _Rooms.Add(new Badezimmer());
+            _Rooms[0].LichtAn = true;
+            _Rooms[1].LichtAn = true;
         }
 
         public float Stromverbrauch
