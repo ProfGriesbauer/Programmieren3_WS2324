@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace LectureHouse
 {
@@ -14,7 +15,51 @@ namespace LectureHouse
         public float Temperature { get; set; }
     }
 
-    public class Room : IRoom
+    public interface IRoomJalousie : IRoom
+    {
+        public bool JalousieOpen { get; set; }
+    }
+
+    public interface IRoomWet : IRoom
+    {
+        public float Wasserverbauch { get; }
+    }
+
+    public class RoomWet : Room, IRoomWet
+    {
+        float _WasserV;
+
+        public float Wasserverbauch
+        {
+            get { return _WasserV; }
+        }
+
+        public override void EverythingOff()
+        {
+            LichtAn = false;
+            Temperature = 21;
+        }
+    }
+
+    public class RoomJalousie : Room, IRoomJalousie
+    {
+        bool _JalousieOpen;
+
+        public bool JalousieOpen
+        {
+            get { return _JalousieOpen; }
+            set { _JalousieOpen = value; }
+        }
+
+        public override void EverythingOff()
+        {
+            LichtAn = false;
+            Temperature = 14.0f;
+            JalousieOpen = false;
+        }
+    }
+
+    public abstract class Room : IRoom
     {
         bool _LichtAn;
         float _Temperatur;
@@ -33,6 +78,8 @@ namespace LectureHouse
         {
             return true;
         }
+
+        public abstract void EverythingOff();
     }
 
     public class Badezimmer : IRoom 
@@ -82,8 +129,9 @@ namespace LectureHouse
             _StromAn = false;
 
             _Rooms = new List<IRoom>();
-            _Rooms.Add(new Room());
+            _Rooms.Add(new RoomWet());
             _Rooms.Add(new Badezimmer());
+            _Rooms.Add(new RoomJalousie());
             _Rooms[0].LichtAn = true;
             _Rooms[1].LichtAn = true;
         }
@@ -112,6 +160,14 @@ namespace LectureHouse
                 if (!value)
                 {
                     _HeizungAn = false;
+                    foreach (IRoom r in _Rooms)
+                    {
+                        //r.LichtAn = false;
+                        if (r is Room)
+                        {
+                            ((Room)r).EverythingOff();
+                        }
+                    }
                 }
             }
         }
