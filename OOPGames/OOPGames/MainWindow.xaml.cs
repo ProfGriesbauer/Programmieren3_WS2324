@@ -33,6 +33,10 @@ namespace OOPGames
         public MainWindow()
         {
             //REGISTER YOUR CLASSES HERE
+            OOPGamesManager.Singleton.RegisterPainter(new C_Paint());
+            OOPGamesManager.Singleton.RegisterRules(new C_Rules());
+            OOPGamesManager.Singleton.RegisterPlayer(new C_HumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
             //Rules

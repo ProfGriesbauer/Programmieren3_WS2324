@@ -27,10 +27,19 @@ namespace OOPGames
             {
                 C_PaintField(canvas, (IField_C)currentField);
             }
+            if (currentField is IX_TicTacToeField)
+            {
+                PaintTicTacToeField(canvas,(IX_TicTacToeField) currentField);
+            }
+        }
+        public void C_PaintField(Canvas canvas, IField_C currentField)
+        {
+                PaintTicTacToeField(canvas, (IX_TicTacToeField)currentField);
         }
         //*********************
         public string Name { get { return "C_GamePainter"; } }
-        public void C_PaintField(Canvas canvas, IField_C currentField)
+        
+        public void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
             // Löscht alle vorhandenen Elemente auf dem Canvas
             canvas.Children.Clear();
@@ -77,8 +86,6 @@ namespace OOPGames
                 }
             }
         }
-
-       
     }
 
     public class C_Rules : IRules_C
@@ -99,15 +106,16 @@ namespace OOPGames
 
         // Spielfeld für Tic-Tac-Toe.
         C_Field _Field = new C_Field();
-
+        
         // Eigenschaft für den Zugriff auf das Spielfeld.
-        public IField_C TicTacToeField { get { return _Field; } }
-
+        public IX_TicTacToeField TicTacToeField { get { return _Field; } }
+        
         // Gibt an, ob noch mögliche Spielzüge möglich sind.
         public bool MovesPossible
         {
             get
             {
+                
                 // Überprüft, ob es noch freie Zellen im Spielfeld gibt.
                 for (int i = 0; i < 3; i++)
                 {
@@ -173,7 +181,7 @@ namespace OOPGames
         }
 
         // Führt einen Tic-Tac-Toe-Spielzug durch, wenn dieser innerhalb des Spielfelds liegt.
-        public void DoTicTacToeMove(IMove_C move)
+        public void DoTicTacToeMove(IX_TicTacToeMove move)
         {
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
             {
@@ -189,7 +197,7 @@ namespace OOPGames
         // Überprüft, ob das Spielfeld von einem spezifischen Maler gemalt werden kann.
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is IPaint_C;
+            return painter is IX_PaintTicTacToe;
         }
         //********************************
 
@@ -251,7 +259,7 @@ namespace OOPGames
         // Überprüft, ob der Spieler von bestimmten Spielregeln gesteuert werden kann.
         public bool CanBeRuledBy(IGameRules rules)
         {
-            return rules is IRules_C;
+            return rules is IX_TicTacToeRules;
         }
 
         // Gibt einen Spielzug basierend auf der Auswahl und dem aktuellen Spielfeld zurück.
@@ -263,11 +271,20 @@ namespace OOPGames
                 // Ruft die spezifische GetMove-Methode für IField_C auf und gibt den resultierenden Spielzug zurück.
                 return GetMove(selection, (IField_C)field);
             }
+            if (field is IX_TicTacToeField)
+            {
+                return GetMove(selection, (IX_TicTacToeField)field);
+            }
             else
             {
                 // Wenn das Spielfeld kein IField_C-Objekt ist, wird null zurückgegeben.
                 return null;
             }
+        }
+
+        public IMove_C GetMove(IMoveSelection selection, IField_C field)
+        {
+           return  (IMove_C)GetMove(selection, (IX_TicTacToeField)field);
         }
         // **************************
 
@@ -294,7 +311,7 @@ namespace OOPGames
         }
 
         // Ermittelt und gibt den Spielzug basierend auf der Auswahl und dem Spielfeld zurück.
-        public IMove_C GetMove(IMoveSelection selection, IField_C field)
+        public IX_TicTacToeMove GetMove(IMoveSelection selection, IX_TicTacToeField field)
         {
             // Überprüft, ob die Auswahl ein IClickSelection-Objekt ist.
             if (selection is IClickSelection)
@@ -335,10 +352,21 @@ namespace OOPGames
         // Base ***********************
         public bool CanBeRuledBy(IGameRules rules)
         {
-            return rules is IRules_C;
+            return rules is IX_TicTacToeRules;
         }
 
         public IPlayMove GetMove(IGameField field)
+        {
+            if (field is IField_C)
+            {
+                return GetMove((IField_C)field);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public IX_TicTacToeMove GetMove(IX_TicTacToeField field)
         {
             if (field is IField_C)
             {
