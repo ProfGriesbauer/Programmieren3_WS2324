@@ -65,6 +65,8 @@
     </Compile>
     <Compile Include="Classes\E_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\F_Gruppe\Vorname_Nachname_XXX.cs" />
+    <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Game.cs" />
+    <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Interface.cs" />
     <Compile Include="Classes\I_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\G_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\C_Gruppe\Vorname_Nachname_XXX.cs" />
