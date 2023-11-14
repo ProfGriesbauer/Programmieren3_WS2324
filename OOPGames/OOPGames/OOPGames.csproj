@@ -63,8 +63,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\D_Gruppe\Hannes_Kochendörfer_TicTacToe Kopiert.cs" />
+    <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_TicTacToe.cs" />
+    <Compile Include="Classes\D_Gruppe\Lasse_Moeller.cs" />
     <Compile Include="Classes\E_Gruppe\Vorname_Nachname_XXX.cs" />
-    <Compile Include="Classes\F_Gruppe\Vorname_Nachname_XXX.cs" />
+    <Compile Include="Classes\F_Gruppe\F-TicTacToe.cs" />
+    <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Game.cs" />
+    <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Interface.cs" />
     <Compile Include="Classes\I_Gruppe\Michael_Zieglmeir_XXX .cs" />
     <Compile Include="Classes\I_Gruppe\Michal_Zieglmeir_Spaceinvader.cs" />
     <Compile Include="Classes\G_Gruppe\Vorname_Nachname_XXX.cs" />
@@ -76,8 +81,8 @@
     <Compile Include="Classes\A_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\X_Griesbauer\Josef_Griesbauer_BaseTicTacToe.cs" />
     <Compile Include="Classes\X_Griesbauer\Josef_Griesbauer_TicTacToe.cs" />
-    <Compile Include="Interfaces\I_Gruppe\Vorname_Nachname_IXXX - Kopieren.cs" />
-    <Compile Include="Interfaces\I_Gruppe\Michael_Zieglmeir.cs" />
+	<Compile Include="Classes\X_Griesbauer\Josef_Griesbauer_VorlesungsTicTacToe.cs" />
+	<Compile Include="Interfaces\I_Gruppe\Michael_Zieglmeir.cs" />
     <Compile Include="Interfaces\J_Gruppe\Vorname_Nachname_IXXX.cs" />
     <Compile Include="Interfaces\E_Gruppe\Vorname_Nachname_IXXX.cs" />
     <Compile Include="Interfaces\F_Gruppe\Vorname_Nachname_IXXX.cs" />
