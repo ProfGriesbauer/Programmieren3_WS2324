@@ -33,13 +33,32 @@ namespace OOPGames
         public MainWindow()
         {
             //REGISTER YOUR CLASSES HERE
+            OOPGamesManager.Singleton.RegisterPainter(new C_Paint());
+            OOPGamesManager.Singleton.RegisterRules(new C_Rules());
+            OOPGamesManager.Singleton.RegisterPlayer(new C_HumanPlayer());
+            
+            OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());
             //Painters
+            OOPGamesManager.Singleton.RegisterPainter(new S_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new X_Base_TICTAC());
+            OOPGamesManager.Singleton.RegisterPainter(new X_TTTPaint());
+			OOPGamesManager.Singleton.RegisterPainter(new I_Painter_TikTakToe());
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new S_TicTacToeRules());
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeComputerPlayer());            OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeComputerPlayer());
+            //Painters
+            
+            //Rules
+            
+            //Players
+           
 
             OOPGamesManager.Singleton.RegisterPainter(new A_TicTacToePaint());
             //Rules
