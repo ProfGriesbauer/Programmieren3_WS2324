@@ -79,11 +79,11 @@ namespace OOPGames
                 for (int i = 0; i <= 8; i++)
                 {
                     int c = i % 3;
-                    int r = ((i - c) / 3) % 3;
+                    int r = 2 - ((i - c) / 3) % 3;
 
                     TextBlock Zahl = new TextBlock() { Text = (i + 1).ToString(), FontSize = 70, Foreground = Brushes.Gray, FontWeight = FontWeights.UltraBlack };
                     Canvas.SetLeft(Zahl, 50 + c * 100);
-                    Canvas.SetBottom(Zahl, 90 + r * 100);
+                    Canvas.SetTop(Zahl, 20 + r * 100);
                     canvas.Children.Add(Zahl);
                 }
             }
@@ -422,7 +422,7 @@ namespace OOPGames
                     sel.YClickPos >= 350 && sel.YClickPos <= 370)
                 {
                     _checkBox2Checked = !_checkBox2Checked;
-
+                    
                     return null;
                 }
 
