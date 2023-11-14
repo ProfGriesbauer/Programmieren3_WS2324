@@ -45,7 +45,6 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new X_TTTPaint());
 			OOPGamesManager.Singleton.RegisterPainter(new I_Painter_TikTakToe());
             //Rules
-            OOPGamesManager.Singleton.RegisterRules(new TicTacToe_Rules());
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new S_TicTacToeRules());
             //Players
