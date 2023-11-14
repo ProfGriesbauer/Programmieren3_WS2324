@@ -7,6 +7,10 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
+using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
+using System.Data.Common;
+using System.Security.Cryptography.X509Certificates;
 
 namespace OOPGames
 {
@@ -27,19 +31,17 @@ namespace OOPGames
             {
                 C_PaintField(canvas, (IField_C)currentField);
             }
-            if (currentField is IX_TicTacToeField)
-            {
-                PaintTicTacToeField(canvas,(IX_TicTacToeField) currentField);
-            }
         }
-        public void C_PaintField(Canvas canvas, IField_C currentField)
+
+        public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
-                PaintTicTacToeField(canvas, (IX_TicTacToeField)currentField);
+            C_PaintField(canvas, (IField_C)currentField);
         }
         //*********************
         public string Name { get { return "C_GamePainter"; } }
-        
-        public void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
+
+       
+        public void C_PaintField(Canvas canvas, IField_C currentField)
         {
             // Löscht alle vorhandenen Elemente auf dem Canvas
             canvas.Children.Clear();
@@ -65,6 +67,71 @@ namespace OOPGames
             canvas.Children.Add(l3);
             Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l4);
+            
+            //CheckBox1 Zeichnen
+            Rectangle checkBox1 = new Rectangle() { Width = 20, Height = 20 , Stroke = Brushes.Black, StrokeThickness = 3};
+            TextBlock checkBox1Text = new TextBlock() { FontSize = 15 };
+            
+            if (C_HumanPlayer.checkBox1Checked)
+            {
+                checkBox1.Fill = Brushes.Gray;
+                checkBox1Text.Text = "Numblock - Eingabe deaktivieren";
+                for (int i = 0; i <= 8; i++)
+                {
+                    int c = i % 3;
+                    int r = ((i - c) / 3) % 3;
+
+                    TextBlock Zahl = new TextBlock() { Text = (i + 1).ToString(), FontSize = 70, Foreground = Brushes.Gray, FontWeight = FontWeights.UltraBlack };
+                    Canvas.SetLeft(Zahl, 50 + c * 100);
+                    Canvas.SetBottom(Zahl, 90 + r * 100);
+                    canvas.Children.Add(Zahl);
+                }
+            }
+            else
+            {
+                checkBox1.Fill = Brushes.White;
+                checkBox1Text.Text = "Numblock - Eingabe aktivieren";
+            }
+            Canvas.SetLeft(checkBox1, 10);
+            Canvas.SetTop(checkBox1, 320);
+            Canvas.SetLeft(checkBox1Text, 35);
+            Canvas.SetTop(checkBox1Text, 320);
+
+            canvas.Children.Add(checkBox1);
+            canvas.Children.Add(checkBox1Text);
+
+            //CheckBox2 Zeichnen
+            Rectangle checkBox2 = new Rectangle() { Width = 20, Height = 20, Stroke = Brushes.Black, StrokeThickness = 3 };
+            TextBlock checkBox2Text = new TextBlock() { FontSize = 15 };
+            Rectangle AuswahlBox = new Rectangle() { Width = 100, Height = 100, Stroke = Brushes.Purple, StrokeThickness = 3 };
+            if (C_HumanPlayer.checkBox2Checked)
+            {
+                checkBox2.Fill = Brushes.Gray;
+                checkBox2Text.Text = "WASD + F - Eingabe deaktivieren";
+
+                int A_Feld = C_Field.Auswahlfeld;
+                int c = A_Feld % 3;
+                int r = 2 - ((A_Feld - c) / 3) % 3;
+
+                Canvas.SetLeft(AuswahlBox, 20 + c * 100);
+                Canvas.SetTop(AuswahlBox, 20 + r * 100);
+              
+
+                canvas.Children.Add(AuswahlBox);
+            }
+            else
+            {
+                checkBox2.Fill = Brushes.White;
+                checkBox2Text.Text = "WASD + F - Eingabe aktivieren";
+            }
+            Canvas.SetLeft(checkBox2, 10);
+            Canvas.SetTop(checkBox2, 350);
+            Canvas.SetLeft(checkBox2Text, 35);
+            Canvas.SetTop(checkBox2Text, 350);
+
+            canvas.Children.Add(checkBox2);
+            canvas.Children.Add(checkBox2Text);
+
 
             // Zeichnet X- und O-Symbole basierend auf dem aktuellen Spielzustand
             for (int i = 0; i < 3; i++)
@@ -86,6 +153,8 @@ namespace OOPGames
                 }
             }
         }
+
+        
     }
 
     public class C_Rules : IRules_C
@@ -106,16 +175,15 @@ namespace OOPGames
 
         // Spielfeld für Tic-Tac-Toe.
         C_Field _Field = new C_Field();
-        
+
         // Eigenschaft für den Zugriff auf das Spielfeld.
-        public IX_TicTacToeField TicTacToeField { get { return _Field; } }
-        
+        public IField_C TicTacToeField { get { return _Field; } }
+
         // Gibt an, ob noch mögliche Spielzüge möglich sind.
         public bool MovesPossible
         {
             get
             {
-                
                 // Überprüft, ob es noch freie Zellen im Spielfeld gibt.
                 for (int i = 0; i < 3; i++)
                 {
@@ -181,7 +249,7 @@ namespace OOPGames
         }
 
         // Führt einen Tic-Tac-Toe-Spielzug durch, wenn dieser innerhalb des Spielfelds liegt.
-        public void DoTicTacToeMove(IX_TicTacToeMove move)
+        public void DoTicTacToeMove(IMove_C move)
         {
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
             {
@@ -197,7 +265,7 @@ namespace OOPGames
         // Überprüft, ob das Spielfeld von einem spezifischen Maler gemalt werden kann.
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            return painter is IX_PaintTicTacToe;
+            return painter is IPaint_C;
         }
         //********************************
 
@@ -230,6 +298,13 @@ namespace OOPGames
                 }
             }
         }
+
+        private static int _Auswahlfeld = 4;
+        public static int Auswahlfeld 
+        { 
+            get { return _Auswahlfeld; }
+            set { _Auswahlfeld = value; }
+        }
     }
 
     public class C_Move : IMove_C
@@ -259,7 +334,7 @@ namespace OOPGames
         // Überprüft, ob der Spieler von bestimmten Spielregeln gesteuert werden kann.
         public bool CanBeRuledBy(IGameRules rules)
         {
-            return rules is IX_TicTacToeRules;
+            return rules is IRules_C;
         }
 
         // Gibt einen Spielzug basierend auf der Auswahl und dem aktuellen Spielfeld zurück.
@@ -271,28 +346,26 @@ namespace OOPGames
                 // Ruft die spezifische GetMove-Methode für IField_C auf und gibt den resultierenden Spielzug zurück.
                 return GetMove(selection, (IField_C)field);
             }
-            if (field is IX_TicTacToeField)
-            {
-                return GetMove(selection, (IX_TicTacToeField)field);
-            }
             else
             {
                 // Wenn das Spielfeld kein IField_C-Objekt ist, wird null zurückgegeben.
                 return null;
             }
         }
-
-        public IMove_C GetMove(IMoveSelection selection, IField_C field)
-        {
-           return  (IMove_C)GetMove(selection, (IX_TicTacToeField)field);
-        }
         // **************************
 
         // Spieler-Nummer des menschlichen Spielers.
         int _PlayerNumber = 0;
+        private static bool _checkBox1Checked = false;
+        private static bool _checkBox2Checked = false;
+
+        public static bool checkBox1Checked { get { return _checkBox1Checked; } }
+        public static bool checkBox2Checked { get { return _checkBox2Checked; } }
 
         // Name des Spielers (festgelegt als "C_HumanPlayer").
         public string Name { get { return "C_HumanPlayer"; } }
+
+      
 
         // Gibt die Spieler-Nummer des Spielers zurück.
         public int PlayerNumber { get { return _PlayerNumber; } }
@@ -311,7 +384,7 @@ namespace OOPGames
         }
 
         // Ermittelt und gibt den Spielzug basierend auf der Auswahl und dem Spielfeld zurück.
-        public IX_TicTacToeMove GetMove(IMoveSelection selection, IX_TicTacToeField field)
+        public IMove_C GetMove(IMoveSelection selection, IField_C field)
         {
             // Überprüft, ob die Auswahl ein IClickSelection-Objekt ist.
             if (selection is IClickSelection)
@@ -334,6 +407,72 @@ namespace OOPGames
                         }
                     }
                 }
+
+                //CheckBox 1 Abfrage
+                if (sel.XClickPos >= 10 && sel.XClickPos <= 30 &&
+                    sel.YClickPos >= 320 && sel.YClickPos <= 340)
+                {
+                    _checkBox1Checked = !_checkBox1Checked;
+
+                    return null;
+                }
+
+                //CheckBox 2 Abfrage
+                if (sel.XClickPos >= 10 && sel.XClickPos <= 30 &&
+                    sel.YClickPos >= 350 && sel.YClickPos <= 370)
+                {
+                    _checkBox2Checked = !_checkBox2Checked;
+
+                    return null;
+                }
+
+            }
+
+            if (selection is IKeySelection)
+            {
+                IKeySelection sel = (IKeySelection)selection;
+
+                Key PressedKey = sel.Key;
+                if (PressedKey >= Key.NumPad1 && PressedKey <= Key.NumPad9 && checkBox1Checked)
+                {
+                    int KeyVal = (int)PressedKey - (int)Key.NumPad1;
+
+                    int c = KeyVal % 3;
+                    int r = 2 - ((KeyVal - c) / 3) % 3;
+                    if (field[r, c] <= 0)
+                    {
+                        return new C_Move(r, c, _PlayerNumber);
+                    }
+                }
+                
+                if (checkBox2Checked)
+                {
+                    if (PressedKey == Key.A && C_Field.Auswahlfeld > 0)
+                    {
+                        C_Field.Auswahlfeld--;
+                    }
+                    if (PressedKey == Key.D && C_Field.Auswahlfeld < 8)
+                    {
+                        C_Field.Auswahlfeld++;
+                    }
+                    if (PressedKey == Key.W && C_Field.Auswahlfeld < 6)
+                    {
+                        C_Field.Auswahlfeld = C_Field.Auswahlfeld +3;
+                    }
+                    if (PressedKey == Key.S && C_Field.Auswahlfeld > 2)
+                    {
+                        C_Field.Auswahlfeld = C_Field.Auswahlfeld - 3;
+                    }
+                    if (PressedKey == Key.F && C_Field.Auswahlfeld >=0 && C_Field.Auswahlfeld <= 8)
+                    {
+                        int c = C_Field.Auswahlfeld % 3;
+                        int r = 2 - ((C_Field.Auswahlfeld - c) / 3) % 3;
+                        if (field[r, c] <= 0)
+                        {
+                            return new C_Move(r, c, _PlayerNumber);
+                        }
+                    }
+                }
             }
 
             // Wenn keine gültige Auswahl gefunden wurde, wird null zurückgegeben.
@@ -352,21 +491,10 @@ namespace OOPGames
         // Base ***********************
         public bool CanBeRuledBy(IGameRules rules)
         {
-            return rules is IX_TicTacToeRules;
+            return rules is IRules_C;
         }
 
         public IPlayMove GetMove(IGameField field)
-        {
-            if (field is IField_C)
-            {
-                return GetMove((IField_C)field);
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public IX_TicTacToeMove GetMove(IX_TicTacToeField field)
         {
             if (field is IField_C)
             {
