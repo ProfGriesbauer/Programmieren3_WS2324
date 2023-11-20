@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOPGames.Classes.D_Gruppe;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,12 +39,16 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
 OOPGamesManager.Singleton.RegisterPainter(new X_Base_TICTAC());
 OOPGamesManager.Singleton.RegisterPainter(new X_TTTPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new X_TicTacPaint());
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new X_TicTacRules());
             OOPGamesManager.Singleton.RegisterRules(new S_TicTacToeRules());
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeComputerPlayer());
             //Painters
