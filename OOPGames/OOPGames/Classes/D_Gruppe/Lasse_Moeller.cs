@@ -10,12 +10,14 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
+  //Painter Feld
     public class X_Base_TICTAC : X_BaseTicTacToePaint
     {
         public override string Name { get { return "LasseTicTacToePaint"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
+            //Farbwahl für Figuren und SPielfeld
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(5, 5, 5);
             canvas.Background = new SolidColorBrush(bgColor);
@@ -26,6 +28,7 @@ namespace OOPGames
             Color OColor = Color.FromRgb(255, 0, 0);
             Brush OStroke = new SolidColorBrush(OColor);
 
+            //Spielfeld
             Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 8.0 };
             canvas.Children.Add(l1);
             Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 8.0 };
@@ -35,10 +38,13 @@ namespace OOPGames
             Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 8.0 };
             canvas.Children.Add(l4);
 
+
+            //Spielfiguren
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
+                    //Kreuz
                     if (currentField[i, j] == 1)
                     {
                         Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
@@ -46,6 +52,7 @@ namespace OOPGames
                         Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X2);
                     }
+                    //Kreis
                     else if (currentField[i, j] == 2)
                     {
                         Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
@@ -55,13 +62,14 @@ namespace OOPGames
             }
         }
     }
-
+    //Regeln
     public class X_TICTACRules : X_BaseTicTacToeRules
     {
         X_TicTacToeField _Field = new X_TicTacToeField();
 
         public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
 
+        //mögliche Züge
         public override bool MovesPossible
         {
             get
@@ -83,20 +91,23 @@ namespace OOPGames
 
         public override string Name { get { return "GriesbauerTicTacToeRules"; } }
 
+        //Konrolle über Sieg
         public override int CheckIfPLayerWon()
         {
             for (int i = 0; i < 3; i++)
             {
+                //Spalte
                 if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
                 {
                     return _Field[i, 0];
                 }
+                //Reihe
                 else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
                 {
                     return _Field[0, i];
                 }
             }
-
+            //Diagonal 
             if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
             {
                 return _Field[0, 0];
@@ -108,7 +119,7 @@ namespace OOPGames
 
             return -1;
         }
-
+        //Feld leeren
         public override void ClearField()
         {
             for (int i = 0; i < 3; i++)
@@ -120,6 +131,7 @@ namespace OOPGames
             }
         }
 
+        //?
         public override void DoTicTacToeMove(IX_TicTacToeMove move)
         {
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
@@ -156,7 +168,7 @@ namespace OOPGames
             }
         }
     }
-
+    //
     public class X_TICTACMove : IX_TicTacToeMove
     {
         int _Row = 0;
@@ -177,6 +189,7 @@ namespace OOPGames
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
 
+    //Spielerinitialisierung
     public class X_TICTACHumanPlayer : X_BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
@@ -191,7 +204,7 @@ namespace OOPGames
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
-
+        //Click Detection
         public override IX_TicTacToeMove GetMove(IMoveSelection selection, IX_TicTacToeField field)
         {
             if (selection is IClickSelection)
@@ -214,12 +227,14 @@ namespace OOPGames
             return null;
         }
 
+        //Spielernummer 
         public override void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
         }
     }
 
+    //NPC initalisieren
     public class X_TICTACComputerPlayer : X_BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
@@ -235,6 +250,7 @@ namespace OOPGames
             return ttthp;
         }
 
+        //Zug des NPCs
         public override IX_TicTacToeMove GetMove(IX_TicTacToeField field)
         {
             Random rand = new Random();
