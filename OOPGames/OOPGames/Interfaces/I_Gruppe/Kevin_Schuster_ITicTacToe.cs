@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace OOPGames
 {
-    public class G_XXX
+    public interface II_TicTacTor_Human_Player
     {
+
     }
 }
