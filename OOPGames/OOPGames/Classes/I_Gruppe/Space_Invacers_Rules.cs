@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace OOPGames
 {
-    public class G_XXX
+    public class Space_Invacers_Rules
     {
+       
+    }
+
+    public class Game_Field
+    {
+       
     }
 }

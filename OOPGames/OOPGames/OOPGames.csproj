@@ -64,12 +64,27 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\B_Gruppe\Stefan_Horak_BaseTicTacToe.cs" />
-    <Compile Include="Classes\B_Gruppe\Stefan_Horak_TicTacToe.cs" />
+    <Compile Include="Classes\B_Gruppe\Stefan_Horak_TicTacToe.cs" />    <Compile Include="Classes\A_Gruppe\Bernd_Lottes_TicTacToe.cs" />
+    <Compile Include="Classes\A_Gruppe\Bernd_Lottes_BaseTicTacToe.cs" />
+    <Compile Include="Classes\D_Gruppe\Hannes_Kochendörfer_TicTacToe Kopiert.cs" />
+    <Compile Include="Classes\D_Gruppe\Lasse_Moeller_PainterMinesweeper.cs" />
+    <Compile Include="Classes\D_Gruppe\Thadeusgluck.cs" />
+    <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_TicTacToe.cs" />
+    <Compile Include="Classes\D_Gruppe\Lasse_Moeller.cs" />
     <Compile Include="Classes\E_Gruppe\Vorname_Nachname_XXX.cs" />
-    <Compile Include="Classes\F_Gruppe\Vorname_Nachname_XXX.cs" />
-    <Compile Include="Classes\I_Gruppe\Vorname_Nachname_XXX.cs" />
+    <Compile Include="Classes\F_Gruppe\F-TicTacToe.cs" />
+    <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Game.cs" />
+    <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Interface.cs" />
+    <Compile Include="Classes\G_Gruppe\G_PacManGame.cs" />
+    <Compile Include="Classes\I_Gruppe\Hatim.Aglaib_Rules.cs" />
+    <Compile Include="Classes\G_Gruppe\G_PacManInterface.cs" />
+    <Compile Include="Classes\I_Gruppe\Kevin_Schuster_Player.cs" />
+    <Compile Include="Classes\I_Gruppe\Michael_Zieglmeir_XXX .cs" />
+    <Compile Include="Classes\I_Gruppe\Space_Invaders_Painter.cs" />
     <Compile Include="Classes\G_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\C_Gruppe\Vorname_Nachname_XXX.cs" />
+    <Compile Include="Classes\I_Gruppe\Space_Invacers_Rules.cs" />
+    <Compile Include="Classes\I_Gruppe\Space_Invaders_Player.cs" />
     <Compile Include="Classes\J_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\H_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\D_Gruppe\Vorname_Nachname_XXX.cs" />
@@ -77,7 +92,9 @@
     <Compile Include="Classes\A_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\X_Griesbauer\Josef_Griesbauer_BaseTicTacToe.cs" />
     <Compile Include="Classes\X_Griesbauer\Josef_Griesbauer_TicTacToe.cs" />
-    <Compile Include="Interfaces\I_Gruppe\Vorname_Nachname_IXXX.cs" />
+    <Compile Include="Classes\X_Griesbauer\Josef_Griesbauer_VorlesungsTicTacToe.cs" />
+    <Compile Include="Interfaces\I_Gruppe\Michael_Zieglmeir.cs" />
+    <Compile Include="Interfaces\I_Gruppe\Kevin_Schuster_ITicTacToe.cs" />
     <Compile Include="Interfaces\J_Gruppe\Vorname_Nachname_IXXX.cs" />
     <Compile Include="Interfaces\E_Gruppe\Vorname_Nachname_IXXX.cs" />
     <Compile Include="Interfaces\F_Gruppe\Vorname_Nachname_IXXX.cs" />
