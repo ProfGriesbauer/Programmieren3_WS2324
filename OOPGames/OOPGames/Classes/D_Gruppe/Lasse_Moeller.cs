@@ -17,6 +17,7 @@ namespace OOPGames
 
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
+            double test = canvas.ActualHeight;
             //Farbwahl für Figuren und SPielfeld
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(5, 5, 5);
