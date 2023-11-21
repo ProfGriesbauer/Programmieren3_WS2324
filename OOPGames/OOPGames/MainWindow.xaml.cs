@@ -36,7 +36,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new C_Paint());
             OOPGamesManager.Singleton.RegisterRules(new C_Rules());
             OOPGamesManager.Singleton.RegisterPlayer(new C_HumanPlayer());           
-            OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());            OOPGamesManager.Singleton.RegisterPainter(new Pac_Paint());
+            OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());  
+            OOPGamesManager.Singleton.RegisterPainter(new Pac_Paint());
             OOPGamesManager.Singleton.RegisterRules(new Pac_Rules());
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new S_TicTacToePaint());

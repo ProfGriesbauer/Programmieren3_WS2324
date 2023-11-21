@@ -74,6 +74,7 @@
     <Compile Include="Classes\F_Gruppe\F-TicTacToe.cs" />
     <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Game.cs" />
     <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Interface.cs" />
+    <Compile Include="Classes\G_Gruppe\G_PacManGame.cs" />
     <Compile Include="Classes\I_Gruppe\Hatim.Aglaib_Rules.cs" />
     <Compile Include="Classes\G_Gruppe\G_PacManInterface.cs" />
     <Compile Include="Classes\I_Gruppe\Kevin_Schuster_Player.cs" />
