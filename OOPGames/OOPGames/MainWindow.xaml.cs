@@ -34,12 +34,11 @@ namespace OOPGames
         {
             //REGISTER YOUR CLASSES HERE
             //Painters
-            OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaintSHo());
             //Rules
-            OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRulesSH());
             //Players
-            OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayerSH());
 
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
