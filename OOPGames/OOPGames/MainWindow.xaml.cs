@@ -39,6 +39,7 @@ namespace OOPGames
             
             OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());
             //Painters
+            OOPGamesManager.Singleton.RegisterPainter(new I_Space_Invader_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new S_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new X_Base_TICTAC());
@@ -51,7 +52,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeHumanPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeComputerPlayer());            OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeComputerPlayer());            
+            OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeComputerPlayer());
             //Painters
             
