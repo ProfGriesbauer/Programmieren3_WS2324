@@ -29,6 +29,7 @@ namespace OOPGames
             Color OColor = Color.FromRgb(255, 0, 0);
             Brush OStroke = new SolidColorBrush(OColor);
 
+            /*
             //Spielfeld
             Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 8.0 };
             canvas.Children.Add(l1);
@@ -38,7 +39,29 @@ namespace OOPGames
             canvas.Children.Add(l3);
             Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 8.0 };
             canvas.Children.Add(l4);
+            */
 
+
+            //Linien innen
+            for (int i = 1; i < 10; i++)
+            {
+                //senkrechte Linien
+                Line si = new Line() { X1 = ((canvas.ActualWidth / 10) * i), Y1 = 0, X2 = ((canvas.ActualWidth / 10) * i), Y2 = canvas.ActualHeight, Stroke = lineStroke, StrokeThickness = 4.0 };
+                canvas.Children.Add(si);
+                //waagerechte Linien
+                Line wi = new Line() { X1 = 0, Y1 = ((canvas.ActualHeight / 10) * i), X2 = canvas.ActualWidth, Y2 = ((canvas.ActualHeight / 10) * i), Stroke = lineStroke, StrokeThickness = 4.0 };
+                canvas.Children.Add(wi);
+            }
+
+            //Linien außen
+            Line l1 = new Line() { X1 = 0, Y1 = 0, X2 = canvas.ActualWidth, Y2 = 0, Stroke = lineStroke, StrokeThickness = 6.0 };
+            canvas.Children.Add(l1);
+            Line l2 = new Line() { X1 = 0, Y1 = 0, X2 = 0, Y2 = canvas.ActualHeight, Stroke = lineStroke, StrokeThickness = 6.0 };
+            canvas.Children.Add(l2);
+            Line l3 = new Line() { X1 = canvas.ActualWidth, Y1 = 0, X2 = canvas.ActualWidth, Y2 = canvas.ActualHeight, Stroke = lineStroke, StrokeThickness = 6.0 };
+            canvas.Children.Add(l3);
+            Line l4 = new Line() { X1 = 0, Y1 = canvas.ActualHeight, X2 = canvas.ActualWidth, Y2 = canvas.ActualHeight, Stroke = lineStroke, StrokeThickness = 6.0 };
+            canvas.Children.Add(l4);
 
             //Spielfiguren
             for (int i = 0; i < 3; i++)
