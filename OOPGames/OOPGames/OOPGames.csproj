@@ -64,7 +64,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\A_Gruppe\Bernd_Lottes_TicTacToe.cs" />
-    <Compile Include="Classes\A_Gruppe\Bernd_Lottes_BaseTicTacToe.cs" />    <Compile Include="Classes\D_Gruppe\Hannes_Kochendörfer_TicTacToe Kopiert.cs" />
+    <Compile Include="Classes\A_Gruppe\Bernd_Lottes_BaseTicTacToe.cs" />
+    <Compile Include="Classes\D_Gruppe\Hannes_Kochendörfer_TicTacToe Kopiert.cs" />
     <Compile Include="Classes\D_Gruppe\Thadeusgluck.cs" />
     <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_TicTacToe.cs" />
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller.cs" />
