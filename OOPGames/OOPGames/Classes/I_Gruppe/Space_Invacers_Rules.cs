@@ -4,9 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames.Classes.E_Gruppe.MAEDN
+namespace OOPGames
 {
-    internal class MAEDN
+    public class Space_Invacers_Rules
     {
+       
+    }
+
+    public class Game_Field
+    {
+       
     }
 }

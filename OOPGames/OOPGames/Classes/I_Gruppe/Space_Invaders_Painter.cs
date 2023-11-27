@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-/*namespace OOPGames
+namespace OOPGames
 {
-    public class Spaceinvader_Painter : IPaintGame2
-    {
-        public string Name => throw new NotImplementedException();
 
+    
+    public class I_Space_Invader_Painter : IPaintGame2
+    {
+        public string Name { get { return "I_Space_Invader"; } }
+
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
+            TickPaintGameField(canvas, currentField);
+        }
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
             canvas.Children.Clear();
@@ -33,6 +40,8 @@ using System.Windows.Shapes;
             canvas.Children.Add(l3);
             Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l4);
+
+
         }
     }
 
@@ -47,10 +56,10 @@ using System.Windows.Shapes;
         {
             return y + Geschwindigkeit;
         }
-    
+
 
         public Hindernis() { }
 
     }
 }
-*/
+

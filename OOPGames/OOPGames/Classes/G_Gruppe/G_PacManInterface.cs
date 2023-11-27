@@ -19,6 +19,7 @@ namespace OOPGames
     {
         bool Punkt { get; set; }
         bool GeistinFeld { get; set; }
+        bool PacinFeld { get; set; }
     }
 
     public interface IFieldWand: IFieldProperties
@@ -42,7 +43,7 @@ namespace OOPGames
 
         //Indexer: returns 0 for a unused tictactoefield, 1 for player 1, 2 for player 2, etc.
         //indexed by the row r and column c
-        int this[int r, int c] { get; set; }
+        IFieldProperties this[int r, int c] { get; set; }
     }
 
     //TicTacToe specific game rules
@@ -51,10 +52,10 @@ namespace OOPGames
         //Gets the current state of the tictactoe field; the class implementing
         //this interface should hold a game field corresponding to the rules
         //it implements
-        IField_Pac TicTacToeField { get; }
+        IField_Pac PacManField { get; }
 
         //Adds the given move to the current tictactoe field if possible
-        void DoTicTacToeMove(IMove_Pac move);
+        void DoPacManMove(IMove_Pac move);
     }
 
     //TicTacToeMove which is derived from row and column
