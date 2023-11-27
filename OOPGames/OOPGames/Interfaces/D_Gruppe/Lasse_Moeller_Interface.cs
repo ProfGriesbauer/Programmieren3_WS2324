@@ -28,4 +28,8 @@ namespace OOPGames
         public bool Markiert;
         public int Nachbarminen;
         }
+    public interface D_Minsweeperplayer 
+    {
+        void Minsweeperplayer();
+    }
 }
