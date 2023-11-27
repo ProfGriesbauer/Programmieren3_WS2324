@@ -40,6 +40,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());  
             OOPGamesManager.Singleton.RegisterPainter(new Pac_Paint());
             OOPGamesManager.Singleton.RegisterRules(new Pac_Rules());
+
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new I_Space_Invader_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new S_TicTacToePaint());
@@ -47,12 +48,15 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new X_Base_TICTAC());
             OOPGamesManager.Singleton.RegisterPainter(new X_TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new Lasse_Moeller_MinesweeperPainter());
+            OOPGamesManager.Singleton.RegisterPainter(new E_TicTacToePaint());
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRulesSH());
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new S_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
+
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayerSH());
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayer());
@@ -61,12 +65,14 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeComputerPlayer());            
             OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer());
             //Painters
-            
+
             //Rules
-            
+
             //Players
-           
+
 
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;

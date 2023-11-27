@@ -73,6 +73,7 @@
     <Compile Include="Classes\D_Gruppe\Thadeusgluck.cs" />
     <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_TicTacToe.cs" />
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller.cs" />
+    <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_BaseTicTacToe.cs" />
     <Compile Include="Classes\E_Gruppe\Vorname_Nachname_XXX.cs" />
     <Compile Include="Classes\F_Gruppe\F-TicTacToe.cs" />
     <Compile Include="Classes\G_Gruppe\Christoph_Holzheu_Game.cs" />
