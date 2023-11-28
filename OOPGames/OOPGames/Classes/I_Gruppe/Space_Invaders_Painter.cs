@@ -12,7 +12,7 @@ namespace OOPGames
 {
 
     
-    public class I_Space_Invader_Painter : IPaintGame2
+    public class I_Space_Invader_Painter : II_PaintSpaceIn
     {
         public string Name { get { return "I_Space_Invader"; } }
 
@@ -22,6 +22,7 @@ namespace OOPGames
         }
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
+            /* zur zeichenhilfe
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
@@ -40,12 +41,13 @@ namespace OOPGames
             canvas.Children.Add(l3);
             Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l4);
+            */
 
 
         }
     }
 
-    public class Hindernis
+    public class Komet
     {
         static int Geschwindigkeit;
         int x_Kordinate { set; get; }
@@ -58,7 +60,7 @@ namespace OOPGames
         }
 
 
-        public Hindernis() { }
+       
 
     }
 }
