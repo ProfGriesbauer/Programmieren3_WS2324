@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class A_TicTacToePaint : X_BaseTicTacToePaint
+    public class A_TicTacToePaint : A_BaseTicTacToePaint
     {
         public override string Name { get { return "LottesTicTacToePaint"; } }
 
@@ -56,15 +59,20 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeRules : X_BaseTicTacToeRules
+    public class A_TicTacToeRules : A_BaseTicTacToeRules
     {
-        A_TicTacToeField _Field = new A_TicTacToeField();
+        IX_TicTacToeField _Field = new A_TicTacToeField();
 
         public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
 
-        public override bool MovesPossible 
-        { 
-            get 
+        public override void setTicTacToeField(IX_TicTacToeField feld)
+        {
+            _Field = feld;
+        }
+
+        public override bool MovesPossible
+        {
+            get
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -77,8 +85,8 @@ namespace OOPGames
                     }
                 }
 
-                return false; 
-            } 
+                return false;
+            }
         }
 
         public override string Name { get { return "LottesTicTacToeRules"; } }
@@ -129,11 +137,11 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeField : A_BaseTicTacToeField
+    public class A_TicTacToeField : IX_TicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
-        public override int this[int r, int c]
+        public  int this[int r, int c]
         {
             get
             {
@@ -155,6 +163,11 @@ namespace OOPGames
                 }
             }
         }
+
+        public bool CanBePaintedBy(IPaintGame painter)
+        {
+            return painter is IX_PaintTicTacToe;
+        }
     }
 
     public class A_TicTacToeMove : IX_TicTacToeMove
@@ -163,7 +176,7 @@ namespace OOPGames
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public A_TicTacToeMove (int row, int column, int playerNumber)
+        public A_TicTacToeMove(int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -230,7 +243,7 @@ namespace OOPGames
 
         public override IGamePlayer Clone()
         {
-            X_TicTacToeComputerPlayer ttthp = new X_TicTacToeComputerPlayer();
+            A_TicTacToeComputerPlayer ttthp = new A_TicTacToeComputerPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -245,7 +258,7 @@ namespace OOPGames
                 int r = ((f - c) / 3) % 3;
                 if (field[r, c] <= 0)
                 {
-                    return new X_TicTacToeMove(r, c, _PlayerNumber);
+                    return new A_TicTacToeMove(r, c, _PlayerNumber);
                 }
                 else
                 {
@@ -261,4 +274,171 @@ namespace OOPGames
             _PlayerNumber = playerNumber;
         }
     }
+
+    public class A_TicTacToeComputerPlayer2 : IX_ComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+        int _OpponentNumber = 0;
+        A_TicTacToeRules regeln = new A_TicTacToeRules();
+        public string Name { get { return "LottesBessererComputerTicTacToePlayer"; } }
+
+        public int PlayerNumber { get { return _PlayerNumber; } }
+
+        public void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+            if (_PlayerNumber ==1 ) { _OpponentNumber = 2;}
+            else {  _OpponentNumber = 1;}
+        }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is IX_TicTacToeRules;
+        }
+
+        public IGamePlayer Clone()
+        {
+            A_TicTacToeComputerPlayer2 cl = new A_TicTacToeComputerPlayer2();
+            return cl;
+        }
+
+        public IX_TicTacToeMove GetMove(IX_TicTacToeField field)
+        {
+            int bestVal = -1000;
+            int bestRow = 1;
+            int bestCol = 1;
+            
+
+            // Traverse all cells, evaluate minimax function 
+            // for all empty cells. And return the cell 
+            // with optimal value. 
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    // Check if cell is empty 
+                    if (field[i, j] == '_')
+                    {
+                        // Make the move 
+                        field[i, j] = _PlayerNumber;
+
+                        // compute evaluation function for this 
+                        // move. 
+                        int moveVal = minimax(field, 0, false);
+
+                        // Undo the move 
+                        field[i, j] = 0;
+
+                        // If the value of the current move is 
+                        // more than the best value, then update 
+                        // best/ 
+                        if (moveVal > bestVal)
+                        {
+                            bestRow = i;
+                            bestCol = j;
+                            bestVal = moveVal;
+                        }
+                    }
+                }
+            }
+            Console.WriteLine(bestRow);
+            Console.WriteLine(bestCol);
+            return new A_TicTacToeMove(bestRow, bestCol, _PlayerNumber);
+
+        }
+
+
+        int minimax(IX_TicTacToeField board,int depth, Boolean isMax)
+        {
+            
+            regeln.setTicTacToeField(board);
+           
+            
+            int möGewinn = regeln.CheckIfPLayerWon();
+
+            // If Maximizer has won the game 
+            // return his/her evaluated score 
+            if (möGewinn == _PlayerNumber )
+                return 10;
+
+            // If Minimizer has won the game 
+            // return his/her evaluated score 
+            if (möGewinn == -1)
+                return -10;
+
+            // If there are no more moves and 
+            // no winner then it is a tie 
+            if (regeln.MovesPossible == false)
+                return 0;
+
+            // If this maximizer's move 
+            if (isMax)
+            {
+                int best = -1000;
+
+                // Traverse all cells 
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        // Check if cell is empty 
+                        if (board[i, j] == 0)
+                        {
+                            // Make the move 
+                            board[i, j] = _PlayerNumber;
+
+                            // Call minimax recursively and choose 
+                            // the maximum value 
+                            best = Math.Max(best, minimax(board, depth + 1, !isMax));
+
+                            // Undo the move 
+                            board[i, j] = 0;
+                        }
+                    }
+                }
+                return best;
+            }
+
+            // If this minimizer's move 
+            else
+            {
+                int best = 1000;
+
+                // Traverse all cells 
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        // Check if cell is empty 
+                        if (board[i, j] == '_')
+                        {
+                            // Make the move 
+                            board[i, j] = _OpponentNumber;
+
+                            // Call minimax recursively and choose 
+                            // the minimum value 
+                            best = Math.Min(best, minimax(board, depth + 1, !isMax));
+
+                            // Undo the move 
+                            board[i, j] = 0;
+                        }
+                    }
+                }
+                return best;
+            }
+        }
+
+        public IPlayMove GetMove(IGameField field)
+        {
+            if (field is IX_TicTacToeField)
+            {
+                return GetMove((IX_TicTacToeField)field);
+            } else
+            {
+                return null;
+            }
+        }
+    }
 }
+
+
