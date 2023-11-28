@@ -12,6 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Data.Common;
 using System.Security.Cryptography.X509Certificates;
 using OOPGames;
+using System.Threading;
 
 namespace OOPGames
 {
@@ -307,7 +308,7 @@ namespace OOPGames
                 int newColumn = currentColumn + pacMove.DeltaColumn;
 
                 // Überprüfen, ob die neue Position im Spielfeld liegt und das Ziel-Feld vom Typ Pac_FieldGang ist
-                if (_16x16Field._IstinFeld(newRow, newColumn) && _16x16Field[newRow, newColumn] is Pac_FieldGang targetField)
+                if(_16x16Field._IstinFeld(newRow, newColumn) && _16x16Field[newRow, newColumn] is Pac_FieldGang targetField)
                 {
                     // Überprüfen, ob das Ziel-Feld befahrbar ist
                     if (targetField.Befahrbar)
@@ -328,7 +329,10 @@ namespace OOPGames
                             Spalte = newColumn,
                             PacinFeld = true // Setzen Sie PacinFeld auf true, um anzuzeigen, dass Pacman auf diesem Feld ist
                         };
+                        
+                       
                     }
+                   
                 }
             }
         }
@@ -342,11 +346,25 @@ namespace OOPGames
             }
         
         }
+
+        public void StartedGameCall()
+        {
+            
+        }
+
+        public void TickGameCall()
+        {
+           int  _aktuelleReihe = _16x16Field.PacPosition.Reihe;
+           int _aktuelleSpalte = _16x16Field.PacPosition.Spalte;
+
+        }
     }
 
-    public class Pac_Paint : IPaint_Pac
+    public class Pac_Paint : PacPosition, IPaint_Pac
     {
         public string Name { get { return "PacMan_GamePainter"; } }
+
+
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
         {
@@ -414,32 +432,37 @@ namespace OOPGames
                         BoxFeld.Fill = Brushes.Black;
                     }
                     canvas.Children.Add(BoxFeld);
-                    if (IstPacman)
-                    { 
-
-                    Ellipse pacManBody = new Ellipse();
-                    pacManBody.Width = 16; // Durchmesser von 16 Pixeln
-                    pacManBody.Height = 16; // Durchmesser von 16 Pixeln
-                    pacManBody.Fill = Brushes.Yellow;
-
-                   
-
-                    // Erstellen Sie einen Path für den Mund
-                    Path pacManMouthPath = new Path();
                     
-                    pacManMouthPath.Fill = Brushes.Blue;
-
-                    Canvas.SetLeft(pacManBody, Spalte *20); // 8 ist der halbe Durchmesser der Ellipse
-                    Canvas.SetTop(pacManBody, Zeile*20);
-                       
-
-
-                        // Fügen Sie die Ellipse und den Mund zum Canvas hinzu
-                    canvas.Children.Add(pacManBody);
-                   
-                    }
                 }
             }
+            {
+
+                Ellipse pacManBody = new Ellipse();
+                pacManBody.Width = 16; // Durchmesser von 16 Pixeln
+                pacManBody.Height = 16; // Durchmesser von 16 Pixeln
+                pacManBody.Fill = Brushes.Yellow;
+
+
+
+                // Erstellen Sie einen Path für den Mund
+                Path pacManMouthPath = new Path();
+
+                pacManMouthPath.Fill = Brushes.Blue;
+
+                Canvas.SetLeft(pacManBody, Spalte * 20); // 8 ist der halbe Durchmesser der Ellipse
+                Canvas.SetTop(pacManBody, Reihe * 20);
+
+
+
+                // Fügen Sie die Ellipse und den Mund zum Canvas hinzu
+                canvas.Children.Add(pacManBody);
+
+            }
+        }
+
+        public bool CanBePaintedBy(IPaintGame painter)
+        {
+            throw new NotImplementedException();
         }
     }
 

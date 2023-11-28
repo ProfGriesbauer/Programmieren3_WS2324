@@ -32,14 +32,16 @@ namespace OOPGames
 
         public MainWindow()
         {
+            OOPGamesManager.Singleton.RegisterPlayer(new Pac_HumanPlayer());
+            OOPGamesManager.Singleton.RegisterPainter(new Pac_Paint());
+            OOPGamesManager.Singleton.RegisterRules(new Pac_Rules());
             //REGISTER YOUR CLASSES HERE
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaintSHo());
             OOPGamesManager.Singleton.RegisterPainter(new C_Paint());
             OOPGamesManager.Singleton.RegisterRules(new C_Rules());
             OOPGamesManager.Singleton.RegisterPlayer(new C_HumanPlayer());           
             OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());  
-            OOPGamesManager.Singleton.RegisterPainter(new Pac_Paint());
-            OOPGamesManager.Singleton.RegisterRules(new Pac_Rules());
+           
 
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new I_Space_Invader_Painter());
