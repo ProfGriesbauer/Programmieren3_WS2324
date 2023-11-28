@@ -61,14 +61,8 @@ namespace OOPGames
     //TicTacToeMove which is derived from row and column
     public interface IMove_Pac : IRowMove, IColumnMove
     {
-        /*
-        Number of the player doing the move.
-        int PlayerNumber { get; }
-        Row of the move
-        int Row { get; }
-        Column of the move
-        //int Column { get; }
-        */
+        int DeltaRow { get; set; }
+        int DeltaColumn { get; set; }
     }
 
     //TicTacToe specific human player

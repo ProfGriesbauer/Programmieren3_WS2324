@@ -90,7 +90,9 @@ namespace OOPGames
     {
         private IFieldProperties[,] _16x16Feld = new IFieldProperties[16, 16];
 
-        private bool _IstinFeld(int r, int c)
+        public PacPosition PacPosition { get; set; } = new PacPosition();
+
+        public bool _IstinFeld(int r, int c)
         {
             return r >= 0 && r < 16 && c >= 0 && c < 16;
         }
@@ -142,8 +144,8 @@ namespace OOPGames
     }
     public class PacPosition : IFieldProperties
     {
-        private int _Reihe = 0;
-        private int _Spalte = 0;
+        private int _Reihe = 12;
+        private int _Spalte = 2;
         private bool _Befahrbar = false;
 
         public int Reihe
@@ -185,7 +187,76 @@ namespace OOPGames
                 }
 
             }
-            _16x16Field[7, 7] = new Pac_FieldGang { Reihe = 7, Spalte = 7, GeistinFeld = false , PacinFeld = true, Punkt = false };
+            _16x16Field[1, 7] = new Pac_FieldWand { Reihe = 1, Spalte = 7 };
+            _16x16Field[1, 8] = new Pac_FieldWand { Reihe = 1, Spalte = 8 };
+            
+            _16x16Field[2, 2] = new Pac_FieldWand { Reihe = 2, Spalte = 2 };
+            _16x16Field[2, 3] = new Pac_FieldWand { Reihe = 3, Spalte = 3 };
+            _16x16Field[2, 5] = new Pac_FieldWand { Reihe = 2, Spalte = 5 };
+            _16x16Field[2, 7] = new Pac_FieldWand { Reihe = 2, Spalte = 7 };
+            _16x16Field[2, 8] = new Pac_FieldWand { Reihe = 2, Spalte = 8 };
+            _16x16Field[2, 10] = new Pac_FieldWand { Reihe = 2, Spalte = 10 };
+            _16x16Field[2, 12] = new Pac_FieldWand { Reihe = 2, Spalte = 12 };
+            _16x16Field[2, 13] = new Pac_FieldWand { Reihe = 2, Spalte = 13 };
+            
+            _16x16Field[3, 2] = new Pac_FieldWand { Reihe = 3, Spalte = 2 };
+            _16x16Field[3, 3] = new Pac_FieldWand { Reihe = 3, Spalte = 3 };
+            _16x16Field[3, 12] = new Pac_FieldWand { Reihe = 3, Spalte = 12 };
+            _16x16Field[3, 13] = new Pac_FieldWand { Reihe = 3, Spalte = 13 };
+
+            //_16x16Field[4, 5] = new Pac_FieldWand { Reihe = 4, Spalte = 5 };
+            _16x16Field[4, 6] = new Pac_FieldWand { Reihe = 4, Spalte = 6 };
+            _16x16Field[4, 7] = new Pac_FieldWand { Reihe = 4, Spalte = 7 };
+            _16x16Field[4, 8] = new Pac_FieldWand { Reihe = 4, Spalte = 8 };
+            _16x16Field[4, 9] = new Pac_FieldWand { Reihe = 4, Spalte = 9 };
+            //_16x16Field[4, 10] = new Pac_FieldWand { Reihe = 4, Spalte = 10 };
+
+            _16x16Field[5, 1] = new Pac_FieldWand { Reihe = 5, Spalte = 1 };
+            _16x16Field[5, 3] = new Pac_FieldWand { Reihe = 5, Spalte = 5 };
+            _16x16Field[5, 4] = new Pac_FieldWand { Reihe = 5, Spalte = 4 };
+            _16x16Field[5, 7] = new Pac_FieldWand { Reihe = 5, Spalte = 7 };
+            _16x16Field[5, 8] = new Pac_FieldWand { Reihe = 5, Spalte = 8 };
+            _16x16Field[5, 11] = new Pac_FieldWand { Reihe = 5, Spalte = 11 };
+            _16x16Field[5, 12] = new Pac_FieldWand { Reihe = 5, Spalte = 12 };
+            _16x16Field[5, 14] = new Pac_FieldWand { Reihe = 5, Spalte = 14 };
+
+            _16x16Field[6, 4] = new Pac_FieldWand { Reihe = 6, Spalte = 4 };
+            _16x16Field[6, 5] = new Pac_FieldWand { Reihe = 6, Spalte = 5 };
+            _16x16Field[6, 10] = new Pac_FieldWand { Reihe = 6, Spalte = 10 };
+            _16x16Field[6, 11] = new Pac_FieldWand { Reihe = 6, Spalte = 11 };
+
+            _16x16Field[7, 2] = new Pac_FieldWand { Reihe = 7, Spalte = 2 };
+            _16x16Field[7, 4] = new Pac_FieldWand { Reihe = 7, Spalte = 4 };
+            _16x16Field[7, 7] = new Pac_FieldWand { Reihe = 7, Spalte = 7 };
+            _16x16Field[7, 8] = new Pac_FieldWand { Reihe = 7, Spalte = 8 };
+            _16x16Field[7, 11] = new Pac_FieldWand { Reihe = 7, Spalte = 11 };
+            _16x16Field[7, 13] = new Pac_FieldWand { Reihe = 7, Spalte = 13 };
+
+            _16x16Field[8, 2] = new Pac_FieldWand { Reihe = 8, Spalte = 2 };
+            _16x16Field[8, 4] = new Pac_FieldWand { Reihe = 8, Spalte = 4 };
+            _16x16Field[8, 6] = new Pac_FieldWand { Reihe = 8, Spalte = 6 };
+            _16x16Field[8, 7] = new Pac_FieldWand { Reihe = 8, Spalte = 7 };
+            _16x16Field[8, 8] = new Pac_FieldWand { Reihe = 8, Spalte = 8 };
+            _16x16Field[8, 9] = new Pac_FieldWand { Reihe = 8, Spalte = 9 };
+            _16x16Field[8, 11] = new Pac_FieldWand { Reihe = 8, Spalte = 11 };
+            _16x16Field[8, 13] = new Pac_FieldWand { Reihe = 8, Spalte = 13 };
+
+            _16x16Field[9, 4] = new Pac_FieldWand { Reihe = 9, Spalte = 4 };
+            _16x16Field[9, 7] = new Pac_FieldWand { Reihe = 9, Spalte = 7 };
+            _16x16Field[9, 8] = new Pac_FieldWand { Reihe = 9, Spalte = 8 };
+            _16x16Field[9, 11] = new Pac_FieldWand { Reihe = 9, Spalte = 11 };
+
+            _16x16Field[10, 2] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 3] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 4] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 5] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 10] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 11] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 12] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 13] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+
+
+            _16x16Field[12, 2] = new Pac_FieldGang { Reihe = 12, Spalte = 2, GeistinFeld = false , PacinFeld = true, Punkt = false };
         }
 
 
@@ -223,8 +294,45 @@ namespace OOPGames
 
         public void DoPacManMove(IMove_Pac move)
         {
-            throw new NotImplementedException();
+
+            // Überprüfen, ob der übergebene Move vom richtigen Typ ist
+            if (move is Move_Pac pacMove)
+            {
+                // Holen Sie die aktuelle Position des Pacman im Feld
+                int currentRow = _16x16Field.PacPosition.Reihe;
+                int currentColumn = _16x16Field.PacPosition.Spalte;
+
+                // Berechnen Sie die neue Position nach Anwendung des Zugs
+                int newRow = currentRow + pacMove.DeltaRow;
+                int newColumn = currentColumn + pacMove.DeltaColumn;
+
+                // Überprüfen, ob die neue Position im Spielfeld liegt und das Ziel-Feld vom Typ Pac_FieldGang ist
+                if (_16x16Field._IstinFeld(newRow, newColumn) && _16x16Field[newRow, newColumn] is Pac_FieldGang targetField)
+                {
+                    // Überprüfen, ob das Ziel-Feld befahrbar ist
+                    if (targetField.Befahrbar)
+                    {
+                        // Pacman aus dem aktuellen Feld entfernen
+                        _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = false, PacinFeld = false, Reihe = currentRow, Spalte = currentColumn, } ;
+
+                        // Die Pac-Position im Spielfeld aktualisieren
+                        _16x16Field.PacPosition.Reihe = newRow;
+                        _16x16Field.PacPosition.Spalte = newColumn;
+
+                        // Pacman in das Ziel-Feld einfügen
+                        _16x16Field[newRow, newColumn] = new Pac_FieldGang
+                        {
+                            Punkt = targetField.Punkt,
+                            GeistinFeld = targetField.GeistinFeld,
+                            Reihe = newRow,
+                            Spalte = newColumn,
+                            PacinFeld = true // Setzen Sie PacinFeld auf true, um anzuzeigen, dass Pacman auf diesem Feld ist
+                        };
+                    }
+                }
+            }
         }
+        
 
         public void DoMove(IPlayMove move)
         {
@@ -335,6 +443,18 @@ namespace OOPGames
         }
     }
 
+    public class Move_Pac : IMove_Pac
+    {
+        public int DeltaRow { get; set; }
+        public int DeltaColumn { get; set; }
+
+        public int Row { get; }
+
+        public int Column { get; }
+
+        public int PlayerNumber { get; }
+    }
+
     public class Pac_HumanPlayer : PacPosition, IHumanPlayer_Pac
     {
         int _PlayerNumber = 0;
@@ -368,22 +488,45 @@ namespace OOPGames
                 IKeySelection sel = (IKeySelection)selection;
 
                 Key PressedKey = sel.Key;
-               
+                // Holen Sie die aktuelle Position des Pacman im Feld
+                int currentRow = Reihe;
+                int currentColumn = Spalte;
+
                 if (PressedKey == Key.A)
                 {
-                 
+                    // Überprüfen, ob der Zug nach links möglich ist 
+                    if (((IFieldProperties)field[currentRow, currentColumn-1]).Befahrbar)
+                    {
+                        // Erstellen Sie einen neuen Zug nach links
+                        return new Move_Pac { DeltaRow = 0, DeltaColumn = -1 };
+                    }
                 }
                 if (PressedKey == Key.D)
                 {
-                   
+                    // Überprüfen, ob der Zug nach rechts möglich ist 
+                    if (((IFieldProperties)field[currentRow, currentColumn +1]).Befahrbar)
+                    {
+                        // Erstellen Sie einen neuen Zug nach rechts
+                        return new Move_Pac { DeltaRow = 0, DeltaColumn = +1 };
+                    }
                 }
                 if (PressedKey == Key.W)
                 {
-                    
+                    // Überprüfen, ob der Zug nach oben möglich ist 
+                    if (((IFieldProperties)field[currentRow - 1, currentColumn]).Befahrbar)
+                    {
+                        // Erstellen Sie einen neuen Zug nach oben
+                        return new Move_Pac { DeltaRow = -1, DeltaColumn = 0 };
+                    }
                 }
                 if (PressedKey == Key.S)
                 {
-                    
+                    // Überprüfen, ob der Zug nach unten möglich ist 
+                    if (((IFieldProperties)field[currentRow - 1, currentColumn]).Befahrbar)
+                    {
+                        // Erstellen Sie einen neuen Zug nach unten
+                        return new Move_Pac { DeltaRow = +1, DeltaColumn = 0 };
+                    }
                 }
             }
             
