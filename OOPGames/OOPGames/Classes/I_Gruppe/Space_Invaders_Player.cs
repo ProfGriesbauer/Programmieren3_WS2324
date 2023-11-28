@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames
 {
-    public class G_XXX
+    public class Space_Invaders_Player
     {
     }
 }

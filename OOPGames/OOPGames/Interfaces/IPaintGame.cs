@@ -26,6 +26,8 @@ namespace OOPGames
     //DIESES INTERFACE NICHT ÄNDERN!
     public interface IPaintGame2 : IPaintGame
     {
+        string Name { get; }
+
         //Paints the given game field on the given canvas
         //Called every 40ms.
         //NOTE: Clearing the canvas, etc. has to be done within this function

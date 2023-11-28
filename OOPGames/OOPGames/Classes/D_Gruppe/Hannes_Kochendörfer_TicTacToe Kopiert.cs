@@ -10,19 +10,14 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class A_MühlePaint : IA_PaintMühle
+    public class X_TTTPaint : X_BaseTicTacToePaint
     {
-        public string Name { get { return "GriesbauerTicTacToePaint"; } }
+        public override string Name { get { return "HannesTicTacToePaint"; } }
 
-        public void PaintGameField(Canvas canvas, IGameField currentField)
-        {
-
-        }
-
-        public void PaintMühleField(Canvas canvas, IA_MühleField currentField)
+        public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(255, 255, 255);
+            Color bgColor = Color.FromRgb(50, 50, 55);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(255, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
@@ -59,15 +54,9 @@ namespace OOPGames
                 }
             }
         }
-
-        public void PaintTicTacToeField(Canvas canvas, IA_MühleField currentField)
-        {
-            throw new NotImplementedException();
-        }
     }
-}
-    /*
-    public class A_TicTacToeRules : X_BaseTicTacToeRules
+
+    public class X_TTTRules : X_BaseTicTacToeRules
     {
         X_TicTacToeField _Field = new X_TicTacToeField();
 
@@ -92,7 +81,7 @@ namespace OOPGames
             }
         }
 
-        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+        public override string Name { get { return "HannesTicTacToeRules"; } }
 
         public override int CheckIfPLayerWon()
         {
@@ -140,7 +129,7 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeField : X_BaseTicTacToeField
+    public class X_TTTField : X_BaseTicTacToeField
     {
         int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
@@ -168,13 +157,13 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeMove : IX_TicTacToeMove
+    public class X_TTTMove : IX_TicTacToeMove
     {
         int _Row = 0;
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public A_TicTacToeMove(int row, int column, int playerNumber)
+        public X_TTTMove(int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -188,17 +177,17 @@ namespace OOPGames
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
 
-    public class A_TicTacToeHumanPlayer : X_BaseHumanTicTacToePlayer
+    public class X_TTTHumanPlayer : X_BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "A_HumanTicTacToePlayer"; } }
+        public override string Name { get { return "HannesTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
         {
-            A_TicTacToeHumanPlayer ttthp = new A_TicTacToeHumanPlayer();
+            X_TicTacToeHumanPlayer ttthp = new X_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -231,17 +220,17 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeComputerPlayer : X_BaseComputerTicTacToePlayer
+    public class X_TTTComputerPlayer : X_BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "A_ComputerTicTacToePlayer"; } }
+        public override string Name { get { return "HannesComputerTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
         {
-            A_TicTacToeComputerPlayer ttthp = new A_TicTacToeComputerPlayer();
+            X_TicTacToeComputerPlayer ttthp = new X_TicTacToeComputerPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -273,4 +262,6 @@ namespace OOPGames
         }
     }
 }
-    */
+
+
+

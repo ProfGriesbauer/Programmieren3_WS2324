@@ -10,25 +10,20 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class A_MühlePaint : IA_PaintMühle
+    public class A_TicTacToePaint : X_BaseTicTacToePaint
     {
-        public string Name { get { return "GriesbauerTicTacToePaint"; } }
+        public override string Name { get { return "LottesTicTacToePaint"; } }
 
-        public void PaintGameField(Canvas canvas, IGameField currentField)
-        {
-
-        }
-
-        public void PaintMühleField(Canvas canvas, IA_MühleField currentField)
+        public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 0, 0);
+            Color lineColor = Color.FromRgb(255, 120, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(0, 255, 0);
+            Color XColor = Color.FromRgb(120, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 0, 255);
+            Color OColor = Color.FromRgb(0, 120, 255);
             Brush OStroke = new SolidColorBrush(OColor);
 
             Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
@@ -59,23 +54,17 @@ namespace OOPGames
                 }
             }
         }
-
-        public void PaintTicTacToeField(Canvas canvas, IA_MühleField currentField)
-        {
-            throw new NotImplementedException();
-        }
     }
-}
-    /*
+
     public class A_TicTacToeRules : X_BaseTicTacToeRules
     {
-        X_TicTacToeField _Field = new X_TicTacToeField();
+        A_TicTacToeField _Field = new A_TicTacToeField();
 
         public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
 
-        public override bool MovesPossible
-        {
-            get
+        public override bool MovesPossible 
+        { 
+            get 
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -88,11 +77,11 @@ namespace OOPGames
                     }
                 }
 
-                return false;
-            }
+                return false; 
+            } 
         }
 
-        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+        public override string Name { get { return "LottesTicTacToeRules"; } }
 
         public override int CheckIfPLayerWon()
         {
@@ -140,9 +129,9 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeField : X_BaseTicTacToeField
+    public class A_TicTacToeField : A_BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        int[,] _Field = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public override int this[int r, int c]
         {
@@ -174,7 +163,7 @@ namespace OOPGames
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public A_TicTacToeMove(int row, int column, int playerNumber)
+        public A_TicTacToeMove (int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -188,17 +177,17 @@ namespace OOPGames
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
 
-    public class A_TicTacToeHumanPlayer : X_BaseHumanTicTacToePlayer
+    public class A_TicTacToeHumanPlayer : A_BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "A_HumanTicTacToePlayer"; } }
+        public override string Name { get { return "LottesHumanTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
         {
-            A_TicTacToeHumanPlayer ttthp = new A_TicTacToeHumanPlayer();
+            X_TicTacToeHumanPlayer ttthp = new X_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -231,17 +220,17 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeComputerPlayer : X_BaseComputerTicTacToePlayer
+    public class A_TicTacToeComputerPlayer : A_BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "A_ComputerTicTacToePlayer"; } }
+        public override string Name { get { return "LottesComputerTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
         {
-            A_TicTacToeComputerPlayer ttthp = new A_TicTacToeComputerPlayer();
+            X_TicTacToeComputerPlayer ttthp = new X_TicTacToeComputerPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -273,4 +262,3 @@ namespace OOPGames
         }
     }
 }
-    */

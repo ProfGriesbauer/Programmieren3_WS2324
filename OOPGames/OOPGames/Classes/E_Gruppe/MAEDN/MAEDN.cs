@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames
+namespace OOPGames.Classes.E_Gruppe.MAEDN
 {
-    public class G_XXX
+    internal class MAEDN
     {
     }
 }
