@@ -36,6 +36,8 @@ namespace OOPGames
     
     public interface IField_Pac : IGameField
     {
+
+        PacPosition PacPosition { get; set; }
         /*
         //Returns true, if the given this game field can be painted by the given painter
         bool CanBePaintedBy(IPaintGame painter);
@@ -47,7 +49,7 @@ namespace OOPGames
     }
 
     //TicTacToe specific game rules
-    public interface IRules_Pac : IGameRules
+    public interface IRules_Pac : IGameRules2
     {
         //Gets the current state of the tictactoe field; the class implementing
         //this interface should hold a game field corresponding to the rules

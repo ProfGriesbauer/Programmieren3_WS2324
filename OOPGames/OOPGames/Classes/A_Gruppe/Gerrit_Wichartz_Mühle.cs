@@ -5,103 +5,77 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class S_MinesweeperPainter : X_BaseTicTacToePaint
+    public class A_MühlePaint : IA_PaintMühle
     {
-        private const int Rows = 10;
-        private const int Cols = 10;
+        public string Name { get { return "GriesbauerTicTacToePaint"; } }
 
-        private Button[,] mineButtons;
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
 
-        public override string Name { get { return "Minesweeper-Painter"; } }
+        }
 
-        public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
+        public void PaintMühleField(Canvas canvas, IA_MühleField currentField)
         {
             canvas.Children.Clear();
+            Color bgColor = Color.FromRgb(255, 255, 255);
+            canvas.Background = new SolidColorBrush(bgColor);
+            Color lineColor = Color.FromRgb(255, 0, 0);
+            Brush lineStroke = new SolidColorBrush(lineColor);
+            Color XColor = Color.FromRgb(0, 255, 0);
+            Brush XStroke = new SolidColorBrush(XColor);
+            Color OColor = Color.FromRgb(0, 0, 255);
+            Brush OStroke = new SolidColorBrush(OColor);
 
-            // Initialize Minesweeper grid of buttons
-            InitializeMineButtons(canvas);
+            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l1);
+            Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l2);
+            Line l3 = new Line() { X1 = 20, Y1 = 120, X2 = 320, Y2 = 120, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l3);
+            Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l4);
 
-            // Update button content based on the current field
-            UpdateButtonContent(currentField);
-        }
-
-        private void InitializeMineButtons(Canvas canvas)
-        {
-            mineButtons = new Button[Rows, Cols];
-
-            for (int row = 0; row < Rows; row++)
+            for (int i = 0; i < 3; i++)
             {
-                for (int col = 0; col < Cols; col++)
+                for (int j = 0; j < 3; j++)
                 {
-                    Button btn = new Button();
-                    btn.Name = $"btn_{row}_{col}";
-                    btn.Content = ""; // Content will be empty initially
-                    btn.Click += Btn_Click;
-                    btn.MouseRightButtonDown += Btn_RightClick;
-                    Canvas.SetTop(btn, row * 30); // Adjust position based on the size you want
-                    Canvas.SetLeft(btn, col * 30);
-                    canvas.Children.Add(btn);
-                    mineButtons[row, col] = btn;
+                    if (currentField[i, j] == 1)
+                    {
+                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X1);
+                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X2);
+                    }
+                    else if (currentField[i, j] == 2)
+                    {
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(OE);
+                    }
                 }
             }
         }
 
-        private void UpdateButtonContent(IX_TicTacToeField currentField)
+        public void PaintTicTacToeField(Canvas canvas, IA_MühleField currentField)
         {
-            for (int row = 0; row < Rows; row++)
-            {
-                for (int col = 0; col < Cols; col++)
-                {
-                    Button btn = mineButtons[row, col];
-                    int cellValue = currentField[row, col];
-
-                    // Customize the button content based on the Minesweeper logic
-                    btn.Content = GetContentBasedOnValue(cellValue);
-                }
-            }
-        }
-
-        private string GetContentBasedOnValue(int cellValue)
-        {
-            // Customize this logic based on Minesweeper requirements
-            // You might want to display different symbols or colors for mines, numbers, etc.
-            if (cellValue == 1)
-            {
-                return "X"; // Example: Display X for mines
-            }
-            else
-            {
-                return ""; // Empty content for other cells
-            }
-        }
-
-        private void Btn_Click(object sender, RoutedEventArgs e)
-        {
-            // Handle button click (left click) logic if needed
-        }
-
-        private void Btn_RightClick(object sender, MouseButtonEventArgs e)
-        {
-            // Handle button right-click logic if needed
+            throw new NotImplementedException();
         }
     }
-
-
-    public class S_TicTacToeRules : X_BaseTicTacToeRules
+}
+    /*
+    public class A_TicTacToeRules : X_BaseTicTacToeRules
     {
-        S_TicTacToeField _Field = new S_TicTacToeField();
+        X_TicTacToeField _Field = new X_TicTacToeField();
 
         public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
 
-        public override bool MovesPossible 
-        { 
-            get 
+        public override bool MovesPossible
+        {
+            get
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -114,11 +88,11 @@ namespace OOPGames
                     }
                 }
 
-                return false; 
-            } 
+                return false;
+            }
         }
 
-        public override string Name { get { return "F-TicTacToeRules"; } }
+        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
 
         public override int CheckIfPLayerWon()
         {
@@ -166,9 +140,9 @@ namespace OOPGames
         }
     }
 
-    public class S_TicTacToeField : X_BaseTicTacToeField
+    public class A_TicTacToeField : X_BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public override int this[int r, int c]
         {
@@ -194,13 +168,13 @@ namespace OOPGames
         }
     }
 
-    public class S_TicTacToeMove : IX_TicTacToeMove
+    public class A_TicTacToeMove : IX_TicTacToeMove
     {
         int _Row = 0;
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public S_TicTacToeMove (int row, int column, int playerNumber)
+        public A_TicTacToeMove(int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -214,17 +188,17 @@ namespace OOPGames
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
 
-    public class S_TicTacToeHumanPlayer : X_BaseHumanTicTacToePlayer
+    public class A_TicTacToeHumanPlayer : X_BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "F-Human-Player"; } }
+        public override string Name { get { return "A_HumanTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
         {
-            S_TicTacToeHumanPlayer ttthp = new S_TicTacToeHumanPlayer();
+            A_TicTacToeHumanPlayer ttthp = new A_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -242,7 +216,7 @@ namespace OOPGames
                             sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 120 + (i * 100) &&
                             field[i, j] <= 0)
                         {
-                            return new S_TicTacToeMove(i, j, _PlayerNumber);
+                            return new X_TicTacToeMove(i, j, _PlayerNumber);
                         }
                     }
                 }
@@ -257,17 +231,17 @@ namespace OOPGames
         }
     }
 
-    public class S_TicTacToeComputerPlayer : X_BaseComputerTicTacToePlayer
+    public class A_TicTacToeComputerPlayer : X_BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "F-Computer-Player"; } }
+        public override string Name { get { return "A_ComputerTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
         {
-            S_TicTacToeComputerPlayer ttthp = new S_TicTacToeComputerPlayer();
+            A_TicTacToeComputerPlayer ttthp = new A_TicTacToeComputerPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -282,7 +256,7 @@ namespace OOPGames
                 int r = ((f - c) / 3) % 3;
                 if (field[r, c] <= 0)
                 {
-                    return new S_TicTacToeMove(r, c, _PlayerNumber);
+                    return new X_TicTacToeMove(r, c, _PlayerNumber);
                 }
                 else
                 {
@@ -299,3 +273,4 @@ namespace OOPGames
         }
     }
 }
+    */
