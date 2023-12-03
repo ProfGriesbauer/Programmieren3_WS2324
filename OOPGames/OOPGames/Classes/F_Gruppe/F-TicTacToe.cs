@@ -17,8 +17,9 @@ namespace OOPGames
         private const int Cols = 10;
 
         private Button[,] mineButtons;
+        public bool[,] mineField;
 
-        public override string Name { get { return "Minesweeper-Painter"; } }
+        public override string Name { get { return "Minesweeper-Painter_F"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
@@ -34,14 +35,20 @@ namespace OOPGames
         private void InitializeMineButtons(Canvas canvas)
         {
             mineButtons = new Button[Rows, Cols];
+            mineField = new bool[Rows, Cols];
+
 
             for (int row = 0; row < Rows; row++)
             {
                 for (int col = 0; col < Cols; col++)
                 {
-                    Button btn = new Button();
-                    btn.Name = $"btn_{row}_{col}";
-                    btn.Content = ""; // Content will be empty initially
+                    Button btn = new Button
+                    {
+                        Name = $"btn_{row}_{col}",
+                        Content = "halo", // Content will be empty initially
+                        Tag = new { Row = row, Col = col } // Set Row and Col as properties using an anonymous type
+
+                    };
                     btn.Click += Btn_Click;
                     btn.MouseRightButtonDown += Btn_RightClick;
                     Canvas.SetTop(btn, row * 30); // Adjust position based on the size you want
@@ -50,7 +57,24 @@ namespace OOPGames
                     mineButtons[row, col] = btn;
                 }
             }
-        }
+            Random rand = new Random();
+            int mineCount = 0;
+
+            while (mineCount < 10)
+            {
+                int row = rand.Next(Rows);
+                int col = rand.Next(Cols);
+
+                if (!mineField[row, col])
+                {
+                    mineField[row, col] = true;
+                    mineCount++;
+                }
+            }
+    
+    }
+
+
 
         private void UpdateButtonContent(IX_TicTacToeField currentField)
         {
@@ -83,9 +107,34 @@ namespace OOPGames
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
-            // Handle button click (left click) logic if needed
-        }
+            Button btn = (Button)sender;
+            int row = (int)((dynamic)btn.Tag).Row;
+            int col = (int)((dynamic)btn.Tag).Col;
 
+            
+
+                // Add your game logic here for left-click
+                // For example, reveal the cell or check if it's a mine
+                // Update the button content accordingly
+                if (mineField[row, col])
+                {
+                    btn.Content = "X"; // This is a mine
+                    MessageBox.Show("Game Over! You hit a mine.", "Game Over");
+                    // Add logic to end the game or perform other actions
+                }
+                else
+                {
+                    int adjacentMines = CountAdjacentMines(row, col);
+                    btn.Content = (adjacentMines > 0) ? adjacentMines.ToString() : "";
+                    // Add more logic as needed
+                }
+        }
+        private int CountAdjacentMines(int row, int col)
+        {
+            // Add your logic to count adjacent mines
+            // For simplicity, this example always returns 0
+            return 0;
+        }
         private void Btn_RightClick(object sender, MouseButtonEventArgs e)
         {
             // Handle button right-click logic if needed
@@ -96,6 +145,7 @@ namespace OOPGames
     public class S_TicTacToeRules : X_BaseTicTacToeRules
     {
         S_TicTacToeField _Field = new S_TicTacToeField();
+        
 
         public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
 
