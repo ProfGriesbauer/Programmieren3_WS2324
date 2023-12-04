@@ -11,7 +11,22 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public interface II_TikTakToe_Painter : IX_PaintTicTacToe
+    public interface II_PlayerSpaceIn : IGamePlayer
+    {
+        
+    }
+
+    public interface II_RulesSpaceIn : IGameRules2
+    {
+
+    }
+
+    public interface II_PaintSpaceIn : IPaintGame2 
+    {
+
+    }
+
+    public interface II_MoveSpaceIn : IPlayMove
     {
 
     }
