@@ -5,60 +5,147 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class S_TicTacToePaint : X_BaseTicTacToePaint
+    public class S_MinesweeperPainter : X_BaseTicTacToePaint
     {
-        public override string Name { get { return "F-Painter"; } }
+        private const int Rows = 10;
+        private const int Cols = 10;
+
+        private Button[,] mineButtons;
+        public bool[,] mineField;
+
+        public override string Name { get { return "Minesweeper-Painter_F"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(0, 0, 0);
-            canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 255, 255);
-            Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(255, 255, 255);
-            Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(255, 255, 255);
-            Brush OStroke = new SolidColorBrush(OColor);
 
-            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 5.0 };
-            canvas.Children.Add(l1);
-            Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 5.0 };
-            canvas.Children.Add(l2);
-            Line l3 = new Line() { X1 = 20, Y1 = 120, X2 = 320, Y2 = 120, Stroke = lineStroke, StrokeThickness = 5.0 };
-            canvas.Children.Add(l3);
-            Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 5.0 };
-            canvas.Children.Add(l4);
+            // Initialize Minesweeper grid of buttons
+            InitializeMineButtons(canvas);
 
-            for (int i = 0; i < 3; i++)
+            // Update button content based on the current field
+            UpdateButtonContent(currentField);
+        }
+
+        private void InitializeMineButtons(Canvas canvas)
+        {
+            mineButtons = new Button[Rows, Cols];
+            mineField = new bool[Rows, Cols];
+
+
+            for (int row = 0; row < Rows; row++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int col = 0; col < Cols; col++)
                 {
-                    if (currentField[i, j] == 1)
+                    Button btn = new Button
                     {
-                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 5.0 };
-                        canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 5.0 };
-                        canvas.Children.Add(X2);
-                    }
-                    else if (currentField[i, j] == 2)
-                    {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 5.0 };
-                        canvas.Children.Add(OE);
-                    }
+                        Name = $"btn_{row}_{col}",
+                        Content = "halo", // Content will be empty initially
+                        Tag = new { Row = row, Col = col } // Set Row and Col as properties using an anonymous type
+
+                    };
+                    btn.Click += Btn_Click;
+                    btn.MouseRightButtonDown += Btn_RightClick;
+                    Canvas.SetTop(btn, row * 30); // Adjust position based on the size you want
+                    Canvas.SetLeft(btn, col * 30);
+                    canvas.Children.Add(btn);
+                    mineButtons[row, col] = btn;
+                }
+            }
+            Random rand = new Random();
+            int mineCount = 0;
+
+            while (mineCount < 10)
+            {
+                int row = rand.Next(Rows);
+                int col = rand.Next(Cols);
+
+                if (!mineField[row, col])
+                {
+                    mineField[row, col] = true;
+                    mineCount++;
+                }
+            }
+    
+    }
+
+
+
+        private void UpdateButtonContent(IX_TicTacToeField currentField)
+        {
+            for (int row = 0; row < Rows; row++)
+            {
+                for (int col = 0; col < Cols; col++)
+                {
+                    Button btn = mineButtons[row, col];
+                    int cellValue = currentField[row, col];
+
+                    // Customize the button content based on the Minesweeper logic
+                    btn.Content = GetContentBasedOnValue(cellValue);
                 }
             }
         }
+
+        private string GetContentBasedOnValue(int cellValue)
+        {
+            // Customize this logic based on Minesweeper requirements
+            // You might want to display different symbols or colors for mines, numbers, etc.
+            if (cellValue == 1)
+            {
+                return "X"; // Example: Display X for mines
+            }
+            else
+            {
+                return ""; // Empty content for other cells
+            }
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            int row = (int)((dynamic)btn.Tag).Row;
+            int col = (int)((dynamic)btn.Tag).Col;
+
+            
+
+                // Add your game logic here for left-click
+                // For example, reveal the cell or check if it's a mine
+                // Update the button content accordingly
+                if (mineField[row, col])
+                {
+                    btn.Content = "X"; // This is a mine
+                    MessageBox.Show("Game Over! You hit a mine.", "Game Over");
+                    // Add logic to end the game or perform other actions
+                }
+                else
+                {
+                    int adjacentMines = CountAdjacentMines(row, col);
+                    btn.Content = (adjacentMines > 0) ? adjacentMines.ToString() : "";
+                    // Add more logic as needed
+                }
+        }
+        private int CountAdjacentMines(int row, int col)
+        {
+            // Add your logic to count adjacent mines
+            // For simplicity, this example always returns 0
+            return 0;
+        }
+        private void Btn_RightClick(object sender, MouseButtonEventArgs e)
+        {
+            // Handle button right-click logic if needed
+        }
     }
+
 
     public class S_TicTacToeRules : X_BaseTicTacToeRules
     {
         S_TicTacToeField _Field = new S_TicTacToeField();
+        
 
         public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
 

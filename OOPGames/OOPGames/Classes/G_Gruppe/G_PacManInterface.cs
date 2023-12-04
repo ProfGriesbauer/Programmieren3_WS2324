@@ -36,6 +36,8 @@ namespace OOPGames
     
     public interface IField_Pac : IGameField
     {
+
+        PacPosition PacPosition { get; set; }
         /*
         //Returns true, if the given this game field can be painted by the given painter
         bool CanBePaintedBy(IPaintGame painter);
@@ -47,7 +49,7 @@ namespace OOPGames
     }
 
     //TicTacToe specific game rules
-    public interface IRules_Pac : IGameRules
+    public interface IRules_Pac : IGameRules2
     {
         //Gets the current state of the tictactoe field; the class implementing
         //this interface should hold a game field corresponding to the rules
@@ -61,14 +63,8 @@ namespace OOPGames
     //TicTacToeMove which is derived from row and column
     public interface IMove_Pac : IRowMove, IColumnMove
     {
-        /*
-        Number of the player doing the move.
-        int PlayerNumber { get; }
-        Row of the move
-        int Row { get; }
-        Column of the move
-        //int Column { get; }
-        */
+        int DeltaRow { get; set; }
+        int DeltaColumn { get; set; }
     }
 
     //TicTacToe specific human player
