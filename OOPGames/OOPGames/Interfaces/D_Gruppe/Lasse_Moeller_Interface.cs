@@ -28,8 +28,8 @@ namespace OOPGames
         public bool Markiert;
         public int Nachbarminen;
         }
-    public interface D_Minsweeperplayer : IGamePlayer
+    public interface ID_Minesweeperplayer :IHumanGamePlayer
     {
-        void Minsweeperplayer();
+        
     }
 }
