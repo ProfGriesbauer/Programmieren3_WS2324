@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 namespace OOPGames
 {
 
-    
+
     public class I_Space_Invader_Painter : II_PaintSpaceIn
     {
         public string Name { get { return "I_Space_Invader"; } }
@@ -42,26 +42,15 @@ namespace OOPGames
             Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l4);
             */
-
-
         }
-    }
-
-    public class Komet
-    {
-        static int Geschwindigkeit;
-        int x_Kordinate { set; get; }
-        int y_Kordinate { get; }
-        int breite;
-
-        int Move(int y)
-        {
-            return y + Geschwindigkeit;
-        }
-
-
-       
-
     }
 }
+
+   
+    
+
+
+
+   
+
 

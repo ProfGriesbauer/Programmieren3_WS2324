@@ -10,6 +10,7 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
+    //ist aktuelle nicht in der xml Datei registriert
     public class I_Painter_TikTakToe : X_BaseTicTacToePaint
     {
         public override string Name { get { return "I_TicTacToePaint"; } }
