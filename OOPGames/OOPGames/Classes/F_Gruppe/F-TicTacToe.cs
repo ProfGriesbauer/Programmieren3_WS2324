@@ -11,6 +11,14 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
+    public enum CellState
+    {
+        Covered,
+        Uncovered,
+        Flagged
+        // Add more states as needed
+    }
+
     public class S_MinesweeperPainter : X_BaseTicTacToePaint
     {
         private const int Rows = 10;
@@ -45,8 +53,9 @@ namespace OOPGames
                     Button btn = new Button
                     {
                         Name = $"btn_{row}_{col}",
-                        Content = "halo", // Content will be empty initially
-                        Tag = new { Row = row, Col = col } // Set Row and Col as properties using an anonymous type
+                        Content = "", // Content will be empty initially
+                        Tag = new { Row = row, Col = col }, // Set Row and Col as properties using an anonymous type
+                        DataContext = CellState.Covered
 
                     };
                     btn.Click += Btn_Click;
@@ -110,13 +119,17 @@ namespace OOPGames
             Button btn = (Button)sender;
             int row = (int)((dynamic)btn.Tag).Row;
             int col = (int)((dynamic)btn.Tag).Col;
+            btn.Background = Brushes.Transparent;
+            CellState currentState = (CellState)btn.DataContext;
 
-            
 
-                // Add your game logic here for left-click
-                // For example, reveal the cell or check if it's a mine
-                // Update the button content accordingly
-                if (mineField[row, col])
+
+
+
+            // Add your game logic here for left-click
+            // For example, reveal the cell or check if it's a mine
+            // Update the button content accordingly
+            if (mineField[row, col])
                 {
                     btn.Content = "X"; // This is a mine
                     MessageBox.Show("Game Over! You hit a mine.", "Game Over");
@@ -125,6 +138,7 @@ namespace OOPGames
                 else
                 {
                     int adjacentMines = CountAdjacentMines(row, col);
+                
                     btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
                 if (adjacentMines == 1)
                 {
@@ -140,7 +154,7 @@ namespace OOPGames
                 }
                 else
                 {
-                    btn.Foreground = Brushes.Black;
+                    btn.Foreground = Brushes.Transparent;
                 }
 
                 // Add more logic as needed
