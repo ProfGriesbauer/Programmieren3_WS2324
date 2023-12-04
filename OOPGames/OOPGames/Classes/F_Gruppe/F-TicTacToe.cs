@@ -126,8 +126,11 @@ namespace OOPGames
                 {
                     int adjacentMines = CountAdjacentMines(row, col);
                     btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
-                    // Add more logic as needed
-                }
+                    btn.Foreground = (adjacentMines == 1) ? Brushes.Green : Brushes.Black;
+                    btn.Foreground = (adjacentMines == 2) ? Brushes.Yellow : Brushes.Black;
+                    btn.Foreground = (adjacentMines == 3) ? Brushes.Red : Brushes.Black;
+                // Add more logic as needed
+            }
         }
         private int CountAdjacentMines(int row, int col)
         {
