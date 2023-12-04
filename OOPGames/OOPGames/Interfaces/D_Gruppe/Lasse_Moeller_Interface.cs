@@ -28,7 +28,7 @@ namespace OOPGames
         public bool Markiert;
         public int Nachbarminen;
         }
-    public interface D_Minsweeperplayer 
+    public interface ID_Minesweeperplayer 
     {
         void Minsweeperplayer();
     }

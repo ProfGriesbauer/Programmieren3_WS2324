@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames.Classes
 {
-    public class D_player : IGamePlayer
+    public class D_player : IGamePlayer 
     {
         int _playernumber;
 
@@ -16,7 +16,7 @@ namespace OOPGames.Classes
 
         public bool CanBeRuledBy(IGameRules rules)
         {
-            throw new NotImplementedException();
+            return rules is D_MinesweeperRules;
         }
 
         public IGamePlayer Clone()
