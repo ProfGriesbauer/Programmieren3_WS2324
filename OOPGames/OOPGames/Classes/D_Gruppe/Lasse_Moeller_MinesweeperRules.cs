@@ -25,7 +25,7 @@ namespace OOPGames
             {
                 for (int r = 1; r < 10; r++)
                 {
-                    for (int s = 0; s < 3; s++)
+                    for (int s = 0; s < 10; s++)
                     {
                         if (_Field[r, s] == 0)
                         {
@@ -40,15 +40,48 @@ namespace OOPGames
         }
         */
 
-        public int CheckIfPLayerWon()
-        {
-            throw new NotImplementedException();
-        }
+        public int CheckIfPLayerWon() => throw new NotImplementedException();
+        /*
+    {
+        int q = 0;
 
-        public void ClearField()
+        for (int r = 1; r < 10; r++)
         {
-            throw new NotImplementedException();
+            for (int s = 0; s < 10; s++)
+            {
+                if ( _Field.Mine[r, s] == 1 && _Field.Markiert[r, s] == 1 )
+                {
+                    q++;
+                }
+
+                if (_Field.Mine[r, s] == 0 && _Field.Aufgedeckt[r, s] == 1)
+                {
+                    q++;
+                }
+
+            }
         }
+        if (q == 100)
+        {
+            return 1;
+        }
+        else return -1;
+    }
+        */
+
+        public void ClearField() => throw new NotImplementedException();
+        /*
+    {
+        for (int r = 1; r < 10; r++)
+        {
+            for (int s = 0; s < 10; s++)
+            {
+                _Field.Aufgedeckt[r, s] = 0;
+            }
+        }
+    }
+        */
+
 
         public void DoMove(IPlayMove move)
         {
