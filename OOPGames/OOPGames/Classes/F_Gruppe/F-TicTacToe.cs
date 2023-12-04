@@ -125,19 +125,53 @@ namespace OOPGames
                 else
                 {
                     int adjacentMines = CountAdjacentMines(row, col);
-                    btn.Content = (adjacentMines > 0) ? adjacentMines.ToString() : "";
-                    // Add more logic as needed
+                    btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
+                if (adjacentMines == 1)
+                {
+                    btn.Foreground = Brushes.Green;
                 }
+                else if (adjacentMines == 2 )
+                {
+                    btn.Foreground = Brushes.Orange;
+                }
+                else if (adjacentMines == 3)
+                {
+                    btn.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    btn.Foreground = Brushes.Black;
+                }
+
+                // Add more logic as needed
+            }
         }
         private int CountAdjacentMines(int row, int col)
         {
-            // Add your logic to count adjacent mines
-            // For simplicity, this example always returns 0
-            return 0;
+            int counter = 0;
+            for (int i = row -1; i<=row+1; i++ )
+            {
+                for (int j = col - 1; j<=col+1; j++ )
+                {
+                    if (i >= 0 &&  j >= 0 && i<10 && j<10)
+                    {
+                        if (mineField[i, j]) { counter++; }
+                    }
+                }
+            }
+            return counter;
         }
         private void Btn_RightClick(object sender, MouseButtonEventArgs e)
         {
-            // Handle button right-click logic if needed
+            Button btn = (Button)sender;
+            if ((btn.Content) != "F")
+            {
+                btn.Content = "F";
+            }
+            else
+            {
+                btn.Content = "";
+            }
         }
     }
 
@@ -280,7 +314,7 @@ namespace OOPGames
         }
 
         public override IX_TicTacToeMove GetMove(IMoveSelection selection, IX_TicTacToeField field)
-        {
+        {/*
             if (selection is IClickSelection)
             {
                 IClickSelection sel = (IClickSelection)selection;
@@ -296,7 +330,7 @@ namespace OOPGames
                         }
                     }
                 }
-            }
+            }*/
 
             return null;
         }
