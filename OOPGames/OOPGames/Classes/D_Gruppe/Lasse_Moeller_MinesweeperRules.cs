@@ -5,19 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OOPGames
-{ 
+{
 
-    public class D_MinesweeperRules :IGameRules
+    public class D_MinesweeperRules : IGameRules
     {
-        D_MinesweeperField ID_MinesweeperField = new D_MinesweeperField();
+        D_MinesweeperField _Field = new D_MinesweeperField();
 
-        public string Name => throw new NotImplementedException();
+        public string Name { get { return "LasseMinesweeperRules"; } }
 
-        public IGameField CurrentField => throw new NotImplementedException();
+        public IGameField CurrentField { get { return (IGameField) _Field; } }
 
 
 
         public bool MovesPossible => throw new NotImplementedException();
+        /*
+        {
+
+            get
+            {
+                for (int r = 1; r < 10; r++)
+                {
+                    for (int s = 0; s < 3; s++)
+                    {
+                        if (_Field[r, s] == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+            
+        }
+        */
 
         public int CheckIfPLayerWon()
         {

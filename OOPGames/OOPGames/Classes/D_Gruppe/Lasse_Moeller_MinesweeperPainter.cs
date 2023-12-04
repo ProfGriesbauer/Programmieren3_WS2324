@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 namespace OOPGames
 {
     
-    public class Lasse_Moeller_MinesweeperPainter : IPaintGame
+    public class D_MinesweeperPainter : IPaintGame
     {
         public string Name { get { return "Minesweeper_Painter_D"; } }
 
