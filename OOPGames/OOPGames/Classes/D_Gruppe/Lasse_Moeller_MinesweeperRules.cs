@@ -5,11 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OOPGames
-{
-    public class D_RulesMinesweeper
-    {
-        
-    }
+{ 
 
     public class D_MinesweeperRules :IGameRules
     {
