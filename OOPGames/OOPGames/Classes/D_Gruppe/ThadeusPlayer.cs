@@ -29,23 +29,25 @@ namespace OOPGames.Classes
 
         public IPlayMove GetMove(IMoveSelection selection, ID_MinesweeperField field)
         {
-            if (selection is IClickSelection)
+            if (_playernumber == 1)
             {
-                IClickSelection sel = (IClickSelection)selection;
-                for (int i = 0; i < 3; i++)
+                if (selection is IClickSelection)
                 {
-                    for (int j = 0; j < 3; j++)
+                    IClickSelection sel = (IClickSelection)selection;
+                    for (int i = 0; i < 10; i++)
                     {
-                        if (sel.XClickPos > 20 + (j * 100) && sel.XClickPos < 120 + (j * 100) &&
-                            sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 120 + (i * 100) &&
-                            field[i, j].Nachbarminen <= 0)
+                        for (int j = 0; j < 10; j++)
                         {
-                            return new X_TicTacMove(i, j, _playernumber);
+                            if (sel.XClickPos > 20 + (j * 100) && sel.XClickPos < 120 + (j * 100) &&
+                                sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 120 + (i * 100) &&
+                                1 == 1)
+                            {
+                                return new D_MinesweeperMove(i, j,_playernumber);
+                            }
                         }
                     }
                 }
             }
-
             return null;
         }
 
@@ -66,4 +68,20 @@ namespace OOPGames.Classes
             _playernumber = playerNumber;
         }
     }
+    public class D_MinesweeperMove : IPlayMove
+    {
+        int _playernumber;
+        int _row;
+        int _colum;
+
+        public D_MinesweeperMove(int i, int j, int playernumber)
+        {
+            _playernumber = playernumber;
+            _row = i;  
+            _colum = j;
+        }
+
+        public int PlayerNumber { get { return _playernumber; } }
+    }
+
 }
