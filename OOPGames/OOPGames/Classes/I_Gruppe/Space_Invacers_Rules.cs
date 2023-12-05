@@ -29,11 +29,7 @@ namespace OOPGames
 
         public int CheckIfPLayerWon()
         {
-            if (I_Field.Ship_1.hit(I_Field.Komet_1) == true)
-            {
-                return 1;
-            }
-            else { return -1; }
+            return -1; 
             
         }
 
@@ -61,6 +57,7 @@ namespace OOPGames
         {
             I_Field.Komet_1.Komet_Move();
             I_Field.Komet_2.Komet_Move();
+            I_Field.Ship_1.hit(I_Field.Komet_1);
         }
         public void Ship_Move(IPlayMove move)
         {
@@ -186,29 +183,43 @@ namespace OOPGames
 
         }
 
+        // Klappt einigermasen
         public bool hit(Komet obstacle)
         {
-            //hit links
-            if (this.Positionx > obstacle.Positionx && this.Positionx < obstacle.Positionx+50 &&
-                this.Positiony > obstacle.Positiony && this.Positiony < obstacle.Positiony+50)
-            {
-                return true;
-            }
+            //hit links   this.Positionx < obstacle.Positionx && this.Positionx < obstacle.Positionx + 50 &&
+            //this.Positiony < obstacle.Positiony + 50 && this.Positiony + 25 > obstacle.Positiony
+
             //hit rechts
 
             //hit front
-            if (this.Positionx < obstacle.Positionx && this.Positionx < obstacle.Positionx + 50 &&
-                this.Positiony < obstacle.Positiony + 50 && this.Positiony + 25 > obstacle.Positiony)
+            if (this.Positionx <= obstacle.Positionx && this.Positionx <= (obstacle.Positionx + 50) &&
+            this.Positiony <= (obstacle.Positiony + 50) && (this.Positiony + 25) >= obstacle.Positiony)
             {
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
+                return false;
             }
-           
 
             else { return false; }
             
         }
 
+        // Nur ein Versuch für den Kreis
+        public bool ÜberlapptMitKreis(Komet obstacle)
+        {
+            // Berechne den Abstand zwischen dem Mittelpunkt des Kreises und dem Quadrat
+            double abstandX = Math.Abs(this.Positionx + 25 / 2 - obstacle.Positionx);
+            double abstandY = Math.Abs(this.Positiony + 25 / 2 - obstacle.Positiony);
+
+            // Überprüfe, ob sich der Kreis innerhalb des Quadrats befindet
+            if (abstandX <= 25 / 2 + 30 && abstandY <= 25 / 2 + 30)
+            {
+                return true;
+            }
+            else { return false; }
+        }
     }
+
+
 
     public class Background
     {
@@ -243,26 +254,11 @@ namespace OOPGames
                     Background.Fill = Brushes.Pink;
                 }
             }
-
             canvas.Children.Add(Background);
-
-
             //Setzt den Kreis auf Position
             Canvas.SetTop(Background, _y_pos);
-            Canvas.SetLeft(Background, _x_pos);
-
+            Canvas.SetLeft(Background, _x_pos);        
         }
     }
-
-    /*
-    public class hit
-    {
-        public bool (Ship Spaceship, Komet obstcale)
-        {
-            return X < anderesRechteck.X + anderesRechteck.Breite &&
-                   X + Breite > anderesRechteck.X &&
-                   Y < anderesRechteck.Y + anderesRechteck.Höhe &&
-                   Y + Höhe > anderesRechteck.Y;
-        }
-    }*/
 }
+
