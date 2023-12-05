@@ -18,14 +18,14 @@ namespace OOPGames
         Flagged
         // Add more states as needed
     }
-
+    
     public class S_MinesweeperPainter : X_BaseTicTacToePaint
     {
         private const int Rows = 10;
         private const int Cols = 10;
 
         private Button[,] mineButtons;
-        public bool[,] mineField;
+        private bool[,] mineField;
 
         public override string Name { get { return "Minesweeper-Painter_F"; } }
 
@@ -58,6 +58,7 @@ namespace OOPGames
                         DataContext = CellState.Covered
 
                     };
+                    btn.FontWeight = FontWeights.Bold;
                     btn.Click += Btn_Click;
                     btn.MouseRightButtonDown += Btn_RightClick;
                     Canvas.SetTop(btn, row * 30); // Adjust position based on the size you want
@@ -92,7 +93,7 @@ namespace OOPGames
                 for (int col = 0; col < Cols; col++)
                 {
                     Button btn = mineButtons[row, col];
-                    int cellValue = currentField[row, col];
+                    bool cellValue = mineField[row, col];
 
                     // Customize the button content based on the Minesweeper logic
                     btn.Content = GetContentBasedOnValue(cellValue);
@@ -100,11 +101,11 @@ namespace OOPGames
             }
         }
 
-        private string GetContentBasedOnValue(int cellValue)
+        private string GetContentBasedOnValue(bool cellValue)
         {
             // Customize this logic based on Minesweeper requirements
             // You might want to display different symbols or colors for mines, numbers, etc.
-            if (cellValue == 1)
+            if (cellValue)
             {
                 return "X"; // Example: Display X for mines
             }
@@ -216,30 +217,18 @@ namespace OOPGames
             } 
         }
 
-        public override string Name { get { return "F-TicTacToeRules"; } }
+        public override string Name { get { return "F-Minesweeper-Rules"; } }
 
         public override int CheckIfPLayerWon()
         {
-            for (int i = 0; i < 3; i++)
+           /* for (int i = 0; i < 9; i++)
             {
-                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                for(int j = 0;j < 9; j++)
                 {
-                    return _Field[i, 0];
+                    Button btn = mineButtons[i, j];
+                    CellState currentState = (CellState)btn.DataContext;
                 }
-                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
-                {
-                    return _Field[0, i];
-                }
-            }
-
-            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
-            {
-                return _Field[0, 0];
-            }
-            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
-            {
-                return _Field[0, 2];
-            }
+            }*/
 
             return -1;
         }
