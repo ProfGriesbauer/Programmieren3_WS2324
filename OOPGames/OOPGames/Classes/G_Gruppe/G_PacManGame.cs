@@ -43,13 +43,13 @@ namespace OOPGames
 
             set { _GeistinFeld = value; }
         }
-        public int Reihe_PacPosition
+        public int Reihe
         {
             get { return _Reihe; }
 
             set { _Reihe = value; }
         }
-        public int Spalte_PacPosition
+        public int Spalte
         {
             get { return _Spalte; }
 
@@ -69,13 +69,13 @@ namespace OOPGames
         private int _Spalte = 0;
         private bool _Befahrbar = false;
 
-        public int Reihe_PacPosition
+        public int Reihe
         {
             get { return _Reihe; }
 
             set { _Reihe = value; }
         }
-        public int Spalte_PacPosition
+        public int Spalte
         {
             get { return _Spalte; }
 
@@ -93,6 +93,7 @@ namespace OOPGames
         private IFieldProperties[,] _16x16Feld = new IFieldProperties[16, 16];
 
         public PacPosition PacPosition { get; set; } = new PacPosition();
+        public GeistPosition GeistPosition { get; set; } = new GeistPosition();
 
         public bool _IstinFeld(int r, int c)
         {
@@ -105,8 +106,8 @@ namespace OOPGames
             
             IFieldProperties pacInFeld = new Pac_FieldGang
             {
-                Reihe_PacPosition = pacZeile,
-                Spalte_PacPosition = pacSpalte
+                Reihe = pacZeile,
+                Spalte = pacSpalte
               
             
             };
@@ -166,13 +167,54 @@ namespace OOPGames
             set { _DeltaColumn = value; }
         }
 
-        public int Reihe_PacPosition
+        public int Reihe
         {
             get { return _Reihe; }
 
             set { _Reihe = value; }
         }
-        public int Spalte_PacPosition
+        public int Spalte
+        {
+            get { return _Spalte; }
+
+            set { _Spalte = value; }
+        }
+        public bool Befahrbar
+        {
+            get { return _Befahrbar; }
+        }
+
+    }
+
+    public class GeistPosition : IFieldProperties
+    {
+        private int _Reihe = 1;
+        private int _Spalte = 1;
+        private bool _Befahrbar = false;
+
+        private int _DeltaRow;
+        private int _DeltaColumn;
+
+        public int DeltaRow_GeistPosition
+        {
+            get { return _DeltaRow; }
+
+            set { _DeltaRow = value; }
+        }
+        public int DeltaColumn_GeistPosition
+        {
+            get { return _DeltaColumn; }
+
+            set { _DeltaColumn = value; }
+        }
+
+        public int Reihe
+        {
+            get { return _Reihe; }
+
+            set { _Reihe = value; }
+        }
+        public int Spalte
         {
             get { return _Spalte; }
 
@@ -196,108 +238,109 @@ namespace OOPGames
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    _16x16Field[i, j] = new Pac_FieldGang { Punkt = true, GeistinFeld = false, PacinFeld =false, Reihe_PacPosition = i, Spalte_PacPosition = j };
+                    _16x16Field[i, j] = new Pac_FieldGang { Punkt = true, GeistinFeld = false, PacinFeld =false, Reihe = i, Spalte = j };
 
-                    _16x16Field[0, j] = new Pac_FieldWand { Reihe_PacPosition = 0, Spalte_PacPosition = j };
-                    _16x16Field[15, j] = new Pac_FieldWand { Reihe_PacPosition = 15, Spalte_PacPosition = j };
-                    _16x16Field[i, 0] = new Pac_FieldWand { Reihe_PacPosition = i, Spalte_PacPosition = 0 };
-                    _16x16Field[i, 15] = new Pac_FieldWand { Reihe_PacPosition = i, Spalte_PacPosition = 15 };
+                    _16x16Field[0, j] = new Pac_FieldWand { Reihe = 0, Spalte = j };
+                    _16x16Field[15, j] = new Pac_FieldWand { Reihe = 15, Spalte = j };
+                    _16x16Field[i, 0] = new Pac_FieldWand { Reihe = i, Spalte = 0 };
+                    _16x16Field[i, 15] = new Pac_FieldWand { Reihe = i, Spalte = 15 };
                 }
 
             }
-            _16x16Field[1, 7] = new Pac_FieldWand { Reihe_PacPosition = 1, Spalte_PacPosition = 7 };
-            _16x16Field[1, 8] = new Pac_FieldWand { Reihe_PacPosition = 1, Spalte_PacPosition = 8 };
+            _16x16Field[1, 7] = new Pac_FieldWand { Reihe = 1, Spalte = 7 };
+            _16x16Field[1, 8] = new Pac_FieldWand { Reihe = 1, Spalte = 8 };
             
-            _16x16Field[2, 2] = new Pac_FieldWand { Reihe_PacPosition = 2, Spalte_PacPosition = 2 };
-            _16x16Field[2, 3] = new Pac_FieldWand { Reihe_PacPosition = 3, Spalte_PacPosition = 3 };
-            _16x16Field[2, 5] = new Pac_FieldWand { Reihe_PacPosition = 2, Spalte_PacPosition = 5 };
-            _16x16Field[2, 7] = new Pac_FieldWand { Reihe_PacPosition = 2, Spalte_PacPosition = 7 };
-            _16x16Field[2, 8] = new Pac_FieldWand { Reihe_PacPosition = 2, Spalte_PacPosition = 8 };
-            _16x16Field[2, 10] = new Pac_FieldWand { Reihe_PacPosition = 2, Spalte_PacPosition = 10 };
-            _16x16Field[2, 12] = new Pac_FieldWand { Reihe_PacPosition = 2, Spalte_PacPosition = 12 };
-            _16x16Field[2, 13] = new Pac_FieldWand { Reihe_PacPosition = 2, Spalte_PacPosition = 13 };
+            _16x16Field[2, 2] = new Pac_FieldWand { Reihe = 2, Spalte = 2 };
+            _16x16Field[2, 3] = new Pac_FieldWand { Reihe = 3, Spalte = 3 };
+            _16x16Field[2, 5] = new Pac_FieldWand { Reihe = 2, Spalte = 5 };
+            _16x16Field[2, 7] = new Pac_FieldWand { Reihe = 2, Spalte = 7 };
+            _16x16Field[2, 8] = new Pac_FieldWand { Reihe = 2, Spalte = 8 };
+            _16x16Field[2, 10] = new Pac_FieldWand { Reihe = 2, Spalte = 10 };
+            _16x16Field[2, 12] = new Pac_FieldWand { Reihe = 2, Spalte = 12 };
+            _16x16Field[2, 13] = new Pac_FieldWand { Reihe = 2, Spalte = 13 };
             
-            _16x16Field[3, 2] = new Pac_FieldWand { Reihe_PacPosition = 3, Spalte_PacPosition = 2 };
-            _16x16Field[3, 3] = new Pac_FieldWand { Reihe_PacPosition = 3, Spalte_PacPosition = 3 };
-            _16x16Field[3, 12] = new Pac_FieldWand { Reihe_PacPosition = 3, Spalte_PacPosition = 12 };
-            _16x16Field[3, 13] = new Pac_FieldWand { Reihe_PacPosition = 3, Spalte_PacPosition = 13 };
+            _16x16Field[3, 2] = new Pac_FieldWand { Reihe = 3, Spalte = 2 };
+            _16x16Field[3, 3] = new Pac_FieldWand { Reihe = 3, Spalte = 3 };
+            _16x16Field[3, 12] = new Pac_FieldWand { Reihe = 3, Spalte = 12 };
+            _16x16Field[3, 13] = new Pac_FieldWand { Reihe = 3, Spalte = 13 };
 
             //_16x16Field[4, 5] = new Pac_FieldWand { Reihe = 4, Spalte = 5 };
-            _16x16Field[4, 6] = new Pac_FieldWand { Reihe_PacPosition = 4, Spalte_PacPosition = 6 };
-            _16x16Field[4, 7] = new Pac_FieldWand { Reihe_PacPosition = 4, Spalte_PacPosition = 7 };
-            _16x16Field[4, 8] = new Pac_FieldWand { Reihe_PacPosition = 4, Spalte_PacPosition = 8 };
-            _16x16Field[4, 9] = new Pac_FieldWand { Reihe_PacPosition = 4, Spalte_PacPosition = 9 };
+            _16x16Field[4, 6] = new Pac_FieldWand { Reihe = 4, Spalte = 6 };
+            _16x16Field[4, 7] = new Pac_FieldWand { Reihe = 4, Spalte = 7 };
+            _16x16Field[4, 8] = new Pac_FieldWand { Reihe = 4, Spalte = 8 };
+            _16x16Field[4, 9] = new Pac_FieldWand { Reihe = 4, Spalte = 9 };
             //_16x16Field[4, 10] = new Pac_FieldWand { Reihe = 4, Spalte = 10 };
 
-            _16x16Field[5, 1] = new Pac_FieldWand { Reihe_PacPosition = 5, Spalte_PacPosition = 1 };
-            _16x16Field[5, 3] = new Pac_FieldWand { Reihe_PacPosition = 5, Spalte_PacPosition = 5 };
-            _16x16Field[5, 4] = new Pac_FieldWand { Reihe_PacPosition = 5, Spalte_PacPosition = 4 };
-            _16x16Field[5, 7] = new Pac_FieldWand { Reihe_PacPosition = 5, Spalte_PacPosition = 7 };
-            _16x16Field[5, 8] = new Pac_FieldWand { Reihe_PacPosition = 5, Spalte_PacPosition = 8 };
-            _16x16Field[5, 11] = new Pac_FieldWand { Reihe_PacPosition = 5, Spalte_PacPosition = 11 };
-            _16x16Field[5, 12] = new Pac_FieldWand { Reihe_PacPosition = 5, Spalte_PacPosition = 12 };
-            _16x16Field[5, 14] = new Pac_FieldWand { Reihe_PacPosition = 5, Spalte_PacPosition = 14 };
+            _16x16Field[5, 1] = new Pac_FieldWand { Reihe = 5, Spalte = 1 };
+            _16x16Field[5, 3] = new Pac_FieldWand { Reihe = 5, Spalte = 5 };
+            _16x16Field[5, 4] = new Pac_FieldWand { Reihe = 5, Spalte = 4 };
+            _16x16Field[5, 7] = new Pac_FieldWand { Reihe = 5, Spalte = 7 };
+            _16x16Field[5, 8] = new Pac_FieldWand { Reihe = 5, Spalte = 8 };
+            _16x16Field[5, 11] = new Pac_FieldWand { Reihe = 5, Spalte = 11 };
+            _16x16Field[5, 12] = new Pac_FieldWand { Reihe = 5, Spalte = 12 };
+            _16x16Field[5, 14] = new Pac_FieldWand { Reihe = 5, Spalte = 14 };
 
-            _16x16Field[6, 4] = new Pac_FieldWand { Reihe_PacPosition = 6, Spalte_PacPosition = 4 };
-            _16x16Field[6, 5] = new Pac_FieldWand { Reihe_PacPosition = 6, Spalte_PacPosition = 5 };
-            _16x16Field[6, 10] = new Pac_FieldWand { Reihe_PacPosition = 6, Spalte_PacPosition = 10 };
-            _16x16Field[6, 11] = new Pac_FieldWand { Reihe_PacPosition = 6, Spalte_PacPosition = 11 };
+            _16x16Field[6, 4] = new Pac_FieldWand { Reihe = 6, Spalte = 4 };
+            _16x16Field[6, 5] = new Pac_FieldWand { Reihe = 6, Spalte = 5 };
+            _16x16Field[6, 10] = new Pac_FieldWand { Reihe = 6, Spalte = 10 };
+            _16x16Field[6, 11] = new Pac_FieldWand { Reihe = 6, Spalte = 11 };
 
-            _16x16Field[7, 2] = new Pac_FieldWand { Reihe_PacPosition = 7, Spalte_PacPosition = 2 };
-            _16x16Field[7, 4] = new Pac_FieldWand { Reihe_PacPosition = 7, Spalte_PacPosition = 4 };
-            _16x16Field[7, 7] = new Pac_FieldWand { Reihe_PacPosition = 7, Spalte_PacPosition = 7 };
-            _16x16Field[7, 8] = new Pac_FieldWand { Reihe_PacPosition = 7, Spalte_PacPosition = 8 };
-            _16x16Field[7, 11] = new Pac_FieldWand { Reihe_PacPosition = 7, Spalte_PacPosition = 11 };
-            _16x16Field[7, 13] = new Pac_FieldWand { Reihe_PacPosition = 7, Spalte_PacPosition = 13 };
+            _16x16Field[7, 2] = new Pac_FieldWand { Reihe = 7, Spalte = 2 };
+            _16x16Field[7, 4] = new Pac_FieldWand { Reihe = 7, Spalte = 4 };
+            _16x16Field[7, 7] = new Pac_FieldWand { Reihe = 7, Spalte = 7 };
+            _16x16Field[7, 8] = new Pac_FieldWand { Reihe = 7, Spalte = 8 };
+            _16x16Field[7, 11] = new Pac_FieldWand { Reihe = 7, Spalte = 11 };
+            _16x16Field[7, 13] = new Pac_FieldWand { Reihe = 7, Spalte = 13 };
 
-            _16x16Field[8, 2] = new Pac_FieldWand { Reihe_PacPosition = 8, Spalte_PacPosition = 2 };
-            _16x16Field[8, 4] = new Pac_FieldWand { Reihe_PacPosition = 8, Spalte_PacPosition = 4 };
-            _16x16Field[8, 6] = new Pac_FieldWand { Reihe_PacPosition = 8, Spalte_PacPosition = 6 };
-            _16x16Field[8, 7] = new Pac_FieldWand { Reihe_PacPosition = 8, Spalte_PacPosition = 7 };
-            _16x16Field[8, 8] = new Pac_FieldWand { Reihe_PacPosition = 8, Spalte_PacPosition = 8 };
-            _16x16Field[8, 9] = new Pac_FieldWand { Reihe_PacPosition = 8, Spalte_PacPosition = 9 };
-            _16x16Field[8, 11] = new Pac_FieldWand { Reihe_PacPosition = 8, Spalte_PacPosition = 11 };
-            _16x16Field[8, 13] = new Pac_FieldWand { Reihe_PacPosition = 8, Spalte_PacPosition = 13 };
+            _16x16Field[8, 2] = new Pac_FieldWand { Reihe = 8, Spalte = 2 };
+            _16x16Field[8, 4] = new Pac_FieldWand { Reihe = 8, Spalte = 4 };
+            _16x16Field[8, 6] = new Pac_FieldWand { Reihe = 8, Spalte = 6 };
+            _16x16Field[8, 7] = new Pac_FieldWand { Reihe = 8, Spalte = 7 };
+            _16x16Field[8, 8] = new Pac_FieldWand { Reihe = 8, Spalte = 8 };
+            _16x16Field[8, 9] = new Pac_FieldWand { Reihe = 8, Spalte = 9 };
+            _16x16Field[8, 11] = new Pac_FieldWand { Reihe = 8, Spalte = 11 };
+            _16x16Field[8, 13] = new Pac_FieldWand { Reihe = 8, Spalte = 13 };
 
-            _16x16Field[9, 4] = new Pac_FieldWand { Reihe_PacPosition = 9, Spalte_PacPosition = 4 };
-            _16x16Field[9, 7] = new Pac_FieldWand { Reihe_PacPosition = 9, Spalte_PacPosition = 7 };
-            _16x16Field[9, 8] = new Pac_FieldWand { Reihe_PacPosition = 9, Spalte_PacPosition = 8 };
-            _16x16Field[9, 11] = new Pac_FieldWand { Reihe_PacPosition = 9, Spalte_PacPosition = 11 };
+            _16x16Field[9, 4] = new Pac_FieldWand { Reihe = 9, Spalte = 4 };
+            _16x16Field[9, 7] = new Pac_FieldWand { Reihe = 9, Spalte = 7 };
+            _16x16Field[9, 8] = new Pac_FieldWand { Reihe = 9, Spalte = 8 };
+            _16x16Field[9, 11] = new Pac_FieldWand { Reihe = 9, Spalte = 11 };
 
-            _16x16Field[10, 2] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
-            _16x16Field[10, 3] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
-            _16x16Field[10, 4] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
-            _16x16Field[10, 5] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
-            _16x16Field[10, 10] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
-            _16x16Field[10, 11] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
-            _16x16Field[10, 12] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
-            _16x16Field[10, 13] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
+            _16x16Field[10, 2] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 3] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 4] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 5] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 10] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 11] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 12] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
+            _16x16Field[10, 13] = new Pac_FieldWand { Reihe = 10, Spalte = 2 };
 
-             _16x16Field[11, 7] = new Pac_FieldWand { Reihe_PacPosition = 11, Spalte_PacPosition = 7 };
-            _16x16Field[11, 8] = new Pac_FieldWand { Reihe_PacPosition = 11, Spalte_PacPosition = 8 };
+             _16x16Field[11, 7] = new Pac_FieldWand { Reihe = 11, Spalte = 7 };
+            _16x16Field[11, 8] = new Pac_FieldWand { Reihe = 11, Spalte = 8 };
 
-            _16x16Field[12, 8] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 8 };
-            _16x16Field[12, 7] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 7 };
-            _16x16Field[12, 2] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 2 };
-            _16x16Field[12, 3] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 3 };
-            _16x16Field[12, 5] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 5 };
-            _16x16Field[12, 13] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 13 };
-            _16x16Field[12, 12] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 12 };
-            _16x16Field[12, 10] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 10 };
+            _16x16Field[12, 8] = new Pac_FieldWand { Reihe = 12, Spalte = 8 };
+            _16x16Field[12, 7] = new Pac_FieldWand { Reihe = 12, Spalte = 7 };
+            _16x16Field[12, 2] = new Pac_FieldWand { Reihe = 12, Spalte = 2 };
+            _16x16Field[12, 3] = new Pac_FieldWand { Reihe = 12, Spalte = 3 };
+            _16x16Field[12, 5] = new Pac_FieldWand { Reihe = 12, Spalte = 5 };
+            _16x16Field[12, 13] = new Pac_FieldWand { Reihe = 12, Spalte = 13 };
+            _16x16Field[12, 12] = new Pac_FieldWand { Reihe = 12, Spalte = 12 };
+            _16x16Field[12, 10] = new Pac_FieldWand { Reihe = 12, Spalte = 10 };
 
-            _16x16Field[13, 2] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 2 };
-            _16x16Field[13, 3] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 3 };
-            _16x16Field[13, 5] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 5 };
-            _16x16Field[13, 13] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 13 };
-            _16x16Field[13, 12] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 12 };
-            _16x16Field[13, 10] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 10 };
+            _16x16Field[13, 2] = new Pac_FieldWand { Reihe = 13, Spalte = 2 };
+            _16x16Field[13, 3] = new Pac_FieldWand { Reihe = 13, Spalte = 3 };
+            _16x16Field[13, 5] = new Pac_FieldWand { Reihe = 13, Spalte = 5 };
+            _16x16Field[13, 13] = new Pac_FieldWand { Reihe = 13, Spalte = 13 };
+            _16x16Field[13, 12] = new Pac_FieldWand { Reihe = 13, Spalte = 12 };
+            _16x16Field[13, 10] = new Pac_FieldWand { Reihe = 13, Spalte = 10 };
 
-            _16x16Field[14, 5] = new Pac_FieldWand { Reihe_PacPosition = 14, Spalte_PacPosition = 5 };
-            _16x16Field[14, 10] = new Pac_FieldWand { Reihe_PacPosition = 14, Spalte_PacPosition = 10 };
-            _16x16Field[14, 8] = new Pac_FieldWand { Reihe_PacPosition = 14, Spalte_PacPosition = 8 };
-            _16x16Field[14, 7] = new Pac_FieldWand { Reihe_PacPosition = 14, Spalte_PacPosition = 7 };
+            _16x16Field[14, 5] = new Pac_FieldWand { Reihe = 14, Spalte = 5 };
+            _16x16Field[14, 10] = new Pac_FieldWand { Reihe = 14, Spalte = 10 };
+            _16x16Field[14, 8] = new Pac_FieldWand { Reihe = 14, Spalte = 8 };
+            _16x16Field[14, 7] = new Pac_FieldWand { Reihe = 14, Spalte = 7 };
 
-            _16x16Field[14, 1] = new Pac_FieldGang { Reihe_PacPosition = 14, Spalte_PacPosition = 1, GeistinFeld = false , PacinFeld = true, Punkt = false };
+            _16x16Field[14, 1] = new Pac_FieldGang { Reihe = 14, Spalte = 1, GeistinFeld = false , PacinFeld = true, Punkt = false };
+            _16x16Field[1, 1] = new Pac_FieldGang { Reihe = 1, Spalte = 1, GeistinFeld = true, PacinFeld = false, Punkt = true};
         }
 
 
@@ -341,8 +384,9 @@ namespace OOPGames
             {
                 // Holen Sie die aktuelle Position des Pacman im Feld
                 
-                int currentRow = _16x16Field.PacPosition.Reihe_PacPosition;
-                int currentColumn = _16x16Field.PacPosition.Spalte_PacPosition;
+                int currentRow = _16x16Field.PacPosition.Reihe;
+                int currentColumn = _16x16Field.PacPosition.Spalte;
+
 
                 // Berechnen Sie die neue Position nach Anwendung des Zugs
                 int newRow = currentRow + pacMove.DeltaRow;
@@ -357,24 +401,27 @@ namespace OOPGames
                     // Überprüfen, ob das Ziel-Feld befahrbar ist
                     if (targetField.Befahrbar)
                     {
+                        //Alle Werte aus IFieldProperies & IFiedGang im 16x16Field abfragbar
+                        IFieldGang GeistFeld = (IFieldGang)_16x16Field[currentRow, currentColumn];
+                        bool currentGeist = GeistFeld.GeistinFeld;
                         // Pacman aus dem aktuellen Feld entfernen
-                        _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = false, PacinFeld = false, Reihe_PacPosition = currentRow, Spalte_PacPosition = currentColumn, } ;
+                        _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = false, PacinFeld = false, Reihe = currentRow, Spalte = currentColumn, GeistinFeld = currentGeist } ;
 
                         // Die Pac-Position im Spielfeld aktualisieren
                         //Aktuelle Richtung in PacPosition schreiben
                         _16x16Field.PacPosition.DeltaColumn_PacPosition = pacMove.DeltaColumn;
                         _16x16Field.PacPosition.DeltaRow_PacPosition = pacMove.DeltaRow;
 
-                        _16x16Field.PacPosition.Reihe_PacPosition = newRow;
-                        _16x16Field.PacPosition.Spalte_PacPosition = newColumn;
+                        _16x16Field.PacPosition.Reihe = newRow;
+                        _16x16Field.PacPosition.Spalte = newColumn;
 
                         // Pacman in das Ziel-Feld einfügen
                         _16x16Field[newRow, newColumn] = new Pac_FieldGang
                         {
-                            Punkt = targetField.Punkt,
+                            Punkt = false,
                             GeistinFeld = targetField.GeistinFeld,
-                            Reihe_PacPosition = newRow,
-                            Spalte_PacPosition = newColumn,
+                            Reihe = newRow,
+                            Spalte = newColumn,
                             PacinFeld = true // Setzen Sie PacinFeld auf true, um anzuzeigen, dass Pacman auf diesem Feld ist
                         };
                         
@@ -384,7 +431,65 @@ namespace OOPGames
                 }
             }
         }
-        
+
+
+        public void DoGeistMove(IMove_Pac movegeist)
+        {
+
+            // Überprüfen, ob der übergebene Move vom richtigen Typ ist
+            if (movegeist is Move_Pac GeistMove)
+            {
+                // Holen Sie die aktuelle Position des Pacman im Feld
+
+                int currentRow = _16x16Field.GeistPosition.Reihe;
+                int currentColumn = _16x16Field.GeistPosition.Spalte;
+
+
+
+                // Berechnen Sie die neue Position nach Anwendung des Zugs
+                int newRow = currentRow + GeistMove.DeltaRow;
+                int newColumn = currentColumn + GeistMove.DeltaColumn;
+
+
+
+
+                // Überprüfen, ob die neue Position im Spielfeld liegt und das Ziel-Feld vom Typ Pac_FieldGang ist
+                if (_16x16Field._IstinFeld(newRow, newColumn) && _16x16Field[newRow, newColumn] is Pac_FieldGang targetField)
+                {
+                    // Überprüfen, ob das Ziel-Feld befahrbar ist
+                    if (targetField.Befahrbar)
+                    {
+                        //Alle Werte aus IFieldProperies & IFiedGang im 16x16Field abfragbar
+                        IFieldGang GangFeld = (IFieldGang)_16x16Field[currentRow, currentColumn];
+                        bool currentPunkt = GangFeld.Punkt;
+                        bool currentPacinFeld = GangFeld.PacinFeld;
+                        // Pacman aus dem aktuellen Feld entfernen
+                        _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = currentPunkt, PacinFeld = currentPacinFeld, Reihe = currentRow, Spalte = currentColumn, GeistinFeld = false};
+
+                        // Die Pac-Position im Spielfeld aktualisieren
+                        //Aktuelle Richtung in PacPosition schreiben
+                        _16x16Field.GeistPosition.DeltaColumn_GeistPosition = GeistMove.DeltaColumn;
+                        _16x16Field.GeistPosition.DeltaRow_GeistPosition = GeistMove.DeltaRow;
+
+                        _16x16Field.GeistPosition.Reihe = newRow;
+                        _16x16Field.GeistPosition.Spalte = newColumn;
+
+                        // Pacman in das Ziel-Feld einfügen
+                        _16x16Field[newRow, newColumn] = new Pac_FieldGang
+                        {
+                            Punkt = currentPunkt,
+                            GeistinFeld = true,
+                            Reihe = newRow,
+                            Spalte = newColumn,
+                            PacinFeld = currentPacinFeld // Setzen Sie PacinFeld auf true, um anzuzeigen, dass Pacman auf diesem Feld ist
+                        };
+
+
+                    }
+
+                }
+            }
+        }
 
         public void DoMove(IPlayMove move)
         {
@@ -400,14 +505,54 @@ namespace OOPGames
             
         }
         int count = 0;
+   
+        public (int Reihe, int Spalte) Bewegung(int Richtungszahl)
+        {
+            int DeltaRow = 0;
+            int DelataColumn = 0;
+
+            switch (Richtungszahl)
+            {
+
+                case 0:
+                    DeltaRow = 0;
+                    DelataColumn = 1;
+                    break;
+
+                case 1:
+                    DeltaRow = 0;
+                    DelataColumn = -1;
+                    break;
+                case 2:
+                    DeltaRow = 1;
+                    DelataColumn = 0;
+                    break;
+
+                case 3:
+                    DeltaRow = -1;
+                    DelataColumn = 0;
+                    break;
+            }
+            
+            return (DeltaRow, DelataColumn);
+
+        }
+
         public void TickGameCall()
         {
-
+            Random random = new Random();  
             if (count >= 5)
             {
-                IMove_Pac TickMove = new Move_Pac { DeltaRow = _16x16Field.PacPosition.DeltaRow_PacPosition, DeltaColumn = _16x16Field.PacPosition.DeltaColumn_PacPosition };
-                DoPacManMove((IMove_Pac)TickMove);
+                IMove_Pac TickMovePacMan = new Move_Pac { DeltaRow = _16x16Field.PacPosition.DeltaRow_PacPosition, DeltaColumn = _16x16Field.PacPosition.DeltaColumn_PacPosition };
+                DoPacManMove((IMove_Pac)TickMovePacMan);
                 count = 0;
+
+                (int geistDeltaRow, int geistDeltaColumn) = Bewegung(random.Next(0,4));
+
+                IMove_Pac TickMoveGeist = new Move_Pac { DeltaRow = geistDeltaRow, DeltaColumn = geistDeltaColumn };
+                DoGeistMove((IMove_Pac)TickMoveGeist);
+                count = 0;
+
             }
             else
             {
@@ -443,8 +588,8 @@ namespace OOPGames
                 IField_Pac pacField = (IField_Pac)currentField;
 
                 // Holen Sie die aktuelle Position des Pacman im Feld
-                int currentRow = pacField.PacPosition.Reihe_PacPosition;
-                int currentColumn = pacField.PacPosition.Spalte_PacPosition;
+                int currentRow = pacField.PacPosition.Reihe;
+                int currentColumn = pacField.PacPosition.Spalte;
 
                 // Löscht alle vorhandenen Elemente auf dem Canvas
                 canvas.Children.Clear();
@@ -460,6 +605,8 @@ namespace OOPGames
                     {
                         bool IstBefahrbar = false;
                         bool IstPacman = false;
+                        bool IstPunkt = false;
+                        bool IstGeist = false;
                         var field = currentField[Zeile, Spalte];
                         if (field != null)
                         {
@@ -469,6 +616,8 @@ namespace OOPGames
                                 var gangField = (Pac_FieldGang)field;
                                 IstBefahrbar = gangField.Befahrbar;
                                 IstPacman = gangField.PacinFeld;
+                                IstPunkt = gangField.Punkt;
+                                IstGeist = gangField.GeistinFeld;
 
                             }
                             else if (field is Pac_FieldWand)
@@ -483,6 +632,8 @@ namespace OOPGames
 
                         Rectangle BoxFeld = new Rectangle() { Width = 20, Height = 20, Stroke = Brushes.Black, StrokeThickness = 1 };
                         Ellipse Point = new Ellipse();
+                        Ellipse pacManBody = new Ellipse();
+                        Ellipse GeistBody = new Ellipse();
                         Canvas.SetLeft(BoxFeld, Spalte * 20);
                         Canvas.SetTop(BoxFeld, Zeile * 20);
                         Canvas.SetLeft(Point, (Spalte * 20) + 8); // 8 ist der halbe Durchmesser der Ellipse
@@ -492,9 +643,30 @@ namespace OOPGames
                             BoxFeld.Stroke = Brushes.LightGray;
                             BoxFeld.Fill = Brushes.White;
 
-                            Point.Width = 4; // Durchmesser von 16 Pixeln
-                            Point.Height = 4; // Durchmesser von 16 Pixeln
-                            Point.Fill = Brushes.Green;
+                            if (IstPacman)
+                            {
+
+                                pacManBody.Width = 16; // Durchmesser von 16 Pixeln
+                                pacManBody.Height = 16; // Durchmesser von 16 Pixeln
+                                pacManBody.Fill = Brushes.Yellow;
+                                Canvas.SetLeft(pacManBody, (currentColumn * 20) + 2); // 8 ist der halbe Durchmesser der Ellipse
+                                Canvas.SetTop(pacManBody, (currentRow * 20) +2);
+                            }
+
+                            if (IstPunkt)
+                            {
+                                Point.Width = 4; // Durchmesser von 16 Pixeln
+                                Point.Height = 4; // Durchmesser von 16 Pixeln
+                                Point.Fill = Brushes.Green;
+                            }
+                            if (IstGeist)
+                            {
+                                GeistBody.Width = 16; // Durchmesser von 16 Pixeln
+                                GeistBody.Height = 16; // Durchmesser von 16 Pixeln
+                                GeistBody.Fill = Brushes.Magenta;
+                                Canvas.SetLeft(GeistBody, (Spalte * 20) + 2); // 8 ist der halbe Durchmesser der Ellipse
+                                Canvas.SetTop(GeistBody, (Zeile * 20) + 2);
+                            }
 
                         }
                         else
@@ -504,31 +676,10 @@ namespace OOPGames
                         }
                         canvas.Children.Add(BoxFeld);
                         canvas.Children.Add(Point);
-
-                        if (IstPacman)
-                        {
-
-                            Ellipse pacManBody = new Ellipse();
-                            pacManBody.Width = 16; // Durchmesser von 16 Pixeln
-                            pacManBody.Height = 16; // Durchmesser von 16 Pixeln
-                            pacManBody.Fill = Brushes.Yellow;
+                        canvas.Children.Add(pacManBody);
+                        canvas.Children.Add(GeistBody);
 
 
-
-                            // Erstellen Sie einen Path für den Mund
-                            Path pacManMouthPath = new Path();
-
-                            pacManMouthPath.Fill = Brushes.Blue;
-
-                            Canvas.SetLeft(pacManBody, currentColumn * 20); // 8 ist der halbe Durchmesser der Ellipse
-                            Canvas.SetTop(pacManBody, currentRow * 20);
-
-
-
-                            // Fügen Sie die Ellipse und den Mund zum Canvas hinzu
-                            canvas.Children.Add(pacManBody);
-
-                        }
                     }
                 }
             }
@@ -593,8 +744,8 @@ namespace OOPGames
                     IField_Pac pacField = (IField_Pac)field;
 
                     // Holen Sie die aktuelle Position des Pacman im Feld
-                    int currentRow = pacField.PacPosition.Reihe_PacPosition;
-                    int currentColumn = pacField.PacPosition.Spalte_PacPosition;
+                    int currentRow = pacField.PacPosition.Reihe;
+                    int currentColumn = pacField.PacPosition.Spalte;
 
                     if (PressedKey == Key.A)
                     {
