@@ -22,7 +22,7 @@ namespace OOPGames.Classes.D_Gruppe
         int _Nachbarminen;
 
 
-        public bool Vermient { get { return _Mine; } set { _Mine = value; } }
+        public bool Mine { get { return _Mine; } set { _Mine = value; } }
         public bool Aufgedeckt
         {
             get { return _Aufgedeckt; }
