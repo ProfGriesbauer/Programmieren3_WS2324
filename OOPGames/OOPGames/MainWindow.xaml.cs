@@ -158,7 +158,12 @@ namespace OOPGames
         private void DoComputerMoves()
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
-            if (winner > 0)
+            if (_CurrentRules is IGameRules3 &&
+                ((IGameRules3)_CurrentRules).CheckIfDraw())
+            {
+                Status.Text = "Draw Game!";
+            }
+            else if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";
             }
@@ -178,7 +183,12 @@ namespace OOPGames
                     }
 
                     winner = _CurrentRules.CheckIfPLayerWon();
-                    if (winner > 0)
+                    if (_CurrentRules is IGameRules3 &&
+                        ((IGameRules3)_CurrentRules).CheckIfDraw())
+                    {
+                        Status.Text = "Draw Game!";
+                    }
+                    else if (winner > 0)
                     {
                         Status.Text = "Player " + winner + " Won!";
                     }
@@ -189,7 +199,12 @@ namespace OOPGames
         private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
-            if (winner > 0)
+            if (_CurrentRules is IGameRules3 &&
+               ((IGameRules3)_CurrentRules).CheckIfDraw())
+            {
+                Status.Text = "Draw Game!";
+            }
+            else if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";
             }
@@ -224,7 +239,12 @@ namespace OOPGames
         {
             if (_CurrentRules == null) return;
             int winner = _CurrentRules.CheckIfPLayerWon();
-            if (winner > 0)
+            if (_CurrentRules is IGameRules3 &&
+               ((IGameRules3)_CurrentRules).CheckIfDraw())
+            {
+                Status.Text = "Draw Game!";
+            }
+            else if (winner > 0)
             {
                 Status.Text = "Player" + winner + " Won!";
             }

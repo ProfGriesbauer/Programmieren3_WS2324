@@ -45,6 +45,15 @@ namespace OOPGames
         void TickGameCall();
     }
 
+    //Extension of the rules interface games with draws.
+    //DIESES INTERFACE NICHT ÄNDERN!
+    public interface IGameRules3 : IGameRules2
+    {
+        //Returns if a game is already draw
+        //RETURN TRUE IF DRAW ELSE FALSE
+        bool CheckIfDraw();
+    }
+
     //Game field compatible with the given rules.
     //DIESES INTERFACE NICHT ÄNDERN!
     public interface IGameField
