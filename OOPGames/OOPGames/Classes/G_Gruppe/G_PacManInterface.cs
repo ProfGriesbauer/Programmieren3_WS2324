@@ -9,8 +9,8 @@ namespace OOPGames
 {
     public interface IFieldProperties
     {
-        int Reihe { get; set; }
-        int Spalte { get; set; }
+        int Reihe_PacPosition { get; set; }
+        int Spalte_PacPosition { get; set; }
         bool Befahrbar { get;}
 
     }
