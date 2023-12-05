@@ -52,7 +52,12 @@ namespace OOPGames.Classes.D_Gruppe
             int[,] _Field_Nachbarmine = new int[10, 10];*/
 
             MineField[,] _Field = new MineField[10, 10];
-        
+
+        double _CanvasHöhe, _CanvasBreite;
+
+        public double CanvasHöhe { get { return _CanvasHöhe; } set { _CanvasHöhe = value; } }
+        public double CanvasBreite { get { return _CanvasBreite; } set { _CanvasBreite = value; } }
+
         public Hannes_Kochendörfer_MinesweeperField ()
         {
             for (int i = 0; i < 10; i++) 
