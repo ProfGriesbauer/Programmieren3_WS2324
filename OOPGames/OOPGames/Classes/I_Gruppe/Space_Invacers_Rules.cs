@@ -46,7 +46,7 @@ namespace OOPGames
 
         public void TickGameCall()
         {
-            
+              
         }
     }
 
@@ -60,13 +60,11 @@ namespace OOPGames
             }
             else { return false; }
         }
-
+        //intitialiesiert Komet und Raumschiff
         Komet _Komet_1 = new Komet();
-
         public Komet Komet_1 { get { return _Komet_1; } }
 
         Ship _Ship_1 = new Ship();
-
         public Ship Ship_1 { get { return _Ship_1; } }
 
     }
@@ -90,6 +88,12 @@ namespace OOPGames
             Canvas.SetTop(Komet, y_pos);
             Canvas.SetLeft(Komet, x_pos);
 
+        }
+
+        //bewegt Komet um Geschwindikeit nach unten
+        public void Komet_Move()
+        {
+            y_pos += Geschwindigkeit;
         }
     }
 
