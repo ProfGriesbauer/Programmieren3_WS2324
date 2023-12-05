@@ -38,6 +38,7 @@ namespace OOPGames
     {
 
         PacPosition PacPosition { get; set; }
+        GeistPosition GeistPosition { get; set; }
         /*
         //Returns true, if the given this game field can be painted by the given painter
         bool CanBePaintedBy(IPaintGame painter);

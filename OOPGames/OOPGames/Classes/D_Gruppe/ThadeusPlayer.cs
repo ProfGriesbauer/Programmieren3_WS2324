@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames.Classes
+namespace OOPGames
 {
     public class D_player : ID_Minesweeperplayer
     {
@@ -22,13 +22,19 @@ namespace OOPGames.Classes
 
         public IGamePlayer Clone()
         {
-          D_player player=new D_player();
-            player.SetPlayerNumber(_playernumber); 
+            D_player player = new D_player();
+            player.SetPlayerNumber(_playernumber);
             return player;
         }
+    
+        
+        
 
         public IPlayMove GetMove(IMoveSelection selection, ID_MinesweeperField field)
         {
+            double _feldbreite = field.CanvasHöhe / 10;
+            double _feldhöhe = field.CanvasBreite / 10;
+            
             if (_playernumber == 1)
             {
                 if (selection is IClickSelection)
@@ -38,11 +44,12 @@ namespace OOPGames.Classes
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            if (sel.XClickPos > 20 + (j * 100) && sel.XClickPos < 120 + (j * 100) &&
-                                sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 120 + (i * 100) &&
-                                1 == 1)
+                            if (sel.XClickPos >  (j * _feldbreite) && sel.XClickPos < ((j+1) * _feldbreite) &&
+                                sel.YClickPos > (i * _feldhöhe) && sel.YClickPos < ((i+1) * _feldhöhe)
+                                )
                             {
-                                return new D_MinesweeperMove(i, j,_playernumber);
+                                int but = sel.ChangedButton;
+                                return new D_MinesweeperMove(i, j, but) ;
                             }
                         }
                     }
@@ -68,20 +75,27 @@ namespace OOPGames.Classes
             _playernumber = playerNumber;
         }
     }
-    public class D_MinesweeperMove : IPlayMove
+    public class D_MinesweeperMove : ID_MinesweeperMove
     {
-        int _playernumber;
+        int _but;
+        int _playernumber = 1;
         int _row;
         int _colum;
 
-        public D_MinesweeperMove(int i, int j, int playernumber)
+        public D_MinesweeperMove(int i, int j, int but)
         {
-            _playernumber = playernumber;
             _row = i;  
             _colum = j;
+            _but = but;
+            
         }
 
         public int PlayerNumber { get { return _playernumber; } }
+
+        public int but { get { return _but; } }
+        public int Row { get { return _row; } }
+
+        public int Colum { get { return _colum;} }
     }
 
 }
