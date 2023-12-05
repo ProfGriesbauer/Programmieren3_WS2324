@@ -29,7 +29,12 @@ namespace OOPGames
 
         public int CheckIfPLayerWon()
         {
-            return -1;
+            if (I_Field.Ship_1.hit(I_Field.Komet_1) == true)
+            {
+                return 1;
+            }
+            else { return -1; }
+            
         }
 
         public void ClearField()
@@ -64,7 +69,7 @@ namespace OOPGames
 
         public void DoSpaceMove(II_SpaceShipMove move)
         {
-            I_Field.Ship_1.Position = I_Field.Ship_1.Position + move.Column * I_Field.Ship_1.Geschwindigkeit ;
+            I_Field.Ship_1.Positionx = I_Field.Ship_1.Positionx + move.Column * I_Field.Ship_1.Geschwindigkeit ;
 
         }
     }
@@ -108,6 +113,9 @@ namespace OOPGames
         int x_pos = 20;
         static int Geschwindigkeit = 5;
 
+        public int Positionx { get { return x_pos; } }
+        public int Positiony { get { return y_pos; } }
+
         public void Komet_Paint(Canvas canvas)
         {
             //zeichnet Kreis
@@ -144,6 +152,11 @@ namespace OOPGames
             y_pos = -25;
             x_pos = randomNumber;
         }
+
+        public void Komet_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbMove()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Ship 
@@ -152,7 +165,8 @@ namespace OOPGames
         int x_pos = 20;
         static int _Geschwindigkeit = 5;
 
-        public int Position { get { return x_pos; } set { x_pos = value; } }
+        public int Positionx { get { return x_pos; } set { x_pos = value; } }
+        public int Positiony { get { return y_pos; } }
         public int Geschwindigkeit { get { return _Geschwindigkeit;  } }
 
 
@@ -172,6 +186,27 @@ namespace OOPGames
 
         }
 
+        public bool hit(Komet obstacle)
+        {
+            //hit links
+            if (this.Positionx > obstacle.Positionx && this.Positionx < obstacle.Positionx+50 &&
+                this.Positiony > obstacle.Positiony && this.Positiony < obstacle.Positiony+50)
+            {
+                return true;
+            }
+            //hit rechts
+
+            //hit front
+            if (this.Positionx < obstacle.Positionx && this.Positionx < obstacle.Positionx + 50 &&
+                this.Positiony < obstacle.Positiony + 50 && this.Positiony + 25 > obstacle.Positiony)
+            {
+                throw new NotImplementedException();
+            }
+           
+
+            else { return false; }
+            
+        }
 
     }
 
@@ -219,9 +254,15 @@ namespace OOPGames
         }
     }
 
-
+    /*
     public class hit
     {
-
-    }
+        public bool (Ship Spaceship, Komet obstcale)
+        {
+            return X < anderesRechteck.X + anderesRechteck.Breite &&
+                   X + Breite > anderesRechteck.X &&
+                   Y < anderesRechteck.Y + anderesRechteck.Höhe &&
+                   Y + Höhe > anderesRechteck.Y;
+        }
+    }*/
 }

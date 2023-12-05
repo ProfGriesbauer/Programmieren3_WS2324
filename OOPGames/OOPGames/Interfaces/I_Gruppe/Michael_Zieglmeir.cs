@@ -29,6 +29,7 @@ namespace OOPGames
     public interface II_Komet
     {
         void Komet_Move();
+        void Komet_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbMove();
     }
     public interface II_SpaceShipMove : IPlayMove, IColumnMove
     {

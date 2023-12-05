@@ -52,7 +52,7 @@ namespace OOPGames
                     Game_Field SpaceField = (Game_Field)field;
 
                     // Holen Sie die aktuelle Position des Pacman im Feld
-                    int current_x = SpaceField.Ship_1.Position;
+                    int current_x = SpaceField.Ship_1.Positionx;
 
                     if (PressedKey == Key.A)
                     {
@@ -66,7 +66,7 @@ namespace OOPGames
                     if (PressedKey == Key.D)
                     {
                         // Überprüfen, ob der Zug nach links möglich ist 
-                        if (current_x < 500)
+                        if (current_x < 365)
                         {
                             // Erstellen Sie einen neuen Zug nach links
                             return new SpaceMove(1, _PlayerNumber);
