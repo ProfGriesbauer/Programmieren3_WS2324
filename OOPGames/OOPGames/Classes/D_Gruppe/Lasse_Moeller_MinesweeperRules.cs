@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOPGames.Classes.D_Gruppe;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,15 @@ namespace OOPGames
 
     public class D_MinesweeperRules : IGameRules
     {
-        D_MinesweeperField _Field = new D_MinesweeperField();
 
+        Hannes_Kochendörfer_MinesweeperField _Field;
         public string Name { get { return "LasseMinesweeperRules"; } }
 
         public IGameField CurrentField { get { return (IGameField) _Field; } }
 
 
 
-        public bool MovesPossible => throw new NotImplementedException();
-        /*
+        public bool MovesPossible 
         {
 
             get
@@ -27,7 +27,7 @@ namespace OOPGames
                 {
                     for (int s = 0; s < 10; s++)
                     {
-                        if (_Field[r, s] == 0)
+                        if (_Field[r, s].Aufgedeckt == false)
                         {
                             return true;
                         }
@@ -38,10 +38,10 @@ namespace OOPGames
             }
             
         }
-        */
+        
 
-        public int CheckIfPLayerWon() => throw new NotImplementedException();
-        /*
+        public int CheckIfPLayerWon()
+        
     {
         int q = 0;
 
@@ -49,12 +49,12 @@ namespace OOPGames
         {
             for (int s = 0; s < 10; s++)
             {
-                if ( _Field.Mine[r, s] == 1 && _Field.Markiert[r, s] == 1 )
+                if ( _Field[r, s].Mine == true && _Field[r, s].Markiert == true )
                 {
                     q++;
                 }
 
-                if (_Field.Mine[r, s] == 0 && _Field.Aufgedeckt[r, s] == 1)
+                if (_Field[r, s].Mine == false && _Field[r, s].Aufgedeckt == true)
                 {
                     q++;
                 }
@@ -67,20 +67,20 @@ namespace OOPGames
         }
         else return -1;
     }
-        */
+        
 
-        public void ClearField() => throw new NotImplementedException();
-        /*
+        public void ClearField() 
+        
     {
         for (int r = 1; r < 10; r++)
         {
             for (int s = 0; s < 10; s++)
             {
-                _Field.Aufgedeckt[r, s] = 0;
+                _Field[r, s].Aufgedeckt = false;
             }
         }
     }
-        */
+        
 
 
         public void DoMove(IPlayMove move)
