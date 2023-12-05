@@ -30,4 +30,9 @@ namespace OOPGames
     {
 
     }
+
+    public interface II_Komet
+    {
+        void Komet_Move();
+    }
 }
