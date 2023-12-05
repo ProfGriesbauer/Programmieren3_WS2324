@@ -65,6 +65,10 @@ namespace OOPGames
 
         public Komet Komet_1 { get { return _Komet_1; } }
 
+        Komet _Ship_1 = new Komet();
+
+        public Komet Ship_1 { get { return _Ship_1; } }
+
     }
 
     public class Komet
@@ -72,8 +76,8 @@ namespace OOPGames
         int y_pos = 20;
         int x_pos = 20;
         static int Geschwindigkeit = 50;
-        
-        public void Komet_Paint(Canvas canvas) 
+
+        public void Komet_Paint(Canvas canvas)
         {
             //zeichnet Kreis
             Ellipse Komet = new Ellipse();
@@ -84,12 +88,30 @@ namespace OOPGames
 
             //Setzt den Kreis auf Position
             Canvas.SetTop(Komet, y_pos);
-            Canvas.SetLeft(Komet, x_pos);  
+            Canvas.SetLeft(Komet, x_pos);
 
         }
+    }
 
+    public class Ship
+    {
+        int y_pos = 320;
+        int x_pos = 20;
+        static int Geschwindigkeit = 50;
 
-        
+        public void Ship_Paint(Canvas canvas)
+        {
+            //zeichnet Kreis
+            Rectangle Ship = new Rectangle();
+            Ship.Width = 25; // Durchmesser von 16 Pixeln
+            Ship.Height = 25; // Durchmesser von 16 Pixeln
+            Ship.Fill = Brushes.Black;
+            canvas.Children.Add(Ship);
 
+            //Setzt den Kreis auf Position
+            Canvas.SetTop(Ship, y_pos);
+            Canvas.SetLeft(Ship, x_pos);
+
+        }
     }
 }
