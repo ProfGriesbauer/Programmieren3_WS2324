@@ -64,7 +64,7 @@ namespace OOPGames
 
         public void DoSpaceMove(II_SpaceShipMove move)
         {
-            I_Field.Ship_1.Position = I_Field.Ship_1.Position + move.Column;
+            I_Field.Ship_1.Position = I_Field.Ship_1.Position + move.Column * I_Field.Ship_1.Geschwindigkeit ;
 
         }
     }
@@ -91,8 +91,11 @@ namespace OOPGames
         Background _Background = new Background(0, 0, 400, 600, 0);
         public Background Background { get { return _Background; } }
 
-        Background _Background_u = new Background(600, 0, 400, 50, 1);
+        Background _Background_u = new Background(600, 0, 400, 100, 1);
         public Background Background_u { get { return _Background_u; } }
+
+        Background _Background_o = new Background(-50, 0, 400, 100, 1);
+        public Background Background_o { get { return _Background_o; } }
 
         Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
         public Background Background_rest { get { return _Background_rest; } }
@@ -145,13 +148,12 @@ namespace OOPGames
 
     public class Ship 
     {
-        int y_pos = 400;
+        int y_pos = 550;
         int x_pos = 20;
-        int _Move= 0;
-        static int Geschwindigkeit = 25;
+        static int _Geschwindigkeit = 5;
 
         public int Position { get { return x_pos; } set { x_pos = value; } }
-        public int Move { set { _Move = value; } }
+        public int Geschwindigkeit { get { return _Geschwindigkeit;  } }
 
 
         public void Ship_Paint(Canvas canvas)
