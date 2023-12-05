@@ -35,4 +35,8 @@ namespace OOPGames
     {
         void Komet_Move();
     }
+    public interface II_SpaceShipMove : IColumnMove
+    {   
+        int DeltaColumn { get; set; }
+    }
 }

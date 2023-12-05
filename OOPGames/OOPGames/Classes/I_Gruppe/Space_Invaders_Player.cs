@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace OOPGames
 {
-    public class Space_Invaders_Player : II_PlayerSpaceIn
+    public class Space_Invaders_Player : II_PlayerSpaceIn, II_SpaceShipMove
     {
         int _PlayerNumber = 0;
         public string Name { get { return "Space_Invaders_Player"; } }
 
         public int PlayerNumber { get { return _PlayerNumber; } }
+
+        public int DeltaColumn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public int Column => throw new NotImplementedException();
 
         public bool CanBeRuledBy(IGameRules rules)
         {
@@ -30,5 +35,6 @@ namespace OOPGames
         {
             _PlayerNumber = playerNumber;
         }
+
     }
 }
