@@ -65,9 +65,9 @@ namespace OOPGames
 
         public Komet Komet_1 { get { return _Komet_1; } }
 
-        Komet _Ship_1 = new Komet();
+        Ship _Ship_1 = new Ship();
 
-        public Komet Ship_1 { get { return _Ship_1; } }
+        public Ship Ship_1 { get { return _Ship_1; } }
 
     }
 
