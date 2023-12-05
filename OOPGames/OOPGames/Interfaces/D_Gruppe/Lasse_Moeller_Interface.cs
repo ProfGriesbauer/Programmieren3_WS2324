@@ -12,7 +12,11 @@ namespace OOPGames
     {
         //Indexer: returns 0 for a unused tictactoefield, 1 for player 1, 2 for player 2, etc.
         //indexed by the row r and column c
-        //MineField this[int r, int s] { get; set; }
+        MineField this[int r, int s] { get; set; }
+
+        double CanvasHöhe { get; set; }
+        double CanvasBreite { get; set; }
+
     }
 
     public interface ID_MinesweeperPainter : IPaintGame
