@@ -51,18 +51,24 @@ namespace OOPGames
         }
 
         public MineField this[int r, int s]
-        { 
-            get => throw new NotImplementedException();
-          set => throw new NotImplementedException(); 
+        {
+            get
+            {
+                return _Field[r, s];
+            }
+          set
+            {
+                _Field[r,s] = value;
+            }
         
         }
 
-        public double CanvasHöhe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double CanvasBreite { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double CanvasHöhe {get; set; }
+        public double CanvasBreite { get; set; }
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 
