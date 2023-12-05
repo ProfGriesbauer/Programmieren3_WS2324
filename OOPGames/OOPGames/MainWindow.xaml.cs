@@ -47,8 +47,6 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new I_Space_Invader_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new S_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new X_Base_TICTAC());
-            OOPGamesManager.Singleton.RegisterPainter(new X_TTTPaint());
             OOPGamesManager.Singleton.RegisterPainter(new D_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new E_TicTacToePaint());
 
