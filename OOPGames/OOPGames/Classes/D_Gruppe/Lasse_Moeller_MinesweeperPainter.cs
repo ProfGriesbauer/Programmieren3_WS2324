@@ -19,8 +19,20 @@ namespace OOPGames
             throw new NotImplementedException();
         }
 
+        
+
         public void PaintMinesweeperField(Canvas canvas, ID_MinesweeperField currentField) 
         {
+
+
+
+            /*
+            double Höhe_Minesweeper_Field = canvas.ActualHeight;
+            double Breite_Minesweeper_Field = canvas.ActualWidth;
+            get { return Höhe_Minesweeper_Field; }
+            */
+
+
             //Farbwahl für Figuren und Spielfeld
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 5, 5);
