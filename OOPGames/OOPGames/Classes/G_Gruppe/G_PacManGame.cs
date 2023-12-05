@@ -146,8 +146,8 @@ namespace OOPGames
     }
     public class PacPosition : IFieldProperties
     {
-        private int _Reihe = 12;
-        private int _Spalte = 2;
+        private int _Reihe = 14;
+        private int _Spalte = 1;
         private bool _Befahrbar = false;
 
         private int _DeltaRow;
@@ -273,8 +273,31 @@ namespace OOPGames
             _16x16Field[10, 12] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
             _16x16Field[10, 13] = new Pac_FieldWand { Reihe_PacPosition = 10, Spalte_PacPosition = 2 };
 
+             _16x16Field[11, 7] = new Pac_FieldWand { Reihe_PacPosition = 11, Spalte_PacPosition = 7 };
+            _16x16Field[11, 8] = new Pac_FieldWand { Reihe_PacPosition = 11, Spalte_PacPosition = 8 };
 
-            _16x16Field[12, 2] = new Pac_FieldGang { Reihe_PacPosition = 12, Spalte_PacPosition = 2, GeistinFeld = false , PacinFeld = true, Punkt = false };
+            _16x16Field[12, 8] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 8 };
+            _16x16Field[12, 7] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 7 };
+            _16x16Field[12, 2] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 2 };
+            _16x16Field[12, 3] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 3 };
+            _16x16Field[12, 5] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 5 };
+            _16x16Field[12, 13] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 13 };
+            _16x16Field[12, 12] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 12 };
+            _16x16Field[12, 10] = new Pac_FieldWand { Reihe_PacPosition = 12, Spalte_PacPosition = 10 };
+
+            _16x16Field[13, 2] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 2 };
+            _16x16Field[13, 3] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 3 };
+            _16x16Field[13, 5] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 5 };
+            _16x16Field[13, 13] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 13 };
+            _16x16Field[13, 12] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 12 };
+            _16x16Field[13, 10] = new Pac_FieldWand { Reihe_PacPosition = 13, Spalte_PacPosition = 10 };
+
+            _16x16Field[14, 5] = new Pac_FieldWand { Reihe_PacPosition = 14, Spalte_PacPosition = 5 };
+            _16x16Field[14, 10] = new Pac_FieldWand { Reihe_PacPosition = 14, Spalte_PacPosition = 10 };
+            _16x16Field[14, 8] = new Pac_FieldWand { Reihe_PacPosition = 14, Spalte_PacPosition = 8 };
+            _16x16Field[14, 7] = new Pac_FieldWand { Reihe_PacPosition = 14, Spalte_PacPosition = 7 };
+
+            _16x16Field[14, 1] = new Pac_FieldGang { Reihe_PacPosition = 14, Spalte_PacPosition = 1, GeistinFeld = false , PacinFeld = true, Punkt = false };
         }
 
 
@@ -380,7 +403,7 @@ namespace OOPGames
         public void TickGameCall()
         {
 
-            if (count >= 1)
+            if (count >= 5)
             {
                 IMove_Pac TickMove = new Move_Pac { DeltaRow = _16x16Field.PacPosition.DeltaRow_PacPosition, DeltaColumn = _16x16Field.PacPosition.DeltaColumn_PacPosition };
                 DoPacManMove((IMove_Pac)TickMove);
@@ -459,12 +482,19 @@ namespace OOPGames
 
 
                         Rectangle BoxFeld = new Rectangle() { Width = 20, Height = 20, Stroke = Brushes.Black, StrokeThickness = 1 };
+                        Ellipse Point = new Ellipse();
                         Canvas.SetLeft(BoxFeld, Spalte * 20);
                         Canvas.SetTop(BoxFeld, Zeile * 20);
+                        Canvas.SetLeft(Point, (Spalte * 20) + 8); // 8 ist der halbe Durchmesser der Ellipse
+                        Canvas.SetTop(Point, (Zeile * 20) + 8);
                         if (IstBefahrbar)
                         {
                             BoxFeld.Stroke = Brushes.LightGray;
                             BoxFeld.Fill = Brushes.White;
+
+                            Point.Width = 4; // Durchmesser von 16 Pixeln
+                            Point.Height = 4; // Durchmesser von 16 Pixeln
+                            Point.Fill = Brushes.Green;
 
                         }
                         else
@@ -473,6 +503,7 @@ namespace OOPGames
                             BoxFeld.Fill = Brushes.Black;
                         }
                         canvas.Children.Add(BoxFeld);
+                        canvas.Children.Add(Point);
 
                         if (IstPacman)
                         {
