@@ -53,7 +53,7 @@ namespace OOPGames
         public void TickGameCall()
         {
             I_Field.Komet_1.Komet_Move();
-            
+            I_Field.Komet_2.Komet_Move();
         }
         public void Ship_Move(IPlayMove move)
         {
@@ -80,6 +80,8 @@ namespace OOPGames
         //intitialiesiert Komet und Raumschiff
         Komet _Komet_1 = new Komet();
         public Komet Komet_1 { get { return _Komet_1; } }
+        Komet _Komet_2 = new Komet();
+        public Komet Komet_2 { get { return _Komet_2; } }
 
         Ship _Ship_1 = new Ship();
         public Ship Ship_1 { get { return _Ship_1; } }
@@ -90,14 +92,14 @@ namespace OOPGames
     {
         int y_pos = 20;
         int x_pos = 20;
-        static int Geschwindigkeit = 1;
+        static int Geschwindigkeit = 5;
 
         public void Komet_Paint(Canvas canvas)
         {
             //zeichnet Kreis
             Ellipse Komet = new Ellipse();
-            Komet.Width = 16; // Durchmesser von 16 Pixeln
-            Komet.Height = 16; // Durchmesser von 16 Pixeln
+            Komet.Width = 50;
+            Komet.Height = 50;
             Komet.Fill = Brushes.Gray;
             canvas.Children.Add(Komet);
 
@@ -111,6 +113,22 @@ namespace OOPGames
         public void Komet_Move()
         {
             y_pos += Geschwindigkeit;
+            
+            //checkt ob Komet aus dem Spielfeld ist.
+            if(y_pos > 625)
+            {
+                Komet_Reset();
+            }
+        }
+
+        //Setzt den Komet wieder an den oberen Bildschirmrand mit einer random x Koordinate (kann verwendet werden um den Score zu tracken)
+        private void Komet_Reset()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(25, 375);
+
+            y_pos = -25;
+            x_pos = randomNumber;
         }
     }
 
