@@ -80,12 +80,31 @@ namespace OOPGames
             }
         }
     }
-        
 
+
+
+        public void DoMove(D_MinesweeperMove move)
+        {
+            int _but = move.but;
+            int _row = move.Row;
+            int _colum = move.Colum;
+            if (_Field[_row,_colum].Mine==true)
+            {
+
+            } 
+            else
+            {
+
+            }
+        }
 
         public void DoMove(IPlayMove move)
         {
-           
+            if (move is ID_MinesweeperMove)
+            {
+                DoMove((ID_MinesweeperMove)move);
+            }
+            
         }
     }
 }
