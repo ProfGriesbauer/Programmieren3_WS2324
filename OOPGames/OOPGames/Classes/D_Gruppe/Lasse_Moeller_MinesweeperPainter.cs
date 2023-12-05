@@ -16,11 +16,21 @@ namespace OOPGames
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
         {
-            throw new NotImplementedException();
+            if (currentField is ID_MinesweeperField)
+            {
+                PaintMinesweeperField(canvas, (ID_MinesweeperField)currentField);
+            }
         }
+
+        
 
         public void PaintMinesweeperField(Canvas canvas, ID_MinesweeperField currentField) 
         {
+       
+            currentField.CanvasHöhe = canvas.ActualHeight;
+            currentField.CanvasBreite = canvas.ActualWidth;
+
+
             //Farbwahl für Figuren und Spielfeld
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 5, 5);
