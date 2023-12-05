@@ -8,7 +8,7 @@ using System.Windows.Navigation;
 
 namespace OOPGames
 {
-    public class Space_Invaders_Player : II_PlayerSpaceIn, IISpaceShipMove
+    public class Space_Invaders_Player : II_PlayerSpaceIn, II_SpaceShipMove
     {
         int _PlayerNumber = 0;
         public string Name { get { return "Space_Invaders_Player"; } }
@@ -35,29 +35,6 @@ namespace OOPGames
         {
             _PlayerNumber = playerNumber;
         }
+
     }
-    /*
-    public IMove_Pac GetMove(IMoveSelection selection, IField_Pac field)
-    {
-
-        if (selection is IKeySelection)
-        {
-            IKeySelection sel = (IKeySelection)selection;
-
-            Key PressedKey = sel.Key;
-            // Holen Sie die aktuelle Position des Pacman im Feld
-            int currentRow = Reihe;
-            int currentColumn = Spalte;
-
-            if (PressedKey == Key.A)
-            {
-                // Überprüfen, ob der Zug nach links möglich ist 
-                if (((IFieldProperties)field[currentRow, currentColumn - 1]).Befahrbar)
-                {
-                    // Erstellen Sie einen neuen Zug nach links
-                    return new Move_Pac { DeltaRow = 0, DeltaColumn = -1 };
-                }
-            }
-        }
-    }*/
 }

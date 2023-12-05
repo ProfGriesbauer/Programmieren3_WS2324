@@ -30,7 +30,7 @@ namespace OOPGames
     {
 
     }
-    public interface IISpaceShipMove : IColumnMove
+    public interface II_SpaceShipMove : IColumnMove
     {   
         int DeltaColumn { get; set; }
     }
