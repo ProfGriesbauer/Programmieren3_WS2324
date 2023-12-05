@@ -28,6 +28,8 @@ namespace OOPGames
 
             if (currentField is Game_Field)
             {
+                canvas.Children.Clear();
+
                 ((Game_Field)currentField).Komet_1.Komet_Paint(canvas);
                 ((Game_Field)currentField).Ship_1.Ship_Paint(canvas);
             }
