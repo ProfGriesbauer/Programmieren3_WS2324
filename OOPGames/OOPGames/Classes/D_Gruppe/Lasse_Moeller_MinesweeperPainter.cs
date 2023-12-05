@@ -59,6 +59,9 @@ namespace OOPGames
             Line l4 = new Line() { X1 = 0, Y1 = canvas.ActualHeight, X2 = canvas.ActualWidth, Y2 = canvas.ActualHeight, Stroke = lineStroke, StrokeThickness = 6.0 };
             canvas.Children.Add(l4);
 
+            //Feldinhalt
+
+
         }
 
 
