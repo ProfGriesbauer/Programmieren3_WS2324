@@ -42,7 +42,7 @@ namespace OOPGames.Classes
                                 sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 120 + (i * 100) &&
                                 1 == 1)
                             {
-                                return new D_MinesweeperMove(i, j,_playernumber);
+                                return new D_MinesweeperMove(i, j);
                             }
                         }
                     }
@@ -70,13 +70,12 @@ namespace OOPGames.Classes
     }
     public class D_MinesweeperMove : IPlayMove
     {
-        int _playernumber;
+        int _playernumber = 1;
         int _row;
         int _colum;
 
-        public D_MinesweeperMove(int i, int j, int playernumber)
+        public D_MinesweeperMove(int i, int j)
         {
-            _playernumber = playernumber;
             _row = i;  
             _colum = j;
         }
