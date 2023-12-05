@@ -85,7 +85,7 @@ namespace OOPGames
 
         public void DoMove(IPlayMove move)
         {
-            throw new NotImplementedException();
+           
         }
     }
 }
