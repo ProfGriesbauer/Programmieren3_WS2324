@@ -6,15 +6,6 @@ using System.Threading.Tasks;
 
 namespace OOPGames
 {
-   /* public class D_MinesweeperField
-    {
-        public bool Mine;           //1,0
-        public bool Aufgedeckt;     //1,0
-        public bool Markiert;       //1,0
-        public int Nachbarminen;    //0-9
-    }
-   */
-
     public class MineField
     {
         bool _Mine;
@@ -23,10 +14,10 @@ namespace OOPGames
         int _Nachbarminen;
 
 
-        public bool Vermient 
+        public bool Mine
         {
             get { return _Mine; } 
-            set { _Mine = value; } 
+            set { _Mine = value; }
         }
         public bool Aufgedeckt
         {

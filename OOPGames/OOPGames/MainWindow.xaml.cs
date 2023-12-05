@@ -72,6 +72,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Space_Invaders_Player());
+            OOPGamesManager.Singleton.RegisterPlayer(new D_player());
+
             //Painters
 
             //Rules

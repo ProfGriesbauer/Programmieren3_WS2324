@@ -46,7 +46,7 @@ namespace OOPGames
 
         public void TickGameCall()
         {
-              
+            I_Field.Komet_1.Komet_Move();
         }
     }
 
@@ -69,11 +69,11 @@ namespace OOPGames
 
     }
 
-    public class Komet
+    public class Komet : II_Komet
     {
         int y_pos = 20;
         int x_pos = 20;
-        static int Geschwindigkeit = 50;
+        static int Geschwindigkeit = 1;
 
         public void Komet_Paint(Canvas canvas)
         {
