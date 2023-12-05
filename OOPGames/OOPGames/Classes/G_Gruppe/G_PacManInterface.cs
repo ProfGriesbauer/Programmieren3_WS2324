@@ -9,8 +9,8 @@ namespace OOPGames
 {
     public interface IFieldProperties
     {
-        int Reihe_PacPosition { get; set; }
-        int Spalte_PacPosition { get; set; }
+        int Reihe { get; set; }
+        int Spalte { get; set; }
         bool Befahrbar { get;}
 
     }
@@ -38,6 +38,7 @@ namespace OOPGames
     {
 
         PacPosition PacPosition { get; set; }
+        GeistPosition GeistPosition { get; set; }
         /*
         //Returns true, if the given this game field can be painted by the given painter
         bool CanBePaintedBy(IPaintGame painter);
