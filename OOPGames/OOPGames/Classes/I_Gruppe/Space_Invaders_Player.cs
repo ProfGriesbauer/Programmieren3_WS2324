@@ -10,7 +10,7 @@ namespace OOPGames
     public class Space_Invaders_Player : II_PlayerSpaceIn
     {
         int _PlayerNumber = 0;
-        public string Name { get { return "I_Space Invader"; } }
+        public string Name { get { return "Space_Invaders_Player"; } }
 
         public int PlayerNumber { get { return _PlayerNumber; } }
 
