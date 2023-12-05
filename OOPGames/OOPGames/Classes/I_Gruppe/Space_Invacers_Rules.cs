@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -24,7 +25,7 @@ namespace OOPGames
             get { return true; }
         }
 
-            public int CheckIfPLayerWon()
+        public int CheckIfPLayerWon()
         {
             return -1;
         }
@@ -36,8 +37,13 @@ namespace OOPGames
 
         public void DoMove(IPlayMove move)
         {
-           
+            if (move is II_SpaceShipMove)
+            {
+                DoSpaceMove((II_SpaceShipMove)move);
+            }
         }
+
+        
 
         public void StartedGameCall()
         {
@@ -47,6 +53,17 @@ namespace OOPGames
         public void TickGameCall()
         {
             I_Field.Komet_1.Komet_Move();
+            
+        }
+        public void Ship_Move(IPlayMove move)
+        {
+            
+        }
+
+        public void DoSpaceMove(II_SpaceShipMove move)
+        {
+            I_Field.Ship_1.Position = I_Field.Ship_1.Position + move.Column;
+
         }
     }
 
@@ -99,9 +116,13 @@ namespace OOPGames
 
     public class Ship 
     {
-        int y_pos = 320;
+        int y_pos = 400;
         int x_pos = 20;
-        static int Geschwindigkeit = 50;
+        int _Move= 0;
+        static int Geschwindigkeit = 25;
+
+        public int Position { get { return x_pos; } set { x_pos = value; } }
+        public int Move { set { _Move = value; } }
 
 
         public void Ship_Paint(Canvas canvas)
@@ -113,10 +134,13 @@ namespace OOPGames
             Ship.Fill = Brushes.Black;
             canvas.Children.Add(Ship);
 
+
             //Setzt den Kreis auf Position
             Canvas.SetTop(Ship, y_pos);
             Canvas.SetLeft(Ship, x_pos);
 
         }
+
+
     }
 }
