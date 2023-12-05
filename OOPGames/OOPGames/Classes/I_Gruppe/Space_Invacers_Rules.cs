@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
 namespace OOPGames
@@ -86,6 +88,15 @@ namespace OOPGames
         Ship _Ship_1 = new Ship();
         public Ship Ship_1 { get { return _Ship_1; } }
 
+        Background _Background = new Background(0, 0, 400, 600, 0);
+        public Background Background { get { return _Background; } }
+
+        Background _Background_u = new Background(600, 0, 400, 50, 1);
+        public Background Background_u { get { return _Background_u; } }
+
+        Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
+        public Background Background_rest { get { return _Background_rest; } }
+
     }
 
     public class Komet : II_Komet
@@ -145,11 +156,11 @@ namespace OOPGames
 
         public void Ship_Paint(Canvas canvas)
         {
-            //zeichnet Kreis
+            //zeichnet Rechteck
             Rectangle Ship = new Rectangle();
             Ship.Width = 25; // Durchmesser von 16 Pixeln
             Ship.Height = 25; // Durchmesser von 16 Pixeln
-            Ship.Fill = Brushes.Black;
+            Ship.Fill = Brushes.Blue;
             canvas.Children.Add(Ship);
 
 
@@ -159,6 +170,56 @@ namespace OOPGames
 
         }
 
+
+    }
+
+    public class Background
+    {
+        int _y_pos = 0;
+        int _x_pos = 0;
+        int _width = 0;
+        int _height = 0;
+        int _color = 0;
+
+        public Background(int y_pos, int x_pos, int width, int Height, int Color)
+        {
+            _y_pos = y_pos;
+            _y_pos = y_pos;
+            _width = width;
+            _height = Height;
+            _color = Color;
+        }
+        public void Background_Paint(Canvas canvas)
+        {
+            //zeichnet rechteck
+            Rectangle Background = new Rectangle();
+            Background.Width = _width; // Durchmesser von 16 Pixeln
+            Background.Height = _height; // Durchmesser von 16 Pixeln
+            if (_color == 0) { Background.Fill = Brushes.Black; }
+            else {
+                if (_color == 1)
+                {
+                    Background.Fill = Brushes.Blue;
+                }
+                else
+                {
+                    Background.Fill = Brushes.Pink;
+                }
+            }
+
+            canvas.Children.Add(Background);
+
+
+            //Setzt den Kreis auf Position
+            Canvas.SetTop(Background, _y_pos);
+            Canvas.SetLeft(Background, _x_pos);
+
+        }
+    }
+
+
+    public class hit
+    {
 
     }
 }
