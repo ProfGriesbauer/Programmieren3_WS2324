@@ -59,7 +59,8 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new S_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new D_MinesweeperRules());
-
+            OOPGamesManager.Singleton.RegisterRules(new Space_Invaders_Rules());
+           
 
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayerSH());
@@ -72,6 +73,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new Space_Invaders_Player());
             //Painters
 
             //Rules
