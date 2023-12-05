@@ -26,13 +26,6 @@ namespace OOPGames
         void PaintMinesweeperField(Canvas canvas, ID_MinesweeperField currentField);
     }
 
-    public class D_MinesweeperField
-    {
-        public bool Mine;
-        public bool Aufgedeckt;
-        public bool Markiert;
-        public int Nachbarminen;
-        }
     public interface ID_Minesweeperplayer :IHumanGamePlayer
     {
         
