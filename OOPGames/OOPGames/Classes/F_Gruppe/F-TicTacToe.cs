@@ -88,32 +88,10 @@ namespace OOPGames
 
         private void UpdateButtonContent(IX_TicTacToeField currentField)
         {
-            for (int row = 0; row < Rows; row++)
-            {
-                for (int col = 0; col < Cols; col++)
-                {
-                    Button btn = mineButtons[row, col];
-                    bool cellValue = mineField[row, col];
-
-                    // Customize the button content based on the Minesweeper logic
-                    btn.Content = GetContentBasedOnValue(cellValue);
-                }
-            }
+            
         }
 
-        private string GetContentBasedOnValue(bool cellValue)
-        {
-            // Customize this logic based on Minesweeper requirements
-            // You might want to display different symbols or colors for mines, numbers, etc.
-            if (cellValue)
-            {
-                return "X"; // Example: Display X for mines
-            }
-            else
-            {
-                return ""; // Empty content for other cells
-            }
-        }
+        
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
@@ -127,12 +105,13 @@ namespace OOPGames
 
 
 
+
             // Add your game logic here for left-click
             // For example, reveal the cell or check if it's a mine
             // Update the button content accordingly
             if (mineField[row, col])
                 {
-                    btn.Content = "X"; // This is a mine
+                    btn.Content = "☼"; // This is a mine
                     MessageBox.Show("Game Over! You hit a mine.", "Game Over");
                     // Add logic to end the game or perform other actions
                 }
@@ -161,6 +140,9 @@ namespace OOPGames
                 // Add more logic as needed
             }
         }
+        
+
+
         private int CountAdjacentMines(int row, int col)
         {
             int counter = 0;
