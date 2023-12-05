@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOPGames.Classes
+namespace OOPGames
 {
     public class D_player : ID_Minesweeperplayer
     {
