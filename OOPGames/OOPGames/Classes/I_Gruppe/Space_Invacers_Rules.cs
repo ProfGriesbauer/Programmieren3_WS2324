@@ -8,7 +8,7 @@ namespace OOPGames
 {
     public class Space_Invacers_Rules : II_RulesSpaceIn
     {
-        public string Name => throw new NotImplementedException();
+        public string Name { get { return "SpaceInvaderRules"; } }
 
         public IGameField CurrentField => throw new NotImplementedException();
 

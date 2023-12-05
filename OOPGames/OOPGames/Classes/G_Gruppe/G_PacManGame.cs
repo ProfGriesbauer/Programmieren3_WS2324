@@ -502,7 +502,7 @@ namespace OOPGames
             // Gibt die geklonte Spieler-Instanz zurück
             return clonedHuman;
         }
-
+        
         public IMove_Pac GetMove(IMoveSelection selection, IField_Pac field)
         {
             
