@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames
 {
-    public interface IA_XXX
+    public class F_XXX
     {
     }
 }

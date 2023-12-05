@@ -32,44 +32,52 @@ namespace OOPGames
 
         public MainWindow()
         {
+            OOPGamesManager.Singleton.RegisterPlayer(new Pac_HumanPlayer());
+            OOPGamesManager.Singleton.RegisterPainter(new Pac_Paint());
+            OOPGamesManager.Singleton.RegisterRules(new Pac_Rules());
             //REGISTER YOUR CLASSES HERE
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaintSHo());
             OOPGamesManager.Singleton.RegisterPainter(new C_Paint());
             OOPGamesManager.Singleton.RegisterRules(new C_Rules());
             OOPGamesManager.Singleton.RegisterPlayer(new C_HumanPlayer());           
             OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());  
-            OOPGamesManager.Singleton.RegisterPainter(new Pac_Paint());
-            OOPGamesManager.Singleton.RegisterRules(new Pac_Rules());
-            
+           
+
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new I_Space_Invader_Painter());
-            OOPGamesManager.Singleton.RegisterPainter(new S_TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new S_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new X_Base_TICTAC());
-            OOPGamesManager.Singleton.RegisterPainter(new X_TTTPaint());
-            OOPGamesManager.Singleton.RegisterPainter(new Lasse_Moeller_PainterMinesweeper());
-            OOPGamesManager.Singleton.RegisterPainter(new VierGewinntGruppeBPaint());
+            OOPGamesManager.Singleton.RegisterPainter(new D_MinesweeperPainter());
+            OOPGamesManager.Singleton.RegisterPainter(new E_TicTacToePaint());
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRulesSH());
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new S_TicTacToeRules());
-            OOPGamesManager.Singleton.RegisterRules(new VierGewinntGruppeBRules());
+            OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new D_MinesweeperRules());
+            OOPGamesManager.Singleton.RegisterRules(new Space_Invaders_Rules());
+           
+
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayerSH());
+
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeComputerPlayer());            
             OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new I_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new Space_Invaders_Player());
             //Painters
-            
+
             //Rules
-            
+
             //Players
-           
+
 
             InitializeComponent();
             PaintList.ItemsSource = OOPGamesManager.Singleton.Painters;
