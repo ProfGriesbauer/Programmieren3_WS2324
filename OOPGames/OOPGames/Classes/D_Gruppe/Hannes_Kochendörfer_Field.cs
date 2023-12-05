@@ -13,15 +13,54 @@ namespace OOPGames.Classes.D_Gruppe
         public bool Markiert;       //1,0
         public int Nachbarminen;    //0-9
     }
+
+    public class MineField
+    {
+        bool _Mine;
+        bool _Aufgedeckt;
+        bool _Markiert;
+        int _Nachbarminen;
+
+
+        public bool Vermient { get { return _Mine; } set { _Mine = value; } }
+        public bool Aufgedeckt
+        {
+            get { return _Aufgedeckt; }
+            set { _Aufgedeckt = value; }
+        }
+        public bool Markiert 
+        {
+            get { return _Markiert; }
+            set { _Markiert = value; }
+        }
+        public int Nachbarminen
+        {
+            get { return _Nachbarminen;}
+            set { _Nachbarminen = value;}
+        }
+    }
     public class Hannes_Kochendörfer_MinesweeperField : ID_MinesweeperField
     {
+
+            /*int[,] _Field_Mine = new int[10, 10];
+            int[,] _Field_Aufgedeckt = new int[10, 10];
+            int[,] _Field_Markiert = new int[10, 10];
+            int[,] _Field_Nachbarmine = new int[10, 10];*/
+
+            MineField[,] _Field = new MineField[10, 10];
         
-        int[,] _Field_Mine = new int[10, 10];
-        int[,] _Field_Aufgedeckt = new int[10, 10];
-        int[,] _Field_Markiert = new int[10, 10];
-        int[,] _Field_Nachbarmine = new int[10, 10];
-        
-        public OOPGames.D_MinesweeperField this[int r, int s]
+        public Hannes_Kochendörfer_MinesweeperField ()
+        {
+            for (int i = 0; i < 10; i++) 
+            {
+                for (int j = 0; j < 10; j++) 
+                {
+                    _Field[i, j] = new MineField();
+                }
+            }
+        }
+
+        public MineField this[int r, int s]
         { 
             get => throw new NotImplementedException();
           set => throw new NotImplementedException(); 
