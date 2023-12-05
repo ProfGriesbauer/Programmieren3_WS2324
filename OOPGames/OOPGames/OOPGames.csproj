@@ -71,7 +71,6 @@
     <Compile Include="Classes\A_Gruppe\Bernd_Lottes_TicTacToe.cs" />
     <Compile Include="Classes\A_Gruppe\Bernd_Lottes_BaseTicTacToe.cs" />
     <Compile Include="Classes\D_Gruppe\Hannes_Kochendörfer_Field.cs" />
-    <Compile Include="Classes\D_Gruppe\Hannes_Kochendörfer_TicTacToe Kopiert.cs" />
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller_MinesweeperPainter.cs" />
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller_MinesweeperRules.cs" />
     <Compile Include="Classes\D_Gruppe\Thadeusgluck.cs" />

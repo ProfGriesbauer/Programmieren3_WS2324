@@ -40,29 +40,29 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new C_Paint());
             OOPGamesManager.Singleton.RegisterRules(new C_Rules());
             OOPGamesManager.Singleton.RegisterPlayer(new C_HumanPlayer());           
-            OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());  
-           
+            OOPGamesManager.Singleton.RegisterPlayer(new C_COMPlayer());
+
 
             //Painters
+            OOPGamesManager.Singleton.RegisterPainter(new D_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new I_Space_Invader_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new S_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
-            OOPGamesManager.Singleton.RegisterPainter(new D_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new E_TicTacToePaint());
 
             //Rules
+            OOPGamesManager.Singleton.RegisterRules(new D_MinesweeperRules());
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRulesSH());
             OOPGamesManager.Singleton.RegisterRules(new I_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new X_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new S_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new E_TicTacToeRules());
-            OOPGamesManager.Singleton.RegisterRules(new D_MinesweeperRules());
             OOPGamesManager.Singleton.RegisterRules(new Space_Invaders_Rules());
-           
+
 
             //Players
+            OOPGamesManager.Singleton.RegisterPlayer(new D_player());
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayerSH());
-
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new X_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new S_TicTacToeHumanPlayer());
@@ -72,7 +72,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new E_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new Space_Invaders_Player());
-            OOPGamesManager.Singleton.RegisterPlayer(new D_player());
+
 
             //Painters
 
@@ -158,7 +158,12 @@ namespace OOPGames
         private void DoComputerMoves()
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
-            if (winner > 0)
+            if (_CurrentRules is IGameRules3 &&
+                ((IGameRules3)_CurrentRules).CheckIfDraw())
+            {
+                Status.Text = "Draw Game!";
+            }
+            else if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";
             }
@@ -178,7 +183,12 @@ namespace OOPGames
                     }
 
                     winner = _CurrentRules.CheckIfPLayerWon();
-                    if (winner > 0)
+                    if (_CurrentRules is IGameRules3 &&
+                        ((IGameRules3)_CurrentRules).CheckIfDraw())
+                    {
+                        Status.Text = "Draw Game!";
+                    }
+                    else if (winner > 0)
                     {
                         Status.Text = "Player " + winner + " Won!";
                     }
@@ -189,7 +199,12 @@ namespace OOPGames
         private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             int winner = _CurrentRules.CheckIfPLayerWon();
-            if (winner > 0)
+            if (_CurrentRules is IGameRules3 &&
+               ((IGameRules3)_CurrentRules).CheckIfDraw())
+            {
+                Status.Text = "Draw Game!";
+            }
+            else if (winner > 0)
             {
                 Status.Text = "Player " + winner + " Won!";
             }
@@ -224,7 +239,12 @@ namespace OOPGames
         {
             if (_CurrentRules == null) return;
             int winner = _CurrentRules.CheckIfPLayerWon();
-            if (winner > 0)
+            if (_CurrentRules is IGameRules3 &&
+               ((IGameRules3)_CurrentRules).CheckIfDraw())
+            {
+                Status.Text = "Draw Game!";
+            }
+            else if (winner > 0)
             {
                 Status.Text = "Player" + winner + " Won!";
             }

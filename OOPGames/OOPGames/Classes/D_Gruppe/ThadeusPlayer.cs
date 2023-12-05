@@ -34,6 +34,7 @@ namespace OOPGames
         {
             double _feldbreite = field.CanvasHöhe / 10;
             double _feldhöhe = field.CanvasBreite / 10;
+            
             if (_playernumber == 1)
             {
                 if (selection is IClickSelection)
@@ -44,9 +45,11 @@ namespace OOPGames
                         for (int j = 0; j < 10; j++)
                         {
                             if (sel.XClickPos >  (j * _feldbreite) && sel.XClickPos < ((j+1) * _feldbreite) &&
-                                sel.YClickPos > (i * _feldhöhe) && sel.YClickPos < ((i+1) * _feldhöhe) )
+                                sel.YClickPos > (i * _feldhöhe) && sel.YClickPos < ((i+1) * _feldhöhe)
+                                )
                             {
-                                return new D_MinesweeperMove(i, j);
+                                int but = sel.ChangedButton;
+                                return new D_MinesweeperMove(i, j, but) ;
                             }
                         }
                     }
@@ -72,19 +75,27 @@ namespace OOPGames
             _playernumber = playerNumber;
         }
     }
-    public class D_MinesweeperMove : IPlayMove
+    public class D_MinesweeperMove : ID_MinesweeperMove
     {
+        int _but;
         int _playernumber = 1;
         int _row;
         int _colum;
 
-        public D_MinesweeperMove(int i, int j)
+        public D_MinesweeperMove(int i, int j, int but)
         {
             _row = i;  
             _colum = j;
+            _but = but;
+            
         }
 
         public int PlayerNumber { get { return _playernumber; } }
+
+        public int but { get { return _but; } }
+        public int Row { get { return _row; } }
+
+        public int Colum { get { return _colum;} }
     }
 
 }

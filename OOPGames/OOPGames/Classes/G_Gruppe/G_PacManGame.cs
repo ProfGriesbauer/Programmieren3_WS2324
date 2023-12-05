@@ -192,8 +192,8 @@ namespace OOPGames
         private int _Spalte = 1;
         private bool _Befahrbar = false;
 
-        private int _DeltaRow;
-        private int _DeltaColumn;
+        private int _DeltaRow = 0;
+        private int _DeltaColumn = 1;
 
         public int DeltaRow_GeistPosition
         {
@@ -504,7 +504,7 @@ namespace OOPGames
         {
             
         }
-        int count = 0;
+
    
         public (int Reihe, int Spalte) Bewegung(int Richtungszahl)
         {
@@ -537,7 +537,9 @@ namespace OOPGames
             return (DeltaRow, DelataColumn);
 
         }
-
+        int count = 0;
+        int geistDeltaRow = 0;
+        int geistDeltaColumn = 1;
         public void TickGameCall()
         {
             Random random = new Random();  
@@ -547,7 +549,16 @@ namespace OOPGames
                 DoPacManMove((IMove_Pac)TickMovePacMan);
                 count = 0;
 
-                (int geistDeltaRow, int geistDeltaColumn) = Bewegung(random.Next(0,4));
+                //Geist Bewegung
+
+                int newRow = _16x16Field.GeistPosition.Reihe + _16x16Field.GeistPosition.DeltaRow_GeistPosition;
+                int newColumn = _16x16Field.GeistPosition.Spalte + _16x16Field.GeistPosition.DeltaColumn_GeistPosition;
+
+                if (_16x16Field[newRow, newColumn].Befahrbar == false)
+                {
+                    (geistDeltaRow, geistDeltaColumn) = Bewegung(random.Next(0, 4));
+                }
+
 
                 IMove_Pac TickMoveGeist = new Move_Pac { DeltaRow = geistDeltaRow, DeltaColumn = geistDeltaColumn };
                 DoGeistMove((IMove_Pac)TickMoveGeist);
