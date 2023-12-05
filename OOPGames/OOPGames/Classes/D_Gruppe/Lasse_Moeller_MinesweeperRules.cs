@@ -11,7 +11,7 @@ namespace OOPGames
     public class D_MinesweeperRules : IGameRules
     {
 
-        Hannes_Kochendörfer_MinesweeperField _Field;
+        Hannes_Kochendörfer_MinesweeperField _Field = new Hannes_Kochendörfer_MinesweeperField();
         public string Name { get { return "LasseMinesweeperRules"; } }
 
         public IGameField CurrentField { get { return (IGameField) _Field; } }

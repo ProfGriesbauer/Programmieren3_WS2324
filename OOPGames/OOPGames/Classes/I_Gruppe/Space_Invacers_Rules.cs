@@ -97,11 +97,12 @@ namespace OOPGames
         }
     }
 
-    public class Ship
+    public class Ship 
     {
         int y_pos = 320;
         int x_pos = 20;
         static int Geschwindigkeit = 50;
+
 
         public void Ship_Paint(Canvas canvas)
         {
