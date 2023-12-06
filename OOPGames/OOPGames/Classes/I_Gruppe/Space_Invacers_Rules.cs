@@ -58,11 +58,7 @@ namespace OOPGames
         {
             I_Field.Komet_1.Komet_Move();
             I_Field.Komet_2.Komet_Move();
-            if (I_Field.UFO.hit(I_Field.Komet_1) == true)
-            {
-                
-            }
-
+            I_Field.UFO.hit(I_Field.Komet_1);
         }
 
 
@@ -83,10 +79,10 @@ namespace OOPGames
             }
             else { return false; }
         }
-        //intitialiesiert Komet und Raumschiff
-        Komet _Komet_1 = new Komet();
+        //intitialiesiert Komet und Raumschiff und Hintergrund
+        Komet _Komet_1 = new Komet(20,20);
         public Komet Komet_1 { get { return _Komet_1; } }
-        Komet _Komet_2 = new Komet();
+        Komet _Komet_2 = new Komet(10,280);
         public Komet Komet_2 { get { return _Komet_2; } }
 
         Ship _UFO = new Ship();
@@ -108,12 +104,17 @@ namespace OOPGames
 
     public class Komet : II_Komet
     {
-        int y_pos = 20;
-        int x_pos = 20;
+        int _y_pos = 0;
+        int _x_pos = 0;
         static int Geschwindigkeit = 5;
+        public Komet(int y_pos, int x_pos)
+        {
+            this._y_pos = y_pos;
+            this._x_pos = x_pos;
+        }
 
-        public int Positionx { get { return x_pos; } }
-        public int Positiony { get { return y_pos; } }
+        public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
+        public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
 
         public void Komet_Paint(Canvas canvas)
         {
@@ -125,18 +126,18 @@ namespace OOPGames
             canvas.Children.Add(Komet);
 
             //Setzt den Kreis auf Position
-            Canvas.SetTop(Komet, y_pos);
-            Canvas.SetLeft(Komet, x_pos);
+            Canvas.SetTop(Komet, _y_pos);
+            Canvas.SetLeft(Komet, _x_pos);
 
         }
 
         //bewegt Komet um Geschwindikeit nach unten
         public void Komet_Move()
         {
-            y_pos += Geschwindigkeit;
+            _y_pos += Geschwindigkeit;
             
             //checkt ob Komet aus dem Spielfeld ist.
-            if(y_pos > 625)
+            if(_y_pos > 625)
             {
                 Komet_Reset();
             }
@@ -148,8 +149,8 @@ namespace OOPGames
             Random random = new Random();
             int randomNumber = random.Next(25, 375);
 
-            y_pos = -25;
-            x_pos = randomNumber;
+            this.Positiony = 20;
+            this.Positionx = randomNumber;
         }
     }
 
@@ -220,18 +221,22 @@ namespace OOPGames
         // Klappt einigermasen
         public bool hit(Komet obstacle)
         {
-            double deltaX = Math.Abs(this.Positionx + 15 - obstacle.Positionx + 30);
-            double deltaY = Math.Abs(this.Positiony + 15 - obstacle.Positiony + 30);
-            double distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
-
-            // Subtrahiere die Radien der Kreise vom Abstand
-            distance -= (30 + 15);
-
-            // Prüft ob kleiner Null --> getroffen
-            if (distance <= 0) 
+            if (obstacle.Positiony < 450)
             {
-                //return true;
-                throw new NotImplementedException();
+                double deltaX = Math.Abs(this.Positionx + 15 - obstacle.Positionx + 30);
+                double deltaY = Math.Abs(this.Positiony + 15 - obstacle.Positiony + 30);
+                double distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
+
+                // Subtrahiere die Radien der Kreise vom Abstand
+                distance -= (30 + 15);
+
+                // Prüft ob kleiner Null --> getroffen
+                if (distance <= 0)
+                {
+                    //return true;
+                    throw new NotImplementedException();
+                }
+                else { return false; }
             }
             else { return false; }
         }
