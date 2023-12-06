@@ -693,8 +693,16 @@ namespace OOPGames
 
                     }
                 }
+                //int currentPunktzahl= pacField.PacPosition.I;
+                TextBlock PacScore = new TextBlock() { FontSize = 20 };
+                PacScore.Text = "Score: "; // das ist das wie ich es bei unserem game brauchen werde 
+                Canvas.SetLeft(PacScore, 20);
+                Canvas.SetTop(PacScore, 330);
+                canvas.Children.Add(PacScore);
+
+                //
             }
-            
+           
         }
 
         public bool CanBePaintedBy(IPaintGame painter)
