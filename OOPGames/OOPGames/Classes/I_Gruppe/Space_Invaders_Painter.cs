@@ -31,7 +31,7 @@ namespace OOPGames
                 canvas.Children.Clear();
                 ((Game_Field)currentField).Background_rest.Background_Paint(canvas);
                 ((Game_Field)currentField).Background.Background_Paint(canvas);
-                ((Game_Field)currentField).Ship_1.Ship_Paint(canvas);
+                ((Game_Field)currentField).UFO.Ship_Paint(canvas);
 
                 ((Game_Field)currentField).Komet_1.Komet_Paint(canvas);
                 ((Game_Field)currentField).Komet_2.Komet_Paint(canvas);

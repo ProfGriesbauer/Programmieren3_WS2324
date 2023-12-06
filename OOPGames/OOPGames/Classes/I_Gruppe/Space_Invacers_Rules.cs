@@ -29,8 +29,9 @@ namespace OOPGames
 
         public int CheckIfPLayerWon()
         {
-            return -1; 
-            
+            return -1;
+            //if (I_Field.UFO.isHit == 1) { return 1; }
+            //else { return -1; } 
         }
 
         public void ClearField()
@@ -57,16 +58,17 @@ namespace OOPGames
         {
             I_Field.Komet_1.Komet_Move();
             I_Field.Komet_2.Komet_Move();
-            I_Field.Ship_1.hit(I_Field.Komet_1);
+            if (I_Field.UFO.hit(I_Field.Komet_1) == true)
+            {
+                
+            }
+
         }
-        public void Ship_Move(IPlayMove move)
-        {
-            
-        }
+
 
         public void DoSpaceMove(II_SpaceShipMove move)
         {
-            I_Field.Ship_1.Positionx = I_Field.Ship_1.Positionx + move.Column * I_Field.Ship_1.Geschwindigkeit ;
+            I_Field.UFO.Positionx = I_Field.UFO.Positionx + move.Column * I_Field.UFO.Geschwindigkeit ;
 
         }
     }
@@ -87,8 +89,8 @@ namespace OOPGames
         Komet _Komet_2 = new Komet();
         public Komet Komet_2 { get { return _Komet_2; } }
 
-        Ship _Ship_1 = new Ship();
-        public Ship Ship_1 { get { return _Ship_1; } }
+        Ship _UFO = new Ship();
+        public Ship UFO { get { return _UFO; } }
 
         Background _Background = new Background(0, 0, 400, 600, 0);
         public Background Background { get { return _Background; } }
@@ -149,76 +151,91 @@ namespace OOPGames
             y_pos = -25;
             x_pos = randomNumber;
         }
-
-        public void Komet_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbMove()
-        {
-            throw new NotImplementedException();
-        }
     }
 
-    public class Ship 
+    public class Ship
     {
-        int y_pos = 550;
-        int x_pos = 20;
+        int _y_pos = 550;
+        int _x_pos = 20;
         static int _Geschwindigkeit = 5;
+        int _hit = -1;
 
-        public int Positionx { get { return x_pos; } set { x_pos = value; } }
-        public int Positiony { get { return y_pos; } }
-        public int Geschwindigkeit { get { return _Geschwindigkeit;  } }
+        public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
+        public int Positiony { get { return _y_pos; } }
+        public int Geschwindigkeit { get { return _Geschwindigkeit; } }
+        public int isHit { get { return _hit; } set { _hit = value; } }
 
 
         public void Ship_Paint(Canvas canvas)
         {
-            //zeichnet Rechteck
-            Rectangle Ship = new Rectangle();
-            Ship.Width = 25; // Durchmesser von 16 Pixeln
-            Ship.Height = 25; // Durchmesser von 16 Pixeln
+            //zeichnet Formen für das UFO
+            Ellipse Ship = new Ellipse();
+            Ship.Width = 30; // Durchmesser von 30 Pixeln
+            Ship.Height = 30; // Durchmesser von 30 Pixeln
             Ship.Fill = Brushes.Blue;
             canvas.Children.Add(Ship);
+            Ellipse Glas = new Ellipse();
+            Glas.Width = 10; // Durchmesser von 10 Pixeln
+            Glas.Height = 10; // Durchmesser von 10 Pixeln
+            Glas.Fill = Brushes.Silver;
+            canvas.Children.Add(Glas);
+            Ellipse Lightv = new Ellipse();
+            Lightv.Width = 2; // Durchmesser von 2 Pixeln
+            Lightv.Height = 2; // Durchmesser von 2 Pixeln
+            Lightv.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lightv);
+            Ellipse Lightl = new Ellipse();
+            Lightl.Width = 2; // Durchmesser von 2 Pixeln
+            Lightl.Height = 2; // Durchmesser von 2 Pixeln
+            Lightl.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lightl);
+            Ellipse Lighth = new Ellipse();
+            Lighth.Width = 2; // Durchmesser von 2 Pixeln
+            Lighth.Height = 2; // Durchmesser von 2 Pixeln
+            Lighth.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lighth);
+            Ellipse Lightr = new Ellipse();
+            Lightr.Width = 2; // Durchmesser von 2 Pixeln
+            Lightr.Height = 2; // Durchmesser von 2 Pixeln
+            Lightr.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lightr);
 
 
-            //Setzt den Kreis auf Position
-            Canvas.SetTop(Ship, y_pos);
-            Canvas.SetLeft(Ship, x_pos);
+            //Setzt den alle Formen auf Position
+            Canvas.SetTop(Ship, _y_pos);
+            Canvas.SetLeft(Ship, _x_pos);
+            Canvas.SetTop(Glas, _y_pos + 10);
+            Canvas.SetLeft(Glas, _x_pos + 10);
+            Canvas.SetTop(Lightv, _y_pos + 3);
+            Canvas.SetLeft(Lightv, _x_pos + 14);
+            Canvas.SetTop(Lightl, _y_pos + 14);
+            Canvas.SetLeft(Lightl, _x_pos + 3);
+            Canvas.SetTop(Lighth, _y_pos + 25);
+            Canvas.SetLeft(Lighth, _x_pos + 14);
+            Canvas.SetTop(Lightr, _y_pos + 14);
+            Canvas.SetLeft(Lightr, _x_pos + 25);
 
         }
 
         // Klappt einigermasen
         public bool hit(Komet obstacle)
         {
-            //hit links   this.Positionx < obstacle.Positionx && this.Positionx < obstacle.Positionx + 50 &&
-            //this.Positiony < obstacle.Positiony + 50 && this.Positiony + 25 > obstacle.Positiony
+            double deltaX = Math.Abs(this.Positionx + 15 - obstacle.Positionx + 30);
+            double deltaY = Math.Abs(this.Positiony + 15 - obstacle.Positiony + 30);
+            double distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
 
-            //hit rechts
+            // Subtrahiere die Radien der Kreise vom Abstand
+            distance -= (30 + 15);
 
-            //hit front
-            if (this.Positionx <= obstacle.Positionx && this.Positionx <= (obstacle.Positionx + 50) &&
-            this.Positiony <= (obstacle.Positiony + 50) && (this.Positiony + 25) >= obstacle.Positiony)
+            // Prüft ob kleiner Null --> getroffen
+            if (distance <= 0) 
             {
-                //throw new NotImplementedException();
-                return false;
-            }
-
-            else { return false; }
-            
-        }
-
-        // Nur ein Versuch für den Kreis
-        public bool ÜberlapptMitKreis(Komet obstacle)
-        {
-            // Berechne den Abstand zwischen dem Mittelpunkt des Kreises und dem Quadrat
-            double abstandX = Math.Abs(this.Positionx + 25 / 2 - obstacle.Positionx);
-            double abstandY = Math.Abs(this.Positiony + 25 / 2 - obstacle.Positiony);
-
-            // Überprüfe, ob sich der Kreis innerhalb des Quadrats befindet
-            if (abstandX <= 25 / 2 + 30 && abstandY <= 25 / 2 + 30)
-            {
-                return true;
+                //return true;
+                throw new NotImplementedException();
             }
             else { return false; }
         }
     }
-
 
 
     public class Background
@@ -228,6 +245,7 @@ namespace OOPGames
         int _width = 0;
         int _height = 0;
         int _color = 0;
+
 
         public Background(int y_pos, int x_pos, int width, int Height, int Color)
         {
