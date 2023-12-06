@@ -11,13 +11,21 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
+    public enum CellState
+    {
+        Covered,
+        Uncovered,
+        Flagged
+        // Add more states as needed
+    }
+    
     public class S_MinesweeperPainter : X_BaseTicTacToePaint
     {
         private const int Rows = 10;
         private const int Cols = 10;
 
         private Button[,] mineButtons;
-        public bool[,] mineField;
+        private bool[,] mineField;
 
         public override string Name { get { return "Minesweeper-Painter_F"; } }
 
@@ -45,10 +53,12 @@ namespace OOPGames
                     Button btn = new Button
                     {
                         Name = $"btn_{row}_{col}",
-                        Content = "halo", // Content will be empty initially
-                        Tag = new { Row = row, Col = col } // Set Row and Col as properties using an anonymous type
+                        Content = "", // Content will be empty initially
+                        Tag = new { Row = row, Col = col }, // Set Row and Col as properties using an anonymous type
+                        DataContext = CellState.Covered
 
                     };
+                    btn.FontWeight = FontWeights.Bold;
                     btn.Click += Btn_Click;
                     btn.MouseRightButtonDown += Btn_RightClick;
                     Canvas.SetTop(btn, row * 30); // Adjust position based on the size you want
@@ -78,53 +88,37 @@ namespace OOPGames
 
         private void UpdateButtonContent(IX_TicTacToeField currentField)
         {
-            for (int row = 0; row < Rows; row++)
-            {
-                for (int col = 0; col < Cols; col++)
-                {
-                    Button btn = mineButtons[row, col];
-                    int cellValue = currentField[row, col];
-
-                    // Customize the button content based on the Minesweeper logic
-                    btn.Content = GetContentBasedOnValue(cellValue);
-                }
-            }
+            
         }
 
-        private string GetContentBasedOnValue(int cellValue)
-        {
-            // Customize this logic based on Minesweeper requirements
-            // You might want to display different symbols or colors for mines, numbers, etc.
-            if (cellValue == 1)
-            {
-                return "X"; // Example: Display X for mines
-            }
-            else
-            {
-                return ""; // Empty content for other cells
-            }
-        }
+        
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
             int row = (int)((dynamic)btn.Tag).Row;
             int col = (int)((dynamic)btn.Tag).Col;
+            btn.Background = Brushes.Transparent;
+            CellState currentState = (CellState)btn.DataContext;
 
-            
 
-                // Add your game logic here for left-click
-                // For example, reveal the cell or check if it's a mine
-                // Update the button content accordingly
-                if (mineField[row, col])
+
+
+
+
+            // Add your game logic here for left-click
+            // For example, reveal the cell or check if it's a mine
+            // Update the button content accordingly
+            if (mineField[row, col])
                 {
-                    btn.Content = "X"; // This is a mine
+                    btn.Content = "☼"; // This is a mine
                     MessageBox.Show("Game Over! You hit a mine.", "Game Over");
                     // Add logic to end the game or perform other actions
                 }
                 else
                 {
                     int adjacentMines = CountAdjacentMines(row, col);
+                
                     btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
                 if (adjacentMines == 1)
                 {
@@ -140,12 +134,15 @@ namespace OOPGames
                 }
                 else
                 {
-                    btn.Foreground = Brushes.Black;
+                    btn.Foreground = Brushes.Transparent;
                 }
 
                 // Add more logic as needed
             }
         }
+        
+
+
         private int CountAdjacentMines(int row, int col)
         {
             int counter = 0;
@@ -202,30 +199,18 @@ namespace OOPGames
             } 
         }
 
-        public override string Name { get { return "F-TicTacToeRules"; } }
+        public override string Name { get { return "F-Minesweeper-Rules"; } }
 
         public override int CheckIfPLayerWon()
         {
-            for (int i = 0; i < 3; i++)
+           /* for (int i = 0; i < 9; i++)
             {
-                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                for(int j = 0;j < 9; j++)
                 {
-                    return _Field[i, 0];
+                    Button btn = mineButtons[i, j];
+                    CellState currentState = (CellState)btn.DataContext;
                 }
-                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
-                {
-                    return _Field[0, i];
-                }
-            }
-
-            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
-            {
-                return _Field[0, 0];
-            }
-            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
-            {
-                return _Field[0, 2];
-            }
+            }*/
 
             return -1;
         }
