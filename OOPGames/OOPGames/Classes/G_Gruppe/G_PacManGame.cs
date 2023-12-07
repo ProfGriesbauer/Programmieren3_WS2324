@@ -15,6 +15,7 @@ using OOPGames;
 using System.Threading;
 using System.Data;
 
+
 namespace OOPGames
 {
     public class Pac_FieldGang : IFieldGang
@@ -344,6 +345,8 @@ namespace OOPGames
             _16x16Field[14, 10] = new Pac_FieldWand { Reihe = 14, Spalte = 10 };
             _16x16Field[14, 8] = new Pac_FieldWand { Reihe = 14, Spalte = 8 };
             _16x16Field[14, 7] = new Pac_FieldWand { Reihe = 14, Spalte = 7 };
+            _16x16Field[14, 9] = new Pac_FieldWand { Reihe = 14, Spalte = 9 };
+            _16x16Field[14, 6] = new Pac_FieldWand { Reihe = 14, Spalte = 6 };
 
             _16x16Field[14, 1] = new Pac_FieldGang { Reihe = 14, Spalte = 1, GeistinFeld = false , PacinFeld = true, Punkt = false };
             _16x16Field[1, 1] = new Pac_FieldGang { Reihe = 1, Spalte = 1, GeistinFeld = true, PacinFeld = false, Punkt = true};
@@ -546,8 +549,10 @@ namespace OOPGames
         int count = 0;
         int geistDeltaRow = 0;
         int geistDeltaColumn = 1;
+        
         public void TickGameCall()
         {
+            bool Zufallsentscheidung = false;
             Random random = new Random();  
             if (count >= 5)
             {
@@ -558,12 +563,25 @@ namespace OOPGames
 
                 //Geist Bewegung
 
-                int newRow = _16x16Field.GeistPosition.Reihe+ _16x16Field.GeistPosition.DeltaRow_GeistPosition;
-                int newColumn = _16x16Field.GeistPosition.Spalte + _16x16Field.GeistPosition.DeltaColumn_GeistPosition;
-
-                if (_16x16Field[newRow, newColumn].Befahrbar == false)
-                {
+                //int newRow = _16x16Field.GeistPosition.Reihe+ _16x16Field.GeistPosition.DeltaRow_GeistPosition;
+                //int newColumn = _16x16Field.GeistPosition.Spalte + _16x16Field.GeistPosition.DeltaColumn_GeistPosition;
+                while (Zufallsentscheidung == false)
+                { 
                     (geistDeltaRow, geistDeltaColumn) = Bewegung(random.Next(0, 4));
+                    int newZufallReihe = _16x16Field.GeistPosition.Reihe + geistDeltaRow;
+                    int newZufallSpalte = _16x16Field.GeistPosition.Spalte + geistDeltaColumn;
+
+                    if (_16x16Field[newZufallReihe,newZufallSpalte].Befahrbar == true)
+                    {
+                        if (geistDeltaRow != -(_16x16Field.GeistPosition.DeltaRow_GeistPosition) || geistDeltaRow == 0)
+                        {
+                            if (geistDeltaColumn != -(_16x16Field.GeistPosition.DeltaColumn_GeistPosition) || geistDeltaColumn == 0)
+                            {
+                                Zufallsentscheidung = true;
+                            }
+                        }
+                    }
+
                 }
 
 
@@ -583,6 +601,7 @@ namespace OOPGames
     {
         public string Name { get { return "PacMan_GamePainter"; } }
         public int AnzahlPunkte = 0;
+        public double Time;
 
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
@@ -594,6 +613,7 @@ namespace OOPGames
         }
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
+            Time = Time+0.1;
             if (currentField is IField_Pac)
             {
                 Pac_PaintField(canvas, (IField_Pac)currentField);
@@ -616,8 +636,8 @@ namespace OOPGames
                 // Setzt die Hintergrundfarbe des Canvas auf Weiß
                 Color bgColor = Color.FromRgb(255, 255, 255);
                 canvas.Background = new SolidColorBrush(bgColor);
-
                 AnzahlPunkte = 0;
+                
                 for (int Spalte = 0; Spalte < 16; Spalte++)
                 {
                     for (int Zeile = 0; Zeile < 16; Zeile++)
@@ -714,6 +734,11 @@ namespace OOPGames
                 Canvas.SetTop(PacScore, 330);
                 canvas.Children.Add(PacScore);
 
+                TextBlock PacTime = new TextBlock() { FontSize = 20 };
+                PacTime.Text = "Zeit: "+Math.Round(Time); // das ist das wie ich es bei unserem game brauchen werde 
+                Canvas.SetLeft(PacTime, 20);              
+                Canvas.SetTop(PacTime, 400);
+                canvas.Children.Add(PacTime);
                 //
             }
            
@@ -744,7 +769,7 @@ namespace OOPGames
         public string Name { get { return "PacMan_HumanPlayer"; } }
 
 
-        public int PlayerNumber { get { return _PlayerNumber; } }
+        public int PlayerNumber { get { return 1; } }
 
         public bool CanBeRuledBy(IGameRules rules)
         {
