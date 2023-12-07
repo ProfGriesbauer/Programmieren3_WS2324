@@ -14,7 +14,7 @@ namespace OOPGames
         int _PlayerNumber = 0;
         public string Name { get { return "Space_Invaders_Player"; } }
 
-        public int PlayerNumber { get { return _PlayerNumber; } }
+        public int PlayerNumber { get { return 1; } }
 
         public int DeltaColumn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -52,7 +52,7 @@ namespace OOPGames
                     Game_Field SpaceField = (Game_Field)field;
 
                     // Holen Sie die aktuelle Position des Pacman im Feld
-                    int current_x = SpaceField.Ship_1.Positionx;
+                    int current_x = SpaceField.UFO.Positionx;
 
                     if (PressedKey == Key.A)
                     {
@@ -66,7 +66,7 @@ namespace OOPGames
                     if (PressedKey == Key.D)
                     {
                         // Überprüfen, ob der Zug nach links möglich ist 
-                        if (current_x < 365)
+                        if (current_x < 360)
                         {
                             // Erstellen Sie einen neuen Zug nach links
                             return new SpaceMove(1, _PlayerNumber);
