@@ -56,9 +56,15 @@ namespace OOPGames
 
         public void TickGameCall()
         {
-            I_Field.Komet_1.Komet_Move();
-            I_Field.Komet_2.Komet_Move();
-            I_Field.UFO.hit(I_Field.Komet_1);
+
+            //führt für jeden Kometen eine Bewegung aus
+            foreach (Komet a in I_Field.Kometen)
+            {
+                a.Komet_Move();
+            }
+
+            //Hat michi Abgeändert (Kometen Bestehen jetzt aus einem Array)
+            I_Field.UFO.hit(I_Field.Kometen[1]);
         }
 
 
@@ -80,10 +86,10 @@ namespace OOPGames
             else { return false; }
         }
         //intitialiesiert Komet und Raumschiff und Hintergrund
-        Komet _Komet_1 = new Komet(20,20);
-        public Komet Komet_1 { get { return _Komet_1; } }
-        Komet _Komet_2 = new Komet(10,280);
-        public Komet Komet_2 { get { return _Komet_2; } }
+        Komet[] kometen = InitializiereKometenArray(5);     //erstellt array auf 5 Kometen
+
+        public Komet[] Kometen {    get { return kometen;   }   } //Macht die Kometen Lesbar
+        
 
         Ship _UFO = new Ship();
         public Ship UFO { get { return _UFO; } }
@@ -100,7 +106,24 @@ namespace OOPGames
         Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
         public Background Background_rest { get { return _Background_rest; } }
 
+
+        //erstellt ein Array mit der länge anzähl aus kometen
+        static Komet[] InitializiereKometenArray(int anzahl)
+        {
+            Komet[] objektArray = new Komet[anzahl];
+
+            for (int i = 0; i < anzahl; i++)
+            {
+                objektArray[i] = new Komet(20 + 5*i, i * 50);
+                 
+            }
+
+            return objektArray;
+        }
+
     }
+
+    
 
     public class Komet : II_Komet
     {
@@ -131,6 +154,8 @@ namespace OOPGames
             Canvas.SetLeft(Komet, _x_pos);
 
         }
+
+        
 
         //bewegt Komet um Geschwindikeit nach unten
         public void Komet_Move()

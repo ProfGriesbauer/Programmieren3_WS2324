@@ -33,8 +33,16 @@ namespace OOPGames
                 ((Game_Field)currentField).Background.Background_Paint(canvas);
                 ((Game_Field)currentField).UFO.Ship_Paint(canvas);
 
-                ((Game_Field)currentField).Komet_1.Komet_Paint(canvas);
-                ((Game_Field)currentField).Komet_2.Komet_Paint(canvas);
+
+                //Mahlt alle Kometen (aus Kometen Array) auf den Canvas
+                foreach (Komet a in ((Game_Field)currentField).Kometen)
+                {
+                    a.Komet_Paint(canvas);
+                }
+                
+                
+                //((Game_Field)currentField).Komet_1.Komet_Paint(canvas);
+                //((Game_Field)currentField).Komet_2.Komet_Paint(canvas);
 
 
                 ((Game_Field)currentField).Background_o.Background_Paint(canvas);
