@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOPGames;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,14 @@ namespace OOPGames
 {
     public class A_MühlePaint : IA_PaintMühle
     {
-        public string Name { get { return "GriesbauerTicTacToePaint"; } }
+        public string Name { get { return "MühlePaint"; } }
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
         {
-
+            if (currentField is IA_MühleField)
+            {
+                PaintMühleField(canvas, (IA_MühleField)currentField);
+            }
         }
 
         public void PaintMühleField(Canvas canvas, IA_MühleField currentField)
@@ -24,131 +28,162 @@ namespace OOPGames
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 0, 0);
+            Color lineColor = Color.FromRgb(0, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(0, 255, 0);
-            Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 0, 255);
-            Brush OStroke = new SolidColorBrush(OColor);
+            Color A_Color = Color.FromRgb(255, 0, 0);
+            Brush A_Stroke = new SolidColorBrush(A_Color);
+            Color B_Color = Color.FromRgb(0, 0, 255);
+            Brush B_Stroke = new SolidColorBrush(B_Color);
 
-            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            //äußeres Viereck
+            Line l1 = new Line() { X1 = 20, Y1 = 20, X2 = 320, Y2 = 20, Stroke = lineStroke, StrokeThickness = 2.0 };
             canvas.Children.Add(l1);
-            Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l2 = new Line() { X1 = 320, Y1 = 20, X2 = 320, Y2 = 320, Stroke = lineStroke, StrokeThickness = 2.0 };
             canvas.Children.Add(l2);
-            Line l3 = new Line() { X1 = 20, Y1 = 120, X2 = 320, Y2 = 120, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l3 = new Line() { X1 = 320, Y1 = 320, X2 = 20, Y2 = 320, Stroke = lineStroke, StrokeThickness = 2.0 };
             canvas.Children.Add(l3);
-            Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l4 = new Line() { X1 = 20, Y1 = 320, X2 = 20, Y2 = 20, Stroke = lineStroke, StrokeThickness = 2.0 };
             canvas.Children.Add(l4);
 
-            for (int i = 0; i < 3; i++)
+            //mittleres Viereck
+            Line l5 = new Line() { X1 = 70, Y1 = 70, X2 = 270, Y2 = 70, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l5);
+            Line l6 = new Line() { X1 = 270, Y1 = 70, X2 = 270, Y2 = 270, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l6);
+            Line l7 = new Line() { X1 = 270, Y1 = 270, X2 = 70, Y2 = 270, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l7);
+            Line l8 = new Line() { X1 = 70, Y1 = 270, X2 = 70, Y2 = 70, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l8);
+
+            //inneres Viereck
+            Line l9 = new Line() { X1 = 120, Y1 = 120, X2 = 220, Y2 = 120, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l9);
+            Line l10 = new Line() { X1 = 220, Y1 = 120, X2 = 220, Y2 = 220, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l10);
+            Line l11 = new Line() { X1 = 220, Y1 = 220, X2 = 120, Y2 = 220, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l11);
+            Line l12 = new Line() { X1 = 120, Y1 = 220, X2 = 120, Y2 = 120, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l12);
+
+            //zwischen Brücken
+            Line l13 = new Line() { X1 = 170, Y1 = 20, X2 = 170, Y2 = 120, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l13);
+            Line l14 = new Line() { X1 = 20, Y1 = 170, X2 = 120, Y2 = 170, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l14);
+            Line l15 = new Line() { X1 = 220, Y1 = 170, X2 = 320, Y2 = 170, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l15);
+            Line l16 = new Line() { X1 = 170, Y1 = 220, X2 = 170, Y2 = 320, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(l16);
+
+            //Spielsteine zeichnen
+
+            for (int j = 0; j < 3; j++)
             {
-                for (int j = 0; j < 3; j++)
+                //1.Reihe
+                if (currentField[0, j] == 1)
                 {
-                    if (currentField[i, j] == 1)
-                    {
-                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X2);
-                    }
-                    else if (currentField[i, j] == 2)
-                    {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(OE);
-                    }
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(20 + (j * 150), 20, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    canvas.Children.Add(A_E);
+                }
+                else if (currentField[0, j] == 2)
+                {
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(20 + (j * 150), 70, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    canvas.Children.Add(B_E);
+                }
+                //2.Reihe
+                if (currentField[1, j] == 1)
+                {
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(70 + (j * 100), 70, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    canvas.Children.Add(A_E);
+                }
+                else if (currentField[1, j] == 2)
+                {
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(70 + (j * 100), 20, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    canvas.Children.Add(B_E);
+                }
+                //3.Reihe
+                if (currentField[2, j] == 1)
+                {
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(120 + (j * 50), 120, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    canvas.Children.Add(A_E);
+                }
+                else if (currentField[2, j] == 2)
+                {
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(120 + (j * 50), 120, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    canvas.Children.Add(B_E);
+                }
+                //4.Reihe
+                if (currentField[3, j] == 1)
+                {
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(20 + (j * 50), 170, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    canvas.Children.Add(A_E);
+                }
+                else if (currentField[3, j] == 2)
+                {
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(20 + (j * 50), 170, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    canvas.Children.Add(B_E);
+                }
+                //5.Reihe
+                if (currentField[4, j] == 1)
+                {
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(220 + (j * 50), 170, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    canvas.Children.Add(A_E);
+                }
+                else if (currentField[4, j] == 2)
+                {
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(220 + (j * 50), 170, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    canvas.Children.Add(B_E);
+                }
+                //6.Reihe
+                if (currentField[5, j] == 1)
+                {
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(120 + (j * 50), 220, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    canvas.Children.Add(A_E);
+                }
+                else if (currentField[5, j] == 2)
+                {
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(120 + (j * 50), 220, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    canvas.Children.Add(B_E);
+                }
+                //7.Reihe
+                if (currentField[6, j] == 1)
+                {
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(70 + (j * 100), 270, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    canvas.Children.Add(A_E);
+                }
+                else if (currentField[6, j] == 2)
+                {
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(70 + (j * 100), 270, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    canvas.Children.Add(B_E);
+                }
+                //8.Reihe
+                if (currentField[7, j] == 1)
+                {
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(20 + (j * 150), 320, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    canvas.Children.Add(A_E);
+                }
+                else if (currentField[7, j] == 2)
+                {
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(20 + (j * 150), 320, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    canvas.Children.Add(B_E);
                 }
             }
+            
         }
 
-        public void PaintTicTacToeField(Canvas canvas, IA_MühleField currentField)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
-    /*
-    public class A_TicTacToeRules : X_BaseTicTacToeRules
-    {
-        X_TicTacToeField _Field = new X_TicTacToeField();
+    
+    
+    public class A_MühleField : IA_MühleField
+{
+        int[,] _Field = new int[8, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
-        public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
-
-        public override bool MovesPossible
+        public int this[int r, int c]
         {
             get
             {
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        if (_Field[i, j] == 0)
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
-        }
-
-        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
-
-        public override int CheckIfPLayerWon()
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
-                {
-                    return _Field[i, 0];
-                }
-                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
-                {
-                    return _Field[0, i];
-                }
-            }
-
-            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
-            {
-                return _Field[0, 0];
-            }
-            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
-            {
-                return _Field[0, 2];
-            }
-
-            return -1;
-        }
-
-        public override void ClearField()
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    _Field[i, j] = 0;
-                }
-            }
-        }
-
-        public override void DoTicTacToeMove(IX_TicTacToeMove move)
-        {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
-            {
-                _Field[move.Row, move.Column] = move.PlayerNumber;
-            }
-        }
-    }
-
-    public class A_TicTacToeField : X_BaseTicTacToeField
-    {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-
-        public override int this[int r, int c]
-        {
-            get
-            {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                if (r >= 0 && r < 8 && c >= 0 && c < 3)
                 {
                     return _Field[r, c];
                 }
@@ -160,25 +195,38 @@ namespace OOPGames
 
             set
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                if (r >= 0 && r < 8 && c >= 0 && c < 3)
                 {
                     _Field[r, c] = value;
                 }
             }
         }
+
+        public bool CanBePaintedBy(IPaintGame painter)
+        {
+            return painter is IA_PaintMühle;
+        }
     }
 
-    public class A_TicTacToeMove : IX_TicTacToeMove
+
+    public class A_MühleMove : IA_MühleMove
     {
         int _Row = 0;
         int _Column = 0;
         int _PlayerNumber = 0;
+        int _oldRow = 0;
+        int _oldColumn = 0;
 
-        public A_TicTacToeMove(int row, int column, int playerNumber)
+
+        public A_MühleMove(int row, int column, int playerNumber, int oldrow, int oldcolumn)
         {
             _Row = row;
             _Column = column;
             _PlayerNumber = playerNumber;
+            //Bei verschieben der Spielsteine brauchen wir den Urprung
+            _oldRow = oldrow;
+            _oldColumn = oldcolumn;
+            
         }
 
         public int Row { get { return _Row; } }
@@ -186,8 +234,13 @@ namespace OOPGames
         public int Column { get { return _Column; } }
 
         public int PlayerNumber { get { return _PlayerNumber; } }
+
+        public int OldRow { get { return _oldRow; } }
+
+        public int OldColumn { get { return _oldColumn; } }
     }
 
+    /*
     public class A_TicTacToeHumanPlayer : X_BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
@@ -230,7 +283,7 @@ namespace OOPGames
             _PlayerNumber = playerNumber;
         }
     }
-
+    /*
     public class A_TicTacToeComputerPlayer : X_BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;

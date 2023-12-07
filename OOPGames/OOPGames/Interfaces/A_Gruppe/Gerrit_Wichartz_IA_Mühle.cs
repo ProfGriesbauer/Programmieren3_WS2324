@@ -11,7 +11,7 @@ namespace OOPGames
     {
         //Paints the given game field on the given canvas
         //NOTE: Clearing the canvas, etc. has to be done within this function
-        void PaintTicTacToeField(Canvas canvas, IA_MühleField currentField);
+        void PaintMühleField(Canvas canvas, IA_MühleField currentField);
     }
 
     public interface IA_MühleField : IGameField
