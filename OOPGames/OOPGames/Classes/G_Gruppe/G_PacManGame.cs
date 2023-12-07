@@ -95,6 +95,9 @@ namespace OOPGames
         public PacPosition PacPosition { get; set; } = new PacPosition();
         public GeistPosition GeistPosition { get; set; } = new GeistPosition();
 
+        
+        //
+
         public bool _IstinFeld(int r, int c)
         {
             return r >= 0 && r < 16 && c >= 0 && c < 16;
@@ -230,9 +233,12 @@ namespace OOPGames
     public class Pac_Rules : IRules_Pac
     {
         Pac_16x16Feld _16x16Field = new Pac_16x16Feld();
-        
+        //
+       
+        //
         public void InitialisiereFeld()
         {
+
             // Feld mit Pac_FieldGang initialisieren
             for (int i = 0; i < 16; i++)
             {
@@ -545,13 +551,14 @@ namespace OOPGames
             Random random = new Random();  
             if (count >= 5)
             {
+
                 IMove_Pac TickMovePacMan = new Move_Pac { DeltaRow = _16x16Field.PacPosition.DeltaRow_PacPosition, DeltaColumn = _16x16Field.PacPosition.DeltaColumn_PacPosition };
                 DoPacManMove((IMove_Pac)TickMovePacMan);
                 count = 0;
 
                 //Geist Bewegung
 
-                int newRow = _16x16Field.GeistPosition.Reihe + _16x16Field.GeistPosition.DeltaRow_GeistPosition;
+                int newRow = _16x16Field.GeistPosition.Reihe+ _16x16Field.GeistPosition.DeltaRow_GeistPosition;
                 int newColumn = _16x16Field.GeistPosition.Spalte + _16x16Field.GeistPosition.DeltaColumn_GeistPosition;
 
                 if (_16x16Field[newRow, newColumn].Befahrbar == false)
@@ -575,7 +582,7 @@ namespace OOPGames
     public class Pac_Paint : IPaint_Pac
     {
         public string Name { get { return "PacMan_GamePainter"; } }
-
+        public int AnzahlPunkte = 0;
 
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
@@ -594,6 +601,7 @@ namespace OOPGames
         }
         public void Pac_PaintField(Canvas canvas, IField_Pac currentField)
         {
+            
             if (currentField is IField_Pac)
             {
                 IField_Pac pacField = (IField_Pac)currentField;
@@ -609,7 +617,7 @@ namespace OOPGames
                 Color bgColor = Color.FromRgb(255, 255, 255);
                 canvas.Background = new SolidColorBrush(bgColor);
 
-
+                AnzahlPunkte = 0;
                 for (int Spalte = 0; Spalte < 16; Spalte++)
                 {
                     for (int Zeile = 0; Zeile < 16; Zeile++)
@@ -651,6 +659,7 @@ namespace OOPGames
                         Canvas.SetTop(Point, (Zeile * 20) + 8);
                         if (IstBefahrbar)
                         {
+
                             BoxFeld.Stroke = Brushes.LightGray;
                             BoxFeld.Fill = Brushes.White;
 
@@ -669,6 +678,11 @@ namespace OOPGames
                                 Point.Width = 4; // Durchmesser von 16 Pixeln
                                 Point.Height = 4; // Durchmesser von 16 Pixeln
                                 Point.Fill = Brushes.Green;
+                            } 
+                            else
+                            {
+
+                                AnzahlPunkte++;
                             }
                             if (IstGeist)
                             {
@@ -695,7 +709,7 @@ namespace OOPGames
                 }
                 //int currentPunktzahl= pacField.PacPosition.I;
                 TextBlock PacScore = new TextBlock() { FontSize = 20 };
-                PacScore.Text = "Score: "; // das ist das wie ich es bei unserem game brauchen werde 
+                PacScore.Text = "Score: "+AnzahlPunkte; // das ist das wie ich es bei unserem game brauchen werde 
                 Canvas.SetLeft(PacScore, 20);
                 Canvas.SetTop(PacScore, 330);
                 canvas.Children.Add(PacScore);
@@ -806,6 +820,7 @@ namespace OOPGames
                             pacField.PacPosition.DeltaColumn_PacPosition = 0;
                         }
                     }
+                  
                 }
             }
             

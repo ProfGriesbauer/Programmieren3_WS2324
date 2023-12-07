@@ -13,6 +13,7 @@ namespace OOPGames
         int Spalte { get; set; }
         bool Befahrbar { get;}
 
+
     }
 
     public interface IFieldGang : IFieldProperties
