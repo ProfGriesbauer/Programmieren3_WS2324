@@ -106,6 +106,7 @@ namespace OOPGames
     {
         int _y_pos = 0;
         int _x_pos = 0;
+
         static int Geschwindigkeit = 5;
         public Komet(int y_pos, int x_pos)
         {
@@ -221,7 +222,7 @@ namespace OOPGames
         // Klappt einigermasen
         public bool hit(Komet obstacle)
         {
-            if (obstacle.Positiony < 450)
+            if (obstacle.Positiony > 450)
             {
                 double deltaX = Math.Abs(this.Positionx + 15 - obstacle.Positionx + 30);
                 double deltaY = Math.Abs(this.Positiony + 15 - obstacle.Positiony + 30);
