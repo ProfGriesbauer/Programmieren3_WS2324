@@ -35,4 +35,9 @@ namespace OOPGames
 
     }
 
+    public interface Anzeige
+    {
+
+    }
+
 }

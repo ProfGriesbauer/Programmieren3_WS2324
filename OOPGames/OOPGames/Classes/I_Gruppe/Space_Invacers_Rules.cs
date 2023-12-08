@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace OOPGames
 {
@@ -105,6 +106,12 @@ namespace OOPGames
 
         Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
         public Background Background_rest { get { return _Background_rest; } }
+
+        Scoreboard _scoreboard = new Scoreboard();
+        public Scoreboard scoreboard { get { return _scoreboard; } }
+
+        Gameend _gameend = new Gameend();
+        public Gameend gameend { get { return _gameend; } }
 
 
         //erstellt ein Array mit der länge anzähl aus kometen
@@ -307,6 +314,73 @@ namespace OOPGames
             //Setzt den Kreis auf Position
             Canvas.SetTop(Background, _y_pos);
             Canvas.SetLeft(Background, _x_pos);        
+        }
+    }
+
+    public class Scoreboard : Anzeige
+    {
+        int _score = 1345;
+
+        // Um das Scoreboard zubenutzen muss der Getter benutzt werden
+        public int score { get { return _score; } set { _score = value; } }
+
+        public void Paint(Canvas canvas)
+        {
+            //zeichnet Kreis
+            Rectangle Board = new Rectangle();
+            Board.Width = 140;
+            Board.Height = 20;
+            Board.Fill = Brushes.Gray;
+            canvas.Children.Add(Board);
+
+            TextBlock ScoreText = new TextBlock();
+            ScoreText.Text = "Your Score: " + _score;
+            ScoreText.FontSize = 15;
+            canvas.Children.Add(ScoreText);
+
+
+            //Setzt den Kreis auf Position
+            Canvas.SetTop(Board, 10);
+            Canvas.SetLeft(Board, 130);
+            Canvas.SetTop(ScoreText, 9);
+            Canvas.SetLeft(ScoreText, 145);
+
+
+        }
+    }
+
+    public class Gameend : Anzeige
+    {
+        int _Highscore = 0;
+
+        public void Paint(Canvas canvas)
+        {
+            //zeichnet Kreis
+            Rectangle Tafel = new Rectangle();
+            Tafel.Width = 200;
+            Tafel.Height = 50;
+            Tafel.RadiusX = 10;
+            Tafel.RadiusX = 10;
+            Tafel.Fill = Brushes.Lavender;
+            canvas.Children.Add(Tafel);
+
+            TextBlock Highscore = new TextBlock();
+            Highscore.Text = "High_Score: " + _Highscore;
+            canvas.Children.Add(Highscore);
+
+            TextBlock Text = new TextBlock();
+            Text.Text = "YOU LOSE";
+            Text.FontSize = 25;
+            canvas.Children.Add(Text);
+
+            //Setzt den Kreis auf Position
+            Canvas.SetTop(Tafel, 275);
+            Canvas.SetLeft(Tafel, 100);
+            Canvas.SetTop(Text, 275);
+            Canvas.SetLeft(Text, 145);
+            Canvas.SetTop(Highscore, 305);
+            Canvas.SetLeft(Highscore, 165);
+
         }
     }
 }

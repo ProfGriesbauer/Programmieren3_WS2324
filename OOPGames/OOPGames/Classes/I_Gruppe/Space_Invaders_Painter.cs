@@ -32,6 +32,7 @@ namespace OOPGames
                 ((Game_Field)currentField).Background_rest.Background_Paint(canvas);
                 ((Game_Field)currentField).Background.Background_Paint(canvas);
                 ((Game_Field)currentField).UFO.Ship_Paint(canvas);
+                
 
 
                 //Mahlt alle Kometen (aus Kometen Array) auf den Canvas
@@ -47,6 +48,9 @@ namespace OOPGames
 
                 ((Game_Field)currentField).Background_o.Background_Paint(canvas);
                 ((Game_Field)currentField).Background_u.Background_Paint(canvas);
+                ((Game_Field)currentField).scoreboard.Paint(canvas);
+                ((Game_Field)currentField).gameend.Paint(canvas);
+
             }
             /* zur zeichenhilfe
             canvas.Children.Clear();
