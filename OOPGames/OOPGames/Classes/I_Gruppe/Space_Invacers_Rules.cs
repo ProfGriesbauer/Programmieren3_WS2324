@@ -11,6 +11,21 @@ using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 
+
+// TO DO
+/*
+    - Kometen Überarbeiten:
+        - das Random und 
+        - durchgehend neue Kometen
+        - alle stehen bleiben wenn gameover 
+    - Highscore einrichen das Variable besteht
+    - Score mit Zählen  (+ 1 wenn Komet reset ?)
+    - kann man bei bestimmten Score gewinnenm ?
+
+Für Später
+    - je nach Score Kometen geschwindigkeit erhöhen ?
+*/
+
 namespace OOPGames
 {
     public class Space_Invaders_Rules : II_RulesSpaceIn
@@ -25,14 +40,16 @@ namespace OOPGames
 
         public bool MovesPossible
         {
-            get { return true; }
+            get 
+            {
+                if (I_Field.UFO.isHit != 1) { return true; }
+                else { return false; }
+            }
         }
 
         public int CheckIfPLayerWon()
         {
             return -1;
-            //if (I_Field.UFO.isHit == 1) { return 1; }
-            //else { return -1; } 
         }
 
         public void ClearField()
@@ -71,8 +88,7 @@ namespace OOPGames
 
         public void DoSpaceMove(II_SpaceShipMove move)
         {
-            I_Field.UFO.Positionx = I_Field.UFO.Positionx + move.Column * I_Field.UFO.Geschwindigkeit ;
-
+            I_Field.UFO.Positionx = I_Field.UFO.Positionx + move.Column * I_Field.UFO.Geschwindigkeit;
         }
     }
 
@@ -192,7 +208,7 @@ namespace OOPGames
         int _y_pos = 550;
         int _x_pos = 20;
         static int _Geschwindigkeit = 5;
-        int _hit = -1;
+        int _hit = 0;
 
         public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
         public int Positiony { get { return _y_pos; } }
@@ -251,8 +267,8 @@ namespace OOPGames
 
         }
 
-        // Klappt einigermasen
-        public bool hit(Komet obstacle)
+        // Funktioniert prüft ob Übergebenes Objekt den minimalen Abstand hält oder nicht
+        public void hit(Komet obstacle)
         {
             if (obstacle.Positiony > 450)
             {
@@ -266,12 +282,10 @@ namespace OOPGames
                 // Prüft ob kleiner Null --> getroffen
                 if (distance <= 0)
                 {
-                    //return true;
-                    throw new NotImplementedException();
+                    _hit = 1;
+                    //throw new NotImplementedException();
                 }
-                else { return false; }
             }
-            else { return false; }
         }
     }
 
@@ -353,34 +367,38 @@ namespace OOPGames
     {
         int _Highscore = 0;
 
+
+
         public void Paint(Canvas canvas)
         {
-            //zeichnet Kreis
-            Rectangle Tafel = new Rectangle();
-            Tafel.Width = 200;
-            Tafel.Height = 50;
-            Tafel.RadiusX = 10;
-            Tafel.RadiusX = 10;
-            Tafel.Fill = Brushes.Lavender;
-            canvas.Children.Add(Tafel);
 
-            TextBlock Highscore = new TextBlock();
-            Highscore.Text = "High_Score: " + _Highscore;
-            canvas.Children.Add(Highscore);
+            {
+                //zeichnet Kreis
+                Rectangle Tafel = new Rectangle();
+                Tafel.Width = 200;
+                Tafel.Height = 50;
+                Tafel.RadiusX = 10;
+                Tafel.RadiusX = 10;
+                Tafel.Fill = Brushes.Lavender;
+                canvas.Children.Add(Tafel);
 
-            TextBlock Text = new TextBlock();
-            Text.Text = "YOU LOSE";
-            Text.FontSize = 25;
-            canvas.Children.Add(Text);
+                TextBlock Highscore = new TextBlock();
+                Highscore.Text = "High_Score: " + _Highscore;
+                canvas.Children.Add(Highscore);
 
-            //Setzt den Kreis auf Position
-            Canvas.SetTop(Tafel, 275);
-            Canvas.SetLeft(Tafel, 100);
-            Canvas.SetTop(Text, 275);
-            Canvas.SetLeft(Text, 145);
-            Canvas.SetTop(Highscore, 305);
-            Canvas.SetLeft(Highscore, 165);
+                TextBlock Text = new TextBlock();
+                Text.Text = "YOU LOSE";
+                Text.FontSize = 25;
+                canvas.Children.Add(Text);
 
+                //Setzt den Kreis auf Position
+                Canvas.SetTop(Tafel, 275);
+                Canvas.SetLeft(Tafel, 100);
+                Canvas.SetTop(Text, 275);
+                Canvas.SetLeft(Text, 145);
+                Canvas.SetTop(Highscore, 305);
+                Canvas.SetLeft(Highscore, 165);
+            }
         }
     }
 }

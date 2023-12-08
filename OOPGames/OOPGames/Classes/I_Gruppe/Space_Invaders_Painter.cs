@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,7 +50,11 @@ namespace OOPGames
                 ((Game_Field)currentField).Background_o.Background_Paint(canvas);
                 ((Game_Field)currentField).Background_u.Background_Paint(canvas);
                 ((Game_Field)currentField).scoreboard.Paint(canvas);
-                ((Game_Field)currentField).gameend.Paint(canvas);
+                if (((Game_Field)currentField).UFO.isHit == 1)
+                {
+                    ((Game_Field)currentField).gameend.Paint(canvas);
+                }
+                
 
             }
             /* zur zeichenhilfe
