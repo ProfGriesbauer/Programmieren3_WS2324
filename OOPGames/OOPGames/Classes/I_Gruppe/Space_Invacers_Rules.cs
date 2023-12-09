@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Runtime.DesignerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -17,10 +18,11 @@ using static System.Net.Mime.MediaTypeNames;
     - Kometen Überarbeiten:
         - das Random und 
         - durchgehend neue Kometen
-        - alle stehen bleiben wenn gameover 
+        - alle stehen bleiben wenn gameover  --  erledigt 
     - Highscore einrichen das Variable besteht
     - Score mit Zählen  (+ 1 wenn Komet reset ?)
     - kann man bei bestimmten Score gewinnenm ?
+    - Hitfunktion wird nicht mit gesammten kometen array aufgerufen! (prüft nur einen Kometen)
 
 Für Später
     - je nach Score Kometen geschwindigkeit erhöhen ?
@@ -153,7 +155,14 @@ namespace OOPGames
         int _y_pos = 0;
         int _x_pos = 0;
 
+        //wird verwendet für das "Starten" eines Kometen am oberen ende Des Bildschirms jedes Objekt einzeln
+        bool Fällt = false;
+
         static int Geschwindigkeit = 5;
+
+        //wird verwendet für Game Over (Objekt übergreifend)
+        static bool _Komet_halt = false;
+        public bool Komet_halt { get { return _Komet_halt; } set { _Komet_halt = value; } }
         public Komet(int y_pos, int x_pos)
         {
             this._y_pos = y_pos;
@@ -183,12 +192,15 @@ namespace OOPGames
         //bewegt Komet um Geschwindikeit nach unten
         public void Komet_Move()
         {
-            _y_pos += Geschwindigkeit;
-            
-            //checkt ob Komet aus dem Spielfeld ist.
-            if(_y_pos > 625)
+            if (Komet_halt == false /*&& this.Fällt == true*/)
             {
-                Komet_Reset();
+                _y_pos += Geschwindigkeit;
+
+                //checkt ob Komet aus dem Spielfeld ist.
+                if (_y_pos > 625)
+                {
+                    Komet_Reset();
+                }
             }
         }
 
@@ -282,6 +294,7 @@ namespace OOPGames
                 // Prüft ob kleiner Null --> getroffen
                 if (distance <= 0)
                 {
+                    obstacle.Komet_halt = true;
                     _hit = 1;
                     //throw new NotImplementedException();
                 }
