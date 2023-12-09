@@ -71,7 +71,7 @@ namespace OOPGames
 
         public void StartedGameCall()
         {
-        
+            I_Field.Kometen[19].fällt = true;
         }
 
         public void TickGameCall()
@@ -85,6 +85,8 @@ namespace OOPGames
 
             //Hat michi Abgeändert (Kometen Bestehen jetzt aus einem Array)
             I_Field.UFO.hit(I_Field.Kometen[1]);
+
+            I_Field.KometenStart(I_Field.Kometen);
         }
 
 
@@ -105,7 +107,8 @@ namespace OOPGames
             else { return false; }
         }
         //intitialiesiert Komet und Raumschiff und Hintergrund
-        Komet[] kometen = InitializiereKometenArray(5);     //erstellt array auf 5 Kometen
+        Komet[] kometen = InitializiereKometenArray(20);     //erstellt array auf 5 Kometen
+        static int KometenIndex = 0;
 
         public Komet[] Kometen {    get { return kometen;   }   } //Macht die Kometen Lesbar
         
@@ -135,15 +138,37 @@ namespace OOPGames
         //erstellt ein Array mit der länge anzähl aus kometen
         static Komet[] InitializiereKometenArray(int anzahl)
         {
+            Random rnd = new Random(); 
             Komet[] objektArray = new Komet[anzahl];
 
             for (int i = 0; i < anzahl; i++)
             {
-                objektArray[i] = new Komet(20 + 5*i, i * 50);
+                objektArray[i] = new Komet(20, rnd.Next(0, 375));
                  
             }
 
             return objektArray;
+        }
+
+        public void KometenStart(Komet[] KometenArray)
+        {
+            if (KometenIndex == 0)
+            {
+                if (KometenArray[19].Positiony >= KometenArray[0].Startabstand && KometenArray[19].Positiony <= KometenArray[0].Startabstand + 30)
+                {
+                    KometenArray[0].fällt = true;
+                    KometenIndex++;
+                }
+            }
+            else if (KometenArray[KometenIndex - 1].Positiony >= KometenArray[KometenIndex].Startabstand && KometenArray[KometenIndex - 1].Positiony <= KometenArray[KometenIndex].Startabstand + 30)
+            {
+                KometenArray[KometenIndex].fällt = true;
+                KometenIndex ++;
+            }
+            if (KometenIndex == 20)
+            {
+                KometenIndex = 0;
+            }
         }
 
     }
@@ -152,11 +177,14 @@ namespace OOPGames
 
     public class Komet : II_Komet
     {
+        public int Startabstand { get { return _StartAbstand; } }
+        public bool fällt { set { _fällt = value; } get { return _fällt; } }
+        int _StartAbstand = 100;
         int _y_pos = 0;
         int _x_pos = 0;
 
         //wird verwendet für das "Starten" eines Kometen am oberen ende Des Bildschirms jedes Objekt einzeln
-        bool Fällt = false;
+        bool _fällt = false;
 
         static int Geschwindigkeit = 5;
 
@@ -192,7 +220,7 @@ namespace OOPGames
         //bewegt Komet um Geschwindikeit nach unten
         public void Komet_Move()
         {
-            if (Komet_halt == false /*&& this.Fällt == true*/)
+            if (Komet_halt == false && this.fällt == true)
             {
                 _y_pos += Geschwindigkeit;
 
@@ -208,10 +236,11 @@ namespace OOPGames
         private void Komet_Reset()
         {
             Random random = new Random();
-            int randomNumber = random.Next(25, 375);
+            
 
             this.Positiony = 20;
-            this.Positionx = randomNumber;
+            this.Positionx = random.Next(25, 375);
+            this.fällt = false;
         }
     }
 
