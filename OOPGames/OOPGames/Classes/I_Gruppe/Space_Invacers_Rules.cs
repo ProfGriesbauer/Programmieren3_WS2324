@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Runtime.DesignerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -16,7 +17,7 @@ using static System.Net.Mime.MediaTypeNames;
 // TO DO
 /*
     - Kometen Überarbeiten:
-        - das Random und 
+        - das Random                                
         - durchgehend neue Kometen
         - alle stehen bleiben wenn gameover  --  erledigt 
     - Highscore einrichen das Variable besteht
@@ -84,9 +85,13 @@ namespace OOPGames
             }
 
             //Hat michi Abgeändert (Kometen Bestehen jetzt aus einem Array)
-            I_Field.UFO.hit(I_Field.Kometen[1]);
+            I_Field.UFO.hit(I_Field.Kometen);
 
             I_Field.KometenStart(I_Field.Kometen);
+
+
+            // Übergabe von Score durch einen bestimmten Kometen aber Varable ist bei allen Kometen gleich
+            I_Field.scoreboard.score = I_Field.Kometen[1].CountKometen;
         }
 
 
@@ -107,7 +112,7 @@ namespace OOPGames
             else { return false; }
         }
         //intitialiesiert Komet und Raumschiff und Hintergrund
-        Komet[] kometen = InitializiereKometenArray(20);     //erstellt array auf 5 Kometen
+        Komet[] kometen = InitializiereKometenArray(20);     //erstellt array auf 20 Kometen
         static int KometenIndex = 0;
 
         public Komet[] Kometen {    get { return kometen;   }   } //Macht die Kometen Lesbar
@@ -143,7 +148,7 @@ namespace OOPGames
 
             for (int i = 0; i < anzahl; i++)
             {
-                objektArray[i] = new Komet(20, rnd.Next(0, 375));
+                objektArray[i] = new Komet(20, rnd.Next(0, 340));
                  
             }
 
@@ -182,15 +187,16 @@ namespace OOPGames
         int _StartAbstand = 100;
         int _y_pos = 0;
         int _x_pos = 0;
+        static int _countKometen = 0;
 
         //wird verwendet für das "Starten" eines Kometen am oberen ende Des Bildschirms jedes Objekt einzeln
         bool _fällt = false;
 
-        static int Geschwindigkeit = 5;
-
+        static int Geschwindigkeit = 5;  
         //wird verwendet für Game Over (Objekt übergreifend)
         static bool _Komet_halt = false;
         public bool Komet_halt { get { return _Komet_halt; } set { _Komet_halt = value; } }
+        public int CountKometen { get { return _countKometen; } }
         public Komet(int y_pos, int x_pos)
         {
             this._y_pos = y_pos;
@@ -238,9 +244,10 @@ namespace OOPGames
             Random random = new Random();
             
 
-            this.Positiony = 20;
-            this.Positionx = random.Next(25, 375);
+            this.Positiony = 0;
+            this.Positionx = random.Next(0, 340);
             this.fällt = false;
+            _countKometen++;
         }
     }
 
@@ -309,23 +316,30 @@ namespace OOPGames
         }
 
         // Funktioniert prüft ob Übergebenes Objekt den minimalen Abstand hält oder nicht
-        public void hit(Komet obstacle)
+        public void hit(Komet[] obstacle)
         {
-            if (obstacle.Positiony > 450)
-            {
-                double deltaX = Math.Abs(this.Positionx + 15 - obstacle.Positionx + 30);
-                double deltaY = Math.Abs(this.Positiony + 15 - obstacle.Positiony + 30);
-                double distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
-
-                // Subtrahiere die Radien der Kreise vom Abstand
-                distance -= (30 + 15);
-
-                // Prüft ob kleiner Null --> getroffen
-                if (distance <= 0)
+            
+            for (int i = 0; i < obstacle.Length; i++) {
+                
+                if (obstacle[i].Positiony > 450 && obstacle[i].Positiony < 600)
                 {
-                    obstacle.Komet_halt = true;
-                    _hit = 1;
+                    //bei beiden Berechungen werden die radien dazu addiert um auf den Mittelpunkt zu kommen
+                    double deltaX = Math.Abs((this.Positionx + 15)  - (obstacle[i].Positionx + 25) ); 
+                    double deltaY = Math.Abs((this.Positiony + 15) - (obstacle[i].Positiony + 25) );
+
+                    double distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
+
+                    // Subtrahiere die Radien der Kreise vom Abstand
+                    distance -= (25 + 15);
+
+                    // Prüft ob kleiner Null --> getroffen
+                    if (distance <= 0)
+                    {
+                        obstacle[i].Komet_halt = true;
+                        _hit = 1;
                     //throw new NotImplementedException();
+                    }
+                    
                 }
             }
         }
@@ -375,10 +389,14 @@ namespace OOPGames
 
     public class Scoreboard : Anzeige
     {
-        int _score = 1345;
+        int _score = 123;
+
+        // Ziegt aktuell auf grund von Fehrbehebung den Abstand zu dem Nähesten Komenten an
 
         // Um das Scoreboard zubenutzen muss der Getter benutzt werden
         public int score { get { return _score; } set { _score = value; } }
+
+        
 
         public void Paint(Canvas canvas)
         {
