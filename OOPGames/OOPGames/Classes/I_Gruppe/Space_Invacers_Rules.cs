@@ -16,10 +16,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 // TO DO
 /*
-    - Kometen Überarbeiten:
-        - das Random                                
-        - durchgehend neue Kometen
-        - alle stehen bleiben wenn gameover  --  erledigt 
+
     - Highscore einrichen das Variable besteht
     - Score mit Zählen  (+ 1 wenn Komet reset ?)
     - kann man bei bestimmten Score gewinnenm ?
@@ -105,6 +102,16 @@ namespace OOPGames
 
     public class Game_Field : IGameField
     {
+        //intitialiesiert Komet und Raumschiff und Hintergrund
+        Komet[] kometen = InitializiereKometenArray(20);     //erstellt array auf 20 Kometen
+        static int KometenIndex = 0;
+        Ship _UFO = new Ship();
+
+
+        public Ship UFO { get { return _UFO; } }
+        public Komet[] Kometen { get { return kometen; } } //Macht die Kometen Lesbar
+
+
         public bool CanBePaintedBy(IPaintGame painter)
         {
             if (painter is I_Space_Invader_Painter) 
@@ -113,15 +120,9 @@ namespace OOPGames
             }
             else { return false; }
         }
-        //intitialiesiert Komet und Raumschiff und Hintergrund
-        Komet[] kometen = InitializiereKometenArray(20);     //erstellt array auf 20 Kometen
-        static int KometenIndex = 0;
-
-        public Komet[] Kometen {    get { return kometen;   }   } //Macht die Kometen Lesbar
         
 
-        Ship _UFO = new Ship();
-        public Ship UFO { get { return _UFO; } }
+        
 
         Background _Background = new Background(0, 0, 400, 600, 0);
         public Background Background { get { return _Background; } }
@@ -150,7 +151,7 @@ namespace OOPGames
 
             for (int i = 0; i < anzahl; i++)
             {
-                objektArray[i] = new Komet(20, rnd.Next(0, 340));
+                objektArray[i] = new Komet(0, rnd.Next(0, 340));
                  
             }
 
@@ -184,29 +185,29 @@ namespace OOPGames
 
     public class Komet : II_Komet
     {
-        public int Startabstand { get { return _StartAbstand; } }
-        public bool fällt { set { _fällt = value; } get { return _fällt; } }
+        
         int _StartAbstand = 100;
         int _y_pos = 0;
         int _x_pos = 0;
         static int _countKometen = 0;
-
         //wird verwendet für das "Starten" eines Kometen am oberen ende Des Bildschirms jedes Objekt einzeln
         bool _fällt = false;
-
         static int Geschwindigkeit = 5;  
         //wird verwendet für Game Over (Objekt übergreifend)
         static bool _Komet_halt = false;
+
         public bool Komet_halt { get { return _Komet_halt; } set { _Komet_halt = value; } }
         public int CountKometen { get { return _countKometen; } }
+        public int Startabstand { get { return _StartAbstand; } set { _StartAbstand = value; } }
+        public bool fällt { set { _fällt = value; } get { return _fällt; } }
+        public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
+        public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
+
         public Komet(int y_pos, int x_pos)
         {
             this._y_pos = y_pos;
             this._x_pos = x_pos;
         }
-
-        public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
-        public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
 
         public void Komet_Paint(Canvas canvas)
         {
@@ -249,7 +250,19 @@ namespace OOPGames
             this.Positiony = 0;
             this.Positionx = random.Next(0, 340);
             this.fällt = false;
+            this.Startabstand = random.Next(20, 180);
             _countKometen++;
+            GeschwindigkeitErhöhen();
+        }
+
+
+        //erhöht alle 20 Kometen die Geschwindigkeit um 2pixel pro aufruf
+        private void GeschwindigkeitErhöhen()
+        {
+            if (_countKometen%20 == 0)
+            {
+                Geschwindigkeit += 2;
+            }
         }
     }
 
