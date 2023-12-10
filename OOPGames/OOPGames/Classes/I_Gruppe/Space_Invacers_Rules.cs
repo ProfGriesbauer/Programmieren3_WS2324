@@ -92,6 +92,8 @@ namespace OOPGames
 
             // Übergabe von Score durch einen bestimmten Kometen aber Varable ist bei allen Kometen gleich
             I_Field.scoreboard.score = I_Field.Kometen[1].CountKometen;
+
+            I_Field.gameend.newHigh(I_Field.scoreboard);
         }
 
 
@@ -130,8 +132,8 @@ namespace OOPGames
         Background _Background_o = new Background(-50, 0, 400, 100, 1);
         public Background Background_o { get { return _Background_o; } }
 
-        Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
-        public Background Background_rest { get { return _Background_rest; } }
+        // test Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
+        // test public Background Background_rest { get { return _Background_rest; } }
 
         Scoreboard _scoreboard = new Scoreboard();
         public Scoreboard scoreboard { get { return _scoreboard; } }
@@ -427,8 +429,6 @@ namespace OOPGames
     {
         int _Highscore = 0;
 
-
-
         public void Paint(Canvas canvas)
         {
 
@@ -460,6 +460,24 @@ namespace OOPGames
                 Canvas.SetLeft(Highscore, 165);
             }
         }
+
+        public void newHigh(Scoreboard Score)
+        {
+            int oldHigh = Properties.Settings.Default.Score;
+            int currantHigh = Score.score;
+
+            if (oldHigh >= currantHigh )
+            {
+                _Highscore = oldHigh;
+            }
+            else
+            {
+                _Highscore = currantHigh;
+                Properties.Settings.Default.Score = currantHigh;
+                Properties.Settings.Default.Save();
+            }
+        }
+
     }
 }
 
