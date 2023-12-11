@@ -75,8 +75,13 @@ namespace OOPGames
                 {
                     if ( currentField[r, s].Aufgedeckt == true )
                     {
+                        int Zahlvar = currentField[r, s].Nachbarminen;
+                        string Zahlstr = Zahlvar.ToString();
                         Rectangle Feld = new Rectangle() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10) - 6), Height = ((canvas.ActualHeight / 10) - 6), Stroke = lineStroke3, StrokeThickness = 3.0, Fill = lineStroke3 };
                         canvas.Children.Add(Feld);
+                        TextBox Zahl = new TextBox() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10) - 6), Height = ((canvas.ActualHeight / 10) - 6), Text = Zahlstr};
+                        canvas.Children.Add(Zahl);
+                        
                     }
                     if ( currentField[r, s].Markiert == true )
                     {
