@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Ink;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -33,10 +35,12 @@ namespace OOPGames
 
             //Farbwahl für Figuren und Spielfeld
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(255, 5, 5);
+            Color bgColor = Color.FromRgb(0, 0, 0);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(0, 0, 255);
+            Color lineColor = Color.FromRgb(20, 20, 20);
             Brush lineStroke = new SolidColorBrush(lineColor);
+
+
 
             //Linien innen
             for (int i = 1; i < 10; i++)
@@ -59,11 +63,37 @@ namespace OOPGames
             Line l4 = new Line() { X1 = 0, Y1 = canvas.ActualHeight, X2 = canvas.ActualWidth, Y2 = canvas.ActualHeight, Stroke = lineStroke, StrokeThickness = 6.0 };
             canvas.Children.Add(l4);
 
-            //Feldinhalt
+            //Feld
+            for (int r = 1; r < 10; r++)
+            {
+                for (int s = 0; s < 10; s++)
+                {
+                    if ( currentField[r, s].Aufgedeckt == true )
+                    {
+                        //Feld weiß mit Zahl zeichnen
+                    }
+                    if ( currentField[r, s].Markiert == true )
+                    {
+                        Rectangle Feld = new Rectangle() { Margin = new Thickness(6 + (r * (canvas.ActualWidth / 10)), 6 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10)-6), Height = ((canvas.ActualHeight / 10)-6), Stroke = lineStroke, StrokeThickness = 3.0 /*, Fill = (255, 255, 255)*/ };
+                        canvas.Children.Add(Feld);
+                    }
+                }
+            }
 
 
+            /*
+            if (currentField[r, s] == 1)
+            {
+                Rectangle Feld = new Rectangle() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = 100, Height = 100, Stroke = lineStroke, StrokeThickness = 3.0, Background = "White" };
+                canvas.Children.Add(Feld);
+            }
+            else if (currentField[i, j] == 2)
+            {
+                Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
+                canvas.Children.Add(OE);
+            }
+            */
         }
-
 
     }
     

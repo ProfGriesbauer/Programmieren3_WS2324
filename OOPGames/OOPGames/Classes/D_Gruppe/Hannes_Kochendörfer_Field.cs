@@ -114,6 +114,12 @@ namespace OOPGames
         public double CanvasHöhe {get; set; }
         public double CanvasBreite { get; set; }
 
+        public bool Aufgedeckt { get; }
+
+        public bool Markiert { get; }
+
+        public int Nachbarminen { get; }
+
         public bool CanBePaintedBy(IPaintGame painter)
         {
             return true;
