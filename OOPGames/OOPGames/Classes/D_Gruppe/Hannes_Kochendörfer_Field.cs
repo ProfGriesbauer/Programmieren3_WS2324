@@ -53,7 +53,7 @@ namespace OOPGames
             int MineCount = 0;                          //15 Minen werden zufällig generiert
             Random rnd = new Random();
 
-            while (MineCount < 15) 
+            while (MineCount < 20) 
             {
                 int row= rnd.Next(10);
                 int col= rnd.Next(10);
@@ -90,6 +90,7 @@ namespace OOPGames
                             }
                         }
                     }
+                    _Field[i-1, j-1].Nachbarminen = MinenNebendran;
                 }
             }                         
 
