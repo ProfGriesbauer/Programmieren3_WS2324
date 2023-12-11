@@ -38,7 +38,10 @@ namespace OOPGames
             Color bgColor = Color.FromRgb(0, 0, 0);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(20, 20, 20);
+            Color lineColor2 = Color.FromRgb(255, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
+            Brush lineStroke2 = new SolidColorBrush(lineColor2);
+
 
 
 
@@ -74,7 +77,7 @@ namespace OOPGames
                     }
                     if ( currentField[r, s].Markiert == true )
                     {
-                        Rectangle Feld = new Rectangle() { Margin = new Thickness(6 + (r * (canvas.ActualWidth / 10)), 6 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10)-6), Height = ((canvas.ActualHeight / 10)-6), Stroke = lineStroke, StrokeThickness = 3.0 /*, Fill = (255, 255, 255)*/ };
+                        Rectangle Feld = new Rectangle() { Margin = new Thickness(2 + (r * (canvas.ActualWidth / 10)), 2 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10)-6), Height = ((canvas.ActualHeight / 10)-6), Stroke = lineStroke2, StrokeThickness = 3.0 /*, Fill = (255, 255, 255)*/ };
                         canvas.Children.Add(Feld);
                     }
                 }
