@@ -13,7 +13,7 @@ namespace OOPGames
     {
 
         Hannes_Kochendörfer_MinesweeperField _Field = new Hannes_Kochendörfer_MinesweeperField();
-        public string Name { get { return "D MinesweeperRules"; } }
+        public string Name { get { return "D Minesweeper_Rules"; } }
 
         public IGameField CurrentField { get { return (IGameField) _Field; } }
 

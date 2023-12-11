@@ -11,7 +11,7 @@ namespace OOPGames
     {
         int _playernumber;
 
-        public string Name { get { return "D Minesweeperplayer"; } }
+        public string Name { get { return "D Minesweeper_Player"; } }
 
         public int PlayerNumber { get { return _playernumber; } }
 

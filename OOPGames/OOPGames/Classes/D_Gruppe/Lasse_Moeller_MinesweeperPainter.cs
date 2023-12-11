@@ -14,7 +14,7 @@ namespace OOPGames
     
     public class D_MinesweeperPainter : IPaintGame
     {
-        public string Name { get { return "Minesweeper_Painter_D"; } }
+        public string Name { get { return "D Minesweeper_Painter"; } }
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
         {
@@ -39,8 +39,10 @@ namespace OOPGames
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(20, 20, 20);
             Color lineColor2 = Color.FromRgb(255, 0, 0);
+            Color lineColor3 = Color.FromRgb(255, 255, 255);
             Brush lineStroke = new SolidColorBrush(lineColor);
             Brush lineStroke2 = new SolidColorBrush(lineColor2);
+            Brush lineStroke3 = new SolidColorBrush(lineColor3);
 
 
 
@@ -73,29 +75,17 @@ namespace OOPGames
                 {
                     if ( currentField[r, s].Aufgedeckt == true )
                     {
-                        //Feld weiß mit Zahl zeichnen
+                        Rectangle Feld = new Rectangle() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10) - 6), Height = ((canvas.ActualHeight / 10) - 6), Stroke = lineStroke3, StrokeThickness = 3.0, Fill = lineStroke3 };
+                        canvas.Children.Add(Feld);
                     }
                     if ( currentField[r, s].Markiert == true )
                     {
-                        Rectangle Feld = new Rectangle() { Margin = new Thickness(2 + (r * (canvas.ActualWidth / 10)), 2 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10)-6), Height = ((canvas.ActualHeight / 10)-6), Stroke = lineStroke2, StrokeThickness = 3.0 /*, Fill = (255, 255, 255)*/ };
-                        canvas.Children.Add(Feld);
+                        Rectangle Flagge = new Rectangle() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10)-6), Height = ((canvas.ActualHeight / 10)-6), Stroke = lineStroke2, StrokeThickness = 3.0 , Fill = lineStroke2 };
+                        canvas.Children.Add(Flagge);
                     }
                 }
             }
 
-
-            /*
-            if (currentField[r, s] == 1)
-            {
-                Rectangle Feld = new Rectangle() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = 100, Height = 100, Stroke = lineStroke, StrokeThickness = 3.0, Background = "White" };
-                canvas.Children.Add(Feld);
-            }
-            else if (currentField[i, j] == 2)
-            {
-                Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
-                canvas.Children.Add(OE);
-            }
-            */
         }
 
     }
