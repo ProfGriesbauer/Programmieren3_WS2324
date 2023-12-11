@@ -193,9 +193,9 @@ namespace OOPGames
         bool _fällt = false;
         static int Geschwindigkeit = 5;  
         //wird verwendet für Game Over (Objekt übergreifend)
-        static bool _Komet_halt = false;
+        static bool _Komet_halt_all = false;
 
-        public bool Komet_halt { get { return _Komet_halt; } set { _Komet_halt = value; } }
+        public bool Komet_halt_all { get { return _Komet_halt_all; } set { _Komet_halt_all = value; } }
         public int CountKometen { get { return _countKometen; } }
         public int Startabstand { get { return _StartAbstand; } set { _StartAbstand = value; } }
         public bool fällt { set { _fällt = value; } get { return _fällt; } }
@@ -228,7 +228,7 @@ namespace OOPGames
         //bewegt Komet um Geschwindikeit nach unten
         public void Komet_Move()
         {
-            if (Komet_halt == false && this.fällt == true)
+            if (Komet_halt_all == false && this.fällt == true)
             {
                 _y_pos += Geschwindigkeit;
 
@@ -258,9 +258,9 @@ namespace OOPGames
         //erhöht alle 20 Kometen die Geschwindigkeit um 2pixel pro aufruf
         private void GeschwindigkeitErhöhen()
         {
-            if (_countKometen%20 == 0)
+            if (_countKometen % 10 == 0)
             {
-                Geschwindigkeit += 2;
+                Geschwindigkeit += 1;
             }
         }
     }
@@ -349,9 +349,9 @@ namespace OOPGames
                     // Prüft ob kleiner Null --> getroffen
                     if (distance <= 0)
                     {
-                        obstacle[i].Komet_halt = true;
+                        obstacle[i].Komet_halt_all = true;
                         _hit = 1;
-                    //throw new NotImplementedException();
+           
                     }
                     
                 }
