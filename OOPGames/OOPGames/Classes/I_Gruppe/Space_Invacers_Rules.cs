@@ -259,9 +259,9 @@ namespace OOPGames
         //erhöht alle 20 Kometen die Geschwindigkeit um 2pixel pro aufruf
         private void GeschwindigkeitErhöhen()
         {
-            if (_countKometen%20 == 0)
+            if (_countKometen % 10 == 0)
             {
-                Geschwindigkeit += 2;
+                Geschwindigkeit += 1;
             }
         }
     }
