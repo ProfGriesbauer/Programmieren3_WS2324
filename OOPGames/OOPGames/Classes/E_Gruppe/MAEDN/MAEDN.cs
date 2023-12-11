@@ -62,13 +62,14 @@ namespace OOPGames.Classes.E_Gruppe.MAEDN //Maria Spielfeld
         Line l4 = new Line() { X1 = 0, Y1 = 550, X2 = 0, Y2 = 0, Stroke = linestroke, StrokeThickness = 5.0 };
         canvas.Children.Add(l4);
 
-        //Spielfelder Kreise Weiß
-        ELlipse 1 = new Ellipse() { Margin = new Thickness( x, y, 0, 0), Width = w, Height = h, Stroke = oSstroke, StrokeThickness = 3.0 };
-        canvas.Children.Add(1);
+        /* Beispiele
 
-
+        // 0: Lauffeld, 1: Startfeld, 2: Hausfeld, 3: Endfeld
+        //Feld_i = new Feld(x, y, i, typ)
         Feld_39 = new Feld(2, 2, 39, 2);
-        Feld_40 = new Feld(52, 2, 40, 2);         
+        Feld_40 = new Feld(52, 2, 40, 2);     
+        
+        */
 
         //Klassen
         public class abstract Feld   // : interface / Vererbung an Haus, Start, Ende, Lauffeld
@@ -79,31 +80,66 @@ namespace OOPGames.Classes.E_Gruppe.MAEDN //Maria Spielfeld
             int _number = 0;
 
             Ellipse _Ell;
+            public void paintFeld (Canvas canvas)
+            {
+                canvas.children.Add(_Ell);
+            }
 
-            public Feld (int x, int y, int typ, int number, int color, int h, int w)
+            public Feld (int x, int y, int number, int typ, int player)
             {
                 _x = x;
                 _y = y;
-                _typ = typ;
                 _number = number;
-                _Ell = new
-                
-                if(_typ=0)
+                _typ = typ;
+                _player=player;
+
+                if (_typ == 0) // Lauffeld
                 {
-
+                    _h = 46;
+                    _w = 46;
+                    _colour = oWstroke;
                 }
-                _h= h;
-                _w = w;
-                
+                else if(_typ == 1) // Startfeld
+                {
+                    _h = 46;
+                    _w = 46;
+                }
+                else if(_typ == 2) // Hausfeld
+                {
+                    _h = 46;
+                    _w = 46;
+                }
+                else if(_typ == 3) // Endfeld
+                {
+                    _h = 46;
+                    _w = 46;
+                }
+
+                if (_player == 1)
+                {
+                    _colour = oSstroke;
+                }
+                else if (_player == 2)
+                {
+                    _colour = oRstroke;
+                }
+                else if (_player == 3)
+                {
+                    _colour = oGstroke;
+                }
+                else if (_player == 4)
+                {
+                    _colour = oBstroke;
+                }
+                _Ell = new Ellipse() { Margin = new Thickness(x, y, 0, 0), Width = _w, Height = _h, Stroke = _colour, StrokeThickness = 3.0 };
             }
-
-
+            
             //return ??
         }
-
+        
         public class Haus : Feld  //:interface / Vererbung ??
         {
-            public Haus (int x, int y, int number, int color) : base(x, y, 0, number, color, 20, 20)
+            public Haus (int x, int y, int number, int color) : base(x, y, 0, number)
             {
                
             }
