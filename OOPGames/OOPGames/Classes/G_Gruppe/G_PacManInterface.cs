@@ -13,6 +13,7 @@ namespace OOPGames
         int Spalte { get; set; }
         bool Befahrbar { get;}
 
+
     }
 
     public interface IFieldGang : IFieldProperties
@@ -20,6 +21,8 @@ namespace OOPGames
         bool Punkt { get; set; }
         bool GeistinFeld { get; set; }
         bool PacinFeld { get; set; }
+
+
     }
 
     public interface IFieldWand: IFieldProperties

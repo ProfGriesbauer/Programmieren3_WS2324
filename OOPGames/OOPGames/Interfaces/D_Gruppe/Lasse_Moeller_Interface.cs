@@ -36,5 +36,7 @@ namespace OOPGames
     public interface ID_MinesweeperMove : IPlayMove
     {
         int but {  get; }
+        int Row { get;}
+        int Colum { get;}
     }
 }

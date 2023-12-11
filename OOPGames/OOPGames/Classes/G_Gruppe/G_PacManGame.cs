@@ -14,6 +14,8 @@ using System.Security.Cryptography.X509Certificates;
 using OOPGames;
 using System.Threading;
 using System.Data;
+using System.Timers;
+
 
 namespace OOPGames
 {
@@ -25,6 +27,7 @@ namespace OOPGames
         private int _Spalte = 0;
         private bool _Befahrbar = true;
         private bool _PacinFeld = false;
+        
         public bool Punkt
         {
             get { return _Punkt; }
@@ -59,6 +62,7 @@ namespace OOPGames
         {
             get { return _Befahrbar; }
         }
+        
     }
 
     public class Pac_FieldWand : IFieldWand
@@ -94,6 +98,9 @@ namespace OOPGames
 
         public PacPosition PacPosition { get; set; } = new PacPosition();
         public GeistPosition GeistPosition { get; set; } = new GeistPosition();
+
+        
+        //
 
         public bool _IstinFeld(int r, int c)
         {
@@ -150,6 +157,7 @@ namespace OOPGames
         private int _Reihe = 14;
         private int _Spalte = 1;
         private bool _Befahrbar = false;
+        private bool _PacGefressen = false;
 
         private int _DeltaRow;
         private int _DeltaColumn;
@@ -183,7 +191,12 @@ namespace OOPGames
         {
             get { return _Befahrbar; }
         }
+        public bool PacGefressen
+        {
+            get { return _PacGefressen; }
 
+            set { _PacGefressen = value; }
+        }
     }
 
     public class GeistPosition : IFieldProperties
@@ -230,9 +243,12 @@ namespace OOPGames
     public class Pac_Rules : IRules_Pac
     {
         Pac_16x16Feld _16x16Field = new Pac_16x16Feld();
-        
+        //
+       
+        //
         public void InitialisiereFeld()
         {
+
             // Feld mit Pac_FieldGang initialisieren
             for (int i = 0; i < 16; i++)
             {
@@ -338,6 +354,8 @@ namespace OOPGames
             _16x16Field[14, 10] = new Pac_FieldWand { Reihe = 14, Spalte = 10 };
             _16x16Field[14, 8] = new Pac_FieldWand { Reihe = 14, Spalte = 8 };
             _16x16Field[14, 7] = new Pac_FieldWand { Reihe = 14, Spalte = 7 };
+            _16x16Field[14, 9] = new Pac_FieldWand { Reihe = 14, Spalte = 9 };
+            _16x16Field[14, 6] = new Pac_FieldWand { Reihe = 14, Spalte = 6 };
 
             _16x16Field[14, 1] = new Pac_FieldGang { Reihe = 14, Spalte = 1, GeistinFeld = false , PacinFeld = true, Punkt = false };
             _16x16Field[1, 1] = new Pac_FieldGang { Reihe = 1, Spalte = 1, GeistinFeld = true, PacinFeld = false, Punkt = true};
@@ -361,6 +379,7 @@ namespace OOPGames
 
         public int CheckIfPLayerWon()
         {
+            
             return -1; // Nicht implementiert!!!!!!!!!!!!!!!!!
         }
 
@@ -375,28 +394,27 @@ namespace OOPGames
             }
             InitialisiereFeld();
         }
-
+        
         public void DoPacManMove(IMove_Pac move)
         {
 
                 // Überprüfen, ob der übergebene Move vom richtigen Typ ist
                 if (move is Move_Pac pacMove)
-            {
+                {
                 // Holen Sie die aktuelle Position des Pacman im Feld
                 
                 int currentRow = _16x16Field.PacPosition.Reihe;
                 int currentColumn = _16x16Field.PacPosition.Spalte;
+                int GeistRow = _16x16Field.GeistPosition.Reihe;
+                int GeistColumn = _16x16Field.GeistPosition.Spalte;
 
 
                 // Berechnen Sie die neue Position nach Anwendung des Zugs
                 int newRow = currentRow + pacMove.DeltaRow;
                 int newColumn = currentColumn + pacMove.DeltaColumn;
 
-
-                
-
                 // Überprüfen, ob die neue Position im Spielfeld liegt und das Ziel-Feld vom Typ Pac_FieldGang ist
-                if(_16x16Field._IstinFeld(newRow, newColumn) && _16x16Field[newRow, newColumn] is Pac_FieldGang targetField)
+                if (_16x16Field._IstinFeld(newRow, newColumn) && _16x16Field[newRow, newColumn] is Pac_FieldGang targetField)
                 {
                     // Überprüfen, ob das Ziel-Feld befahrbar ist
                     if (targetField.Befahrbar)
@@ -405,7 +423,7 @@ namespace OOPGames
                         IFieldGang GeistFeld = (IFieldGang)_16x16Field[currentRow, currentColumn];
                         bool currentGeist = GeistFeld.GeistinFeld;
                         // Pacman aus dem aktuellen Feld entfernen
-                        _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = false, PacinFeld = false, Reihe = currentRow, Spalte = currentColumn, GeistinFeld = currentGeist } ;
+                        _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = false, PacinFeld = false, Reihe = currentRow, Spalte = currentColumn, GeistinFeld = currentGeist };
 
                         // Die Pac-Position im Spielfeld aktualisieren
                         //Aktuelle Richtung in PacPosition schreiben
@@ -424,12 +442,13 @@ namespace OOPGames
                             Spalte = newColumn,
                             PacinFeld = true // Setzen Sie PacinFeld auf true, um anzuzeigen, dass Pacman auf diesem Feld ist
                         };
-                        
-                       
+
+
                     }
-                   
                 }
+                    
             }
+            
         }
 
 
@@ -450,7 +469,7 @@ namespace OOPGames
                 int newRow = currentRow + GeistMove.DeltaRow;
                 int newColumn = currentColumn + GeistMove.DeltaColumn;
 
-
+                
 
 
                 // Überprüfen, ob die neue Position im Spielfeld liegt und das Ziel-Feld vom Typ Pac_FieldGang ist
@@ -464,7 +483,13 @@ namespace OOPGames
                         bool currentPunkt = GangFeld.Punkt;
                         bool currentPacinFeld = GangFeld.PacinFeld;
                         // Pacman aus dem aktuellen Feld entfernen
-                        _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = currentPunkt, PacinFeld = currentPacinFeld, Reihe = currentRow, Spalte = currentColumn, GeistinFeld = false};
+                        if (currentPacinFeld==true)
+                        {
+                            _16x16Field.PacPosition.PacGefressen = true;
+                            _16x16Field.PacPosition.Reihe = 0;
+                            _16x16Field.PacPosition.Spalte = 0;
+                        }
+                        _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = currentPunkt, PacinFeld = false, Reihe = currentRow, Spalte = currentColumn, GeistinFeld = false};
 
                         // Die Pac-Position im Spielfeld aktualisieren
                         //Aktuelle Richtung in PacPosition schreiben
@@ -481,7 +506,7 @@ namespace OOPGames
                             GeistinFeld = true,
                             Reihe = newRow,
                             Spalte = newColumn,
-                            PacinFeld = currentPacinFeld // Setzen Sie PacinFeld auf true, um anzuzeigen, dass Pacman auf diesem Feld ist
+                            PacinFeld = false // Setzen Sie PacinFeld auf true, um anzuzeigen, dass Pacman auf diesem Feld ist
                         };
 
 
@@ -540,23 +565,39 @@ namespace OOPGames
         int count = 0;
         int geistDeltaRow = 0;
         int geistDeltaColumn = 1;
+        
         public void TickGameCall()
         {
+            bool Zufallsentscheidung = false;
             Random random = new Random();  
             if (count >= 5)
             {
+
                 IMove_Pac TickMovePacMan = new Move_Pac { DeltaRow = _16x16Field.PacPosition.DeltaRow_PacPosition, DeltaColumn = _16x16Field.PacPosition.DeltaColumn_PacPosition };
                 DoPacManMove((IMove_Pac)TickMovePacMan);
                 count = 0;
 
                 //Geist Bewegung
 
-                int newRow = _16x16Field.GeistPosition.Reihe + _16x16Field.GeistPosition.DeltaRow_GeistPosition;
-                int newColumn = _16x16Field.GeistPosition.Spalte + _16x16Field.GeistPosition.DeltaColumn_GeistPosition;
-
-                if (_16x16Field[newRow, newColumn].Befahrbar == false)
-                {
+                //int newRow = _16x16Field.GeistPosition.Reihe+ _16x16Field.GeistPosition.DeltaRow_GeistPosition;
+                //int newColumn = _16x16Field.GeistPosition.Spalte + _16x16Field.GeistPosition.DeltaColumn_GeistPosition;
+                while (Zufallsentscheidung == false)
+                { 
                     (geistDeltaRow, geistDeltaColumn) = Bewegung(random.Next(0, 4));
+                    int newZufallReihe = _16x16Field.GeistPosition.Reihe + geistDeltaRow;
+                    int newZufallSpalte = _16x16Field.GeistPosition.Spalte + geistDeltaColumn;
+
+                    if (_16x16Field[newZufallReihe,newZufallSpalte].Befahrbar == true)
+                    {
+                        if (geistDeltaRow != -(_16x16Field.GeistPosition.DeltaRow_GeistPosition) || geistDeltaRow == 0)
+                        {
+                            if (geistDeltaColumn != -(_16x16Field.GeistPosition.DeltaColumn_GeistPosition) || geistDeltaColumn == 0)
+                            {
+                                Zufallsentscheidung = true;
+                            }
+                        }
+                    }
+
                 }
 
 
@@ -571,11 +612,12 @@ namespace OOPGames
             }
         }
     }
-
+    
     public class Pac_Paint : IPaint_Pac
     {
         public string Name { get { return "PacMan_GamePainter"; } }
-
+        public int AnzahlPunkte = 0;
+        public double Time;
 
 
         public void PaintGameField(Canvas canvas, IGameField currentField)
@@ -587,6 +629,7 @@ namespace OOPGames
         }
         public void TickPaintGameField(Canvas canvas, IGameField currentField)
         {
+            Time = Time + 0.1;
             if (currentField is IField_Pac)
             {
                 Pac_PaintField(canvas, (IField_Pac)currentField);
@@ -594,6 +637,7 @@ namespace OOPGames
         }
         public void Pac_PaintField(Canvas canvas, IField_Pac currentField)
         {
+
             if (currentField is IField_Pac)
             {
                 IField_Pac pacField = (IField_Pac)currentField;
@@ -601,14 +645,16 @@ namespace OOPGames
                 // Holen Sie die aktuelle Position des Pacman im Feld
                 int currentRow = pacField.PacPosition.Reihe;
                 int currentColumn = pacField.PacPosition.Spalte;
+                int GeistRow = pacField.GeistPosition.Reihe;
+                int GeistColumn = pacField.GeistPosition.Spalte;
 
                 // Löscht alle vorhandenen Elemente auf dem Canvas
-                canvas.Children.Clear();
 
                 // Setzt die Hintergrundfarbe des Canvas auf Weiß
+                canvas.Children.Clear();
                 Color bgColor = Color.FromRgb(255, 255, 255);
                 canvas.Background = new SolidColorBrush(bgColor);
-
+                AnzahlPunkte = 0;
 
                 for (int Spalte = 0; Spalte < 16; Spalte++)
                 {
@@ -651,6 +697,7 @@ namespace OOPGames
                         Canvas.SetTop(Point, (Zeile * 20) + 8);
                         if (IstBefahrbar)
                         {
+
                             BoxFeld.Stroke = Brushes.LightGray;
                             BoxFeld.Fill = Brushes.White;
 
@@ -661,7 +708,7 @@ namespace OOPGames
                                 pacManBody.Height = 16; // Durchmesser von 16 Pixeln
                                 pacManBody.Fill = Brushes.Yellow;
                                 Canvas.SetLeft(pacManBody, (currentColumn * 20) + 2); // 8 ist der halbe Durchmesser der Ellipse
-                                Canvas.SetTop(pacManBody, (currentRow * 20) +2);
+                                Canvas.SetTop(pacManBody, (currentRow * 20) + 2);
                             }
 
                             if (IstPunkt)
@@ -669,6 +716,11 @@ namespace OOPGames
                                 Point.Width = 4; // Durchmesser von 16 Pixeln
                                 Point.Height = 4; // Durchmesser von 16 Pixeln
                                 Point.Fill = Brushes.Green;
+                            }
+                            else
+                            {
+
+                                AnzahlPunkte++;
                             }
                             if (IstGeist)
                             {
@@ -678,6 +730,7 @@ namespace OOPGames
                                 Canvas.SetLeft(GeistBody, (Spalte * 20) + 2); // 8 ist der halbe Durchmesser der Ellipse
                                 Canvas.SetTop(GeistBody, (Zeile * 20) + 2);
                             }
+
 
                         }
                         else
@@ -694,8 +747,24 @@ namespace OOPGames
                     }
                 }
             }
-            
-        }
+                //int currentPunktzahl= pacField.PacPosition.I;
+                TextBlock PacScore = new TextBlock() { FontSize = 20 };
+                PacScore.Text = "Score: " + AnzahlPunkte; // das ist das wie ich es bei unserem game brauchen werde 
+                Canvas.SetLeft(PacScore, 20);
+                Canvas.SetTop(PacScore, 330);
+                canvas.Children.Add(PacScore);
+
+                TextBlock PacTime = new TextBlock() { FontSize = 20 };
+                PacTime.Text = "Zeit: " + Math.Round(Time); // das ist das wie ich es bei unserem game brauchen werde 
+                Canvas.SetLeft(PacTime, 20);
+                Canvas.SetTop(PacTime, 400);
+                canvas.Children.Add(PacTime);
+                //
+                
+
+            }
+
+        
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
@@ -722,7 +791,7 @@ namespace OOPGames
         public string Name { get { return "PacMan_HumanPlayer"; } }
 
 
-        public int PlayerNumber { get { return _PlayerNumber; } }
+        public int PlayerNumber { get { return 1; } }
 
         public bool CanBeRuledBy(IGameRules rules)
         {
@@ -753,50 +822,53 @@ namespace OOPGames
                 if (field is IField_Pac)
                 {
                     IField_Pac pacField = (IField_Pac)field;
+                    if (pacField.PacPosition.PacGefressen == false)
+                    {
+                        // Holen Sie die aktuelle Position des Pacman im Feld
+                        int currentRow = pacField.PacPosition.Reihe;
+                        int currentColumn = pacField.PacPosition.Spalte;
 
-                    // Holen Sie die aktuelle Position des Pacman im Feld
-                    int currentRow = pacField.PacPosition.Reihe;
-                    int currentColumn = pacField.PacPosition.Spalte;
+                        if (PressedKey == Key.A)
+                        {
+                            // Überprüfen, ob der Zug nach links möglich ist 
+                            if (((IFieldProperties)field[currentRow, currentColumn - 1]).Befahrbar)
+                            {
+                                // Erstellen Sie einen neuen Zug nach links
+                                pacField.PacPosition.DeltaRow_PacPosition = 0;
+                                pacField.PacPosition.DeltaColumn_PacPosition = -1;
+                            }
+                        }
+                        if (PressedKey == Key.D)
+                        {
+                            // Überprüfen, ob der Zug nach rechts möglich ist 
+                            if (((IFieldProperties)field[currentRow, currentColumn + 1]).Befahrbar)
+                            {
+                                // Erstellen Sie einen neuen Zug nach rechts
+                                pacField.PacPosition.DeltaRow_PacPosition = 0;
+                                pacField.PacPosition.DeltaColumn_PacPosition = +1;
+                            }
+                        }
+                        if (PressedKey == Key.W)
+                        {
+                            // Überprüfen, ob der Zug nach oben möglich ist 
+                            if (((IFieldProperties)field[currentRow - 1, currentColumn]).Befahrbar)
+                            {
+                                // Erstellen Sie einen neuen Zug nach oben
+                                pacField.PacPosition.DeltaRow_PacPosition = -1;
+                                pacField.PacPosition.DeltaColumn_PacPosition = 0;
+                            }
+                        }
+                        if (PressedKey == Key.S)
+                        {
+                            // Überprüfen, ob der Zug nach unten möglich ist 
+                            if (((IFieldProperties)field[currentRow + 1, currentColumn]).Befahrbar)
+                            {
+                                // Erstellen Sie einen neuen Zug nach unten
+                                pacField.PacPosition.DeltaRow_PacPosition = +1;
+                                pacField.PacPosition.DeltaColumn_PacPosition = 0;
+                            }
+                        }
 
-                    if (PressedKey == Key.A)
-                    {
-                        // Überprüfen, ob der Zug nach links möglich ist 
-                        if (((IFieldProperties)field[currentRow, currentColumn - 1]).Befahrbar)
-                        {
-                            // Erstellen Sie einen neuen Zug nach links
-                            pacField.PacPosition.DeltaRow_PacPosition = 0;
-                            pacField.PacPosition.DeltaColumn_PacPosition = -1;
-                        }
-                    }
-                    if (PressedKey == Key.D)
-                    {
-                        // Überprüfen, ob der Zug nach rechts möglich ist 
-                        if (((IFieldProperties)field[currentRow, currentColumn + 1]).Befahrbar)
-                        {
-                            // Erstellen Sie einen neuen Zug nach rechts
-                            pacField.PacPosition.DeltaRow_PacPosition = 0;
-                            pacField.PacPosition.DeltaColumn_PacPosition = +1;
-                        }
-                    }
-                    if (PressedKey == Key.W)
-                    {
-                        // Überprüfen, ob der Zug nach oben möglich ist 
-                        if (((IFieldProperties)field[currentRow - 1, currentColumn]).Befahrbar)
-                        {
-                            // Erstellen Sie einen neuen Zug nach oben
-                            pacField.PacPosition.DeltaRow_PacPosition = -1;
-                            pacField.PacPosition.DeltaColumn_PacPosition = 0;
-                        }
-                    }
-                    if (PressedKey == Key.S)
-                    {
-                        // Überprüfen, ob der Zug nach unten möglich ist 
-                        if (((IFieldProperties)field[currentRow + 1, currentColumn]).Befahrbar)
-                        {
-                            // Erstellen Sie einen neuen Zug nach unten
-                            pacField.PacPosition.DeltaRow_PacPosition = +1;
-                            pacField.PacPosition.DeltaColumn_PacPosition = 0;
-                        }
                     }
                 }
             }

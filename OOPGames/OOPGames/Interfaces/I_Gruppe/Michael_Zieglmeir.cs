@@ -11,14 +11,14 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public interface II_PlayerSpaceIn : IGamePlayer
+    public interface II_PlayerSpaceIn : IHumanGamePlayer
     {
-        
+        II_SpaceShipMove GetMove(IMoveSelection selection, Game_Field field);
     }
 
     public interface II_RulesSpaceIn : IGameRules2
     {
-
+        void DoSpaceMove(II_SpaceShipMove move);
     }
 
     public interface II_PaintSpaceIn : IPaintGame2 
@@ -26,17 +26,19 @@ namespace OOPGames
 
     }
 
-    public interface II_MoveSpaceIn : IPlayMove
-    {
-
-    }
-
     public interface II_Komet
     {
         void Komet_Move();
+        int CountKometen { get; } 
     }
-    public interface II_SpaceShipMove : IColumnMove
-    {   
-        int DeltaColumn { get; set; }
+    public interface II_SpaceShipMove : IPlayMove, IColumnMove
+    {
+
     }
+
+    public interface Anzeige
+    {
+
+    }
+
 }
