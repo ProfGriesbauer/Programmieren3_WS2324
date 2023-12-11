@@ -30,7 +30,7 @@ namespace OOPGames
             if (currentField is Game_Field)
             {
                 canvas.Children.Clear();
-                ((Game_Field)currentField).Background_rest.Background_Paint(canvas);
+                // test ((Game_Field)currentField).Background_rest.Background_Paint(canvas);
                 ((Game_Field)currentField).Background.Background_Paint(canvas);
                 ((Game_Field)currentField).UFO.Ship_Paint(canvas);
                 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Runtime.DesignerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -15,14 +16,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 // TO DO
 /*
-    - Kometen Überarbeiten:
-        - das Random und 
-        - durchgehend neue Kometen
-        - alle stehen bleiben wenn gameover  --  erledigt 
+
     - Highscore einrichen das Variable besteht
     - Score mit Zählen  (+ 1 wenn Komet reset ?)
     - kann man bei bestimmten Score gewinnenm ?
-    - Hitfunktion wird nicht mit gesammten kometen array aufgerufen! (prüft nur einen Kometen)
 
 Für Später
     - je nach Score Kometen geschwindigkeit erhöhen ?
@@ -71,7 +68,7 @@ namespace OOPGames
 
         public void StartedGameCall()
         {
-        
+            I_Field.Kometen[19].fällt = true;
         }
 
         public void TickGameCall()
@@ -84,7 +81,15 @@ namespace OOPGames
             }
 
             //Hat michi Abgeändert (Kometen Bestehen jetzt aus einem Array)
-            I_Field.UFO.hit(I_Field.Kometen[1]);
+            I_Field.UFO.hit(I_Field.Kometen);
+
+            I_Field.KometenStart(I_Field.Kometen);
+
+
+            // Übergabe von Score durch einen bestimmten Kometen aber Varable ist bei allen Kometen gleich
+            I_Field.scoreboard.score = I_Field.Kometen[1].CountKometen;
+
+            I_Field.gameend.newHigh(I_Field.scoreboard);
         }
 
 
@@ -96,6 +101,16 @@ namespace OOPGames
 
     public class Game_Field : IGameField
     {
+        //intitialiesiert Komet und Raumschiff und Hintergrund
+        Komet[] kometen = InitializiereKometenArray(20);     //erstellt array auf 20 Kometen
+        static int KometenIndex = 0;
+        Ship _UFO = new Ship();
+
+
+        public Ship UFO { get { return _UFO; } }
+        public Komet[] Kometen { get { return kometen; } } //Macht die Kometen Lesbar
+
+
         public bool CanBePaintedBy(IPaintGame painter)
         {
             if (painter is I_Space_Invader_Painter) 
@@ -104,14 +119,9 @@ namespace OOPGames
             }
             else { return false; }
         }
-        //intitialiesiert Komet und Raumschiff und Hintergrund
-        Komet[] kometen = InitializiereKometenArray(5);     //erstellt array auf 5 Kometen
-
-        public Komet[] Kometen {    get { return kometen;   }   } //Macht die Kometen Lesbar
         
 
-        Ship _UFO = new Ship();
-        public Ship UFO { get { return _UFO; } }
+        
 
         Background _Background = new Background(0, 0, 400, 600, 0);
         public Background Background { get { return _Background; } }
@@ -122,8 +132,8 @@ namespace OOPGames
         Background _Background_o = new Background(-50, 0, 400, 100, 1);
         public Background Background_o { get { return _Background_o; } }
 
-        Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
-        public Background Background_rest { get { return _Background_rest; } }
+        // test Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
+        // test public Background Background_rest { get { return _Background_rest; } }
 
         Scoreboard _scoreboard = new Scoreboard();
         public Scoreboard scoreboard { get { return _scoreboard; } }
@@ -135,15 +145,37 @@ namespace OOPGames
         //erstellt ein Array mit der länge anzähl aus kometen
         static Komet[] InitializiereKometenArray(int anzahl)
         {
+            Random rnd = new Random(); 
             Komet[] objektArray = new Komet[anzahl];
 
             for (int i = 0; i < anzahl; i++)
             {
-                objektArray[i] = new Komet(20 + 5*i, i * 50);
+                objektArray[i] = new Komet(0, rnd.Next(0, 340));
                  
             }
 
             return objektArray;
+        }
+
+        public void KometenStart(Komet[] KometenArray)
+        {
+            if (KometenIndex == 0)
+            {
+                if (KometenArray[19].Positiony >= KometenArray[0].Startabstand && KometenArray[19].Positiony <= KometenArray[0].Startabstand + 30)
+                {
+                    KometenArray[0].fällt = true;
+                    KometenIndex++;
+                }
+            }
+            else if (KometenArray[KometenIndex - 1].Positiony >= KometenArray[KometenIndex].Startabstand && KometenArray[KometenIndex - 1].Positiony <= KometenArray[KometenIndex].Startabstand + 30)
+            {
+                KometenArray[KometenIndex].fällt = true;
+                KometenIndex ++;
+            }
+            if (KometenIndex == 20)
+            {
+                KometenIndex = 0;
+            }
         }
 
     }
@@ -152,25 +184,29 @@ namespace OOPGames
 
     public class Komet : II_Komet
     {
+        
+        int _StartAbstand = 100;
         int _y_pos = 0;
         int _x_pos = 0;
-
+        static int _countKometen = 0;
         //wird verwendet für das "Starten" eines Kometen am oberen ende Des Bildschirms jedes Objekt einzeln
-        bool Fällt = false;
-
-        static int Geschwindigkeit = 5;
-
+        bool _fällt = false;
+        static int Geschwindigkeit = 5;  
         //wird verwendet für Game Over (Objekt übergreifend)
-        static bool _Komet_halt = false;
-        public bool Komet_halt { get { return _Komet_halt; } set { _Komet_halt = value; } }
+        static bool _Komet_halt_all = false;
+
+        public bool Komet_halt_all { get { return _Komet_halt_all; } set { _Komet_halt_all = value; } }
+        public int CountKometen { get { return _countKometen; } }
+        public int Startabstand { get { return _StartAbstand; } set { _StartAbstand = value; } }
+        public bool fällt { set { _fällt = value; } get { return _fällt; } }
+        public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
+        public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
+
         public Komet(int y_pos, int x_pos)
         {
             this._y_pos = y_pos;
             this._x_pos = x_pos;
         }
-
-        public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
-        public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
 
         public void Komet_Paint(Canvas canvas)
         {
@@ -192,7 +228,7 @@ namespace OOPGames
         //bewegt Komet um Geschwindikeit nach unten
         public void Komet_Move()
         {
-            if (Komet_halt == false /*&& this.Fällt == true*/)
+            if (Komet_halt_all == false && this.fällt == true)
             {
                 _y_pos += Geschwindigkeit;
 
@@ -208,10 +244,24 @@ namespace OOPGames
         private void Komet_Reset()
         {
             Random random = new Random();
-            int randomNumber = random.Next(25, 375);
+            
 
-            this.Positiony = 20;
-            this.Positionx = randomNumber;
+            this.Positiony = 0;
+            this.Positionx = random.Next(0, 340);
+            this.fällt = false;
+            this.Startabstand = random.Next(20, 180);
+            _countKometen++;
+            GeschwindigkeitErhöhen();
+        }
+
+
+        //erhöht alle 20 Kometen die Geschwindigkeit um 2pixel pro aufruf
+        private void GeschwindigkeitErhöhen()
+        {
+            if (_countKometen % 10 == 0)
+            {
+                Geschwindigkeit += 1;
+            }
         }
     }
 
@@ -280,23 +330,30 @@ namespace OOPGames
         }
 
         // Funktioniert prüft ob Übergebenes Objekt den minimalen Abstand hält oder nicht
-        public void hit(Komet obstacle)
+        public void hit(Komet[] obstacle)
         {
-            if (obstacle.Positiony > 450)
-            {
-                double deltaX = Math.Abs(this.Positionx + 15 - obstacle.Positionx + 30);
-                double deltaY = Math.Abs(this.Positiony + 15 - obstacle.Positiony + 30);
-                double distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
-
-                // Subtrahiere die Radien der Kreise vom Abstand
-                distance -= (30 + 15);
-
-                // Prüft ob kleiner Null --> getroffen
-                if (distance <= 0)
+            
+            for (int i = 0; i < obstacle.Length; i++) {
+                
+                if (obstacle[i].Positiony > 450 && obstacle[i].Positiony < 600)
                 {
-                    obstacle.Komet_halt = true;
-                    _hit = 1;
-                    //throw new NotImplementedException();
+                    //bei beiden Berechungen werden die radien dazu addiert um auf den Mittelpunkt zu kommen
+                    double deltaX = Math.Abs((this.Positionx + 15)  - (obstacle[i].Positionx + 25) ); 
+                    double deltaY = Math.Abs((this.Positiony + 15) - (obstacle[i].Positiony + 25) );
+
+                    double distance = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
+
+                    // Subtrahiere die Radien der Kreise vom Abstand
+                    distance -= (25 + 15);
+
+                    // Prüft ob kleiner Null --> getroffen
+                    if (distance <= 0)
+                    {
+                        obstacle[i].Komet_halt_all = true;
+                        _hit = 1;
+           
+                    }
+                    
                 }
             }
         }
@@ -346,10 +403,14 @@ namespace OOPGames
 
     public class Scoreboard : Anzeige
     {
-        int _score = 1345;
+        int _score = 123;
+
+        // Ziegt aktuell auf grund von Fehrbehebung den Abstand zu dem Nähesten Komenten an
 
         // Um das Scoreboard zubenutzen muss der Getter benutzt werden
         public int score { get { return _score; } set { _score = value; } }
+
+        
 
         public void Paint(Canvas canvas)
         {
@@ -379,8 +440,6 @@ namespace OOPGames
     public class Gameend : Anzeige
     {
         int _Highscore = 0;
-
-
 
         public void Paint(Canvas canvas)
         {
@@ -413,6 +472,24 @@ namespace OOPGames
                 Canvas.SetLeft(Highscore, 165);
             }
         }
+
+        public void newHigh(Scoreboard Score)
+        {
+            int oldHigh = Properties.Settings.Default.Score;
+            int currantHigh = Score.score;
+
+            if (oldHigh >= currantHigh )
+            {
+                _Highscore = oldHigh;
+            }
+            else
+            {
+                _Highscore = currantHigh;
+                Properties.Settings.Default.Score = currantHigh;
+                Properties.Settings.Default.Save();
+            }
+        }
+
     }
 }
 
