@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace OOPGames
 {
@@ -31,6 +32,8 @@ namespace OOPGames
         private Button[,] mineButtons;
         private bool[,] mineField;
         // 10x10 field
+        private DispatcherTimer timer;
+        private int timeElapsed;
         public override string Name { get { return "F_Minesweeper_Painter"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
@@ -42,6 +45,18 @@ namespace OOPGames
 
             // Update button content based on the current field
             UpdateButtonContent(currentField);
+            // Initialize the timer
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+
+            // Start the timer
+            timer.Start();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // Update the timeElapsed property every second
+            timeElapsed++;
         }
 
         private void InitializeMineButtons(Canvas canvas)
@@ -177,7 +192,9 @@ namespace OOPGames
             }
             if (Win())
             {
-                MessageBox.Show("You Win! Congratulations :).", "Congratulations");
+                // Stop the timer when the player wins
+                timer.Stop();
+                MessageBox.Show($"You Win! Congratulations :). Time elapsed: {timeElapsed} seconds", "Congratulations");
             }
         }
         public bool Win()
