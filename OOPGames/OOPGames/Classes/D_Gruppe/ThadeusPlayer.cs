@@ -35,8 +35,8 @@ namespace OOPGames
             double _feldbreite = field.CanvasHöhe / 10;
             double _feldhöhe = field.CanvasBreite / 10;
             
-            if (_playernumber == 1)
-            {
+           // if (_playernumber == 1)
+           // {
                 if (selection is IClickSelection)
                 {
                     IClickSelection sel = (IClickSelection)selection;
@@ -54,7 +54,7 @@ namespace OOPGames
                         }
                     }
                 }
-            }
+           // }
             return null;
         }
 
