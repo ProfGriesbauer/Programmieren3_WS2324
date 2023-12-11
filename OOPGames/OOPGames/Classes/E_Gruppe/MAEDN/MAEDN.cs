@@ -10,31 +10,31 @@ namespace OOPGames.Classes.E_Gruppe.MAEDN //Maria Spielfeld
     {
         //Color Painting
         //Außenrahmen
-        Color linecolor = Color.FromRgb(245, 245, 245);
+        Color linecolor = Color.FromRgb(238, 106, 80);
         Brush linestroke = new SolidColorBrush(linecolor);
 
         //Spielfelder Kreise Spielfelder Weiß
-        Color oWcolor = Color.FromRgb(108, 123, 139);
+        Color oWcolor = Color.FromRgb(245, 245, 245);
         Brush oWstroke = new SolidColorBrush(oWcolor);
 
         //Häuser Kreise Schwarz
-        Color oScolor = Color.FromRgb(108, 123, 139);
+        Color oScolor = Color.FromRgb(0, 0, 0);
         Brush oSstroke = new SolidColorBrush(oScolor);
 
         //Häuser Kreise Rot
-        Color oRcolor = Color.FromRgb(108, 123, 139);
+        Color oRcolor = Color.FromRgb(139, 0, 0);
         Brush oRstroke = new SolidColorBrush(oRcolor);
 
         //Häuser Kreise Grün
-        Color oGcolor = Color.FromRgb(108, 123, 139);
+        Color oGcolor = Color.FromRgb(85, 107, 47);
         Brush oGstroke = new SolidColorBrush(oGcolor);
 
         //Häuser Kreise Blau
-        Color oBcolor = Color.FromRgb(108, 123, 139);
+        Color oBcolor = Color.FromRgb(0, 0, 100);
         Brush oBstroke = new SolidColorBrush(oBcolor);
 
         //Hintergrund Spielfeld
-        Color bgcolor = Color.FromRgb(108, 123, 139);
+        Color bgcolor = Color.FromRgb(238, 221, 130);
         Brush bgstroke = new SolidColorBrush(bgcolor);
 
 
@@ -265,6 +265,17 @@ namespace OOPGames.Classes.E_Gruppe.MAEDN //Maria Spielfeld
 
         ELlipse 71 = new Ellipse() { Margin = new Thickness( x, y, 0, 0), Width = w, Height = h, Stroke = stroke, StrokeThickness = 3.0 };
         canvas.Children.Add(71); 
+
+        ELlipse 72 = new Ellipse() { Margin = new Thickness(x, y, 0, 0), Width = w, Height = h, Stroke = stroke, StrokeThickness = 3.0 };
+        canvas.Children.Add(72);
+
+        ELlipse 73 = new Ellipse() { Margin = new Thickness(x, y, 0, 0), Width = w, Height = h, Stroke = stroke, StrokeThickness = 3.0 };
+        canvas.Children.Add(73); 
+
+        ELlipse 74 = new Ellipse() { Margin = new Thickness(x, y, 0, 0), Width = w, Height = h, Stroke = stroke, StrokeThickness = 3.0 };
+        canvas.Children.Add(74); 
+
+         
 
         //Klassen
         public class Feld   // : interface / Vererbung an Haus, Start, Ende, Lauffeld
