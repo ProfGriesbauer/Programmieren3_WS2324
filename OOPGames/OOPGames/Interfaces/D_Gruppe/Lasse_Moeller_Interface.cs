@@ -16,6 +16,9 @@ namespace OOPGames
 
         double CanvasHöhe { get; set; }
         double CanvasBreite { get; set; }
+        bool Aufgedeckt { get; }   
+        bool Markiert {  get; }
+        int Nachbarminen { get; }  
 
     }
 
