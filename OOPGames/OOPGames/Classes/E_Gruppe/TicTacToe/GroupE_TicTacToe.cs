@@ -63,7 +63,7 @@ namespace OOPGames
             Line l8 = new Line() { X1 = 0, Y1 = 300, X2 = 0, Y2 = 0, Stroke = linestroke, StrokeThickness = 5.0 };
             canvas.Children.Add(l8);
 
-            // Strichmännchen und Roboter werden noch programmiert
+      
 
             for (int i = 0; i < 3; i++)
             {

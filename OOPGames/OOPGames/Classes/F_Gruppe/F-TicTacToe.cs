@@ -34,10 +34,14 @@ namespace OOPGames
         // 10x10 field
         private DispatcherTimer timer;
         private int timeElapsed;
+        private TextBlock timeCounter;
+        private bool gameEnded = false;
+
         public override string Name { get { return "F_Minesweeper_Painter"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
+
             canvas.Children.Clear();
 
             // Initialize Minesweeper grid of buttons
@@ -57,6 +61,7 @@ namespace OOPGames
         {
             // Update the timeElapsed property every second
             timeElapsed++;
+            timeCounter.Text = $"Time: {timeElapsed}s";
         }
 
         private void InitializeMineButtons(Canvas canvas)
@@ -86,6 +91,25 @@ namespace OOPGames
                     mineButtons[row, col] = btn;
                 }
             }
+            timeCounter = new TextBlock
+            {
+                Text = "Time: 0s",
+                FontSize = 16,
+                Foreground = Brushes.Black,
+                Margin = new Thickness(10, 10, 0, 0)
+            };
+            canvas.Children.Add(timeCounter);
+            // Positioniere das Zeit-Counter
+            Canvas.SetTop(timeCounter, Rows * 30 + 10);
+            Canvas.SetLeft(timeCounter, 10);
+            Button btntime = new Button
+            {
+                Content = timeElapsed,
+
+            };
+            Canvas.SetTop(btntime, 400); // Adjust position based on the size you want
+            Canvas.SetLeft(btntime, 40);
+
             Random rand = new Random();
             int mineCount = 0;
 
@@ -102,6 +126,8 @@ namespace OOPGames
             }
             // 10 mines randomly placed
         }
+        
+    
 
 
 
@@ -118,84 +144,107 @@ namespace OOPGames
             Button btn = (Button)sender;
             int row = (int)((dynamic)btn.Tag).Row;
             int col = (int)((dynamic)btn.Tag).Col;
-            btn.Background = Brushes.Transparent;
-            CellState currentState = (CellState)btn.DataContext;
-            btn.DataContext = CellState.Uncovered;
-
-
-
-
-
-
-
-
-
-            if (mineField[row, col]) // column (De: Spalte)
+            if (!Win()&&!Lose())
             {
-                btn.Content = "☼"; // This is the mine symbol
-                MessageBox.Show("Game Over! You hit a mine :(.", "Game Over");
+                gameEnded = true;
+                btn.Background = Brushes.Transparent;
+                CellState currentState = (CellState)btn.DataContext;
+                btn.DataContext = CellState.Uncovered;
 
-            }
-            else
-            {
-                int adjacentMines = CountAdjacentMines(row, col);
 
-                btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
-                if (adjacentMines == 1)
-                {
-                    btn.Foreground = Brushes.Blue;
-                    c++;
 
-                }
-                else if (adjacentMines == 2)
+
+
+
+
+
+
+                if (mineField[row, col]) // column (De: Spalte)
                 {
-                    btn.Foreground = Brushes.Green;
-                    c++;
-                }
-                else if (adjacentMines == 3)
-                {
-                    btn.Foreground = Brushes.Red;
-                    c++;
-                }
-                else if (adjacentMines == 4)
-                {
-                    btn.Foreground = Brushes.Purple;
-                    c++;
-                }
-                else if (adjacentMines == 5)
-                {
-                    btn.Foreground = Brushes.Yellow;
-                    c++;
-                }
-                else if (adjacentMines == 6)
-                {
-                    btn.Foreground = Brushes.Turquoise;
-                    c++;
-                }
-                else if (adjacentMines == 7)
-                {
-                    btn.Foreground = Brushes.Gray;
-                    c++;
-                }
-                else if (adjacentMines == 8)
-                {
-                    btn.Foreground = Brushes.Black;
-                    c++;
+                    btn.Content = "☼"; // This is the mine symbol
+                    timer.Stop();
+                    MessageBox.Show("Game Over! You hit a mine 😝.", "Game Over");
+
                 }
                 else
                 {
-                    btn.Foreground = Brushes.Transparent;
-                    c++;
+                    int adjacentMines = CountAdjacentMines(row, col);
+
+                    btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
+                    if (adjacentMines == 1)
+                    {
+                        btn.Foreground = Brushes.Blue;
+
+
+                    }
+                    else if (adjacentMines == 2)
+                    {
+                        btn.Foreground = Brushes.Green;
+
+                    }
+                    else if (adjacentMines == 3)
+                    {
+                        btn.Foreground = Brushes.Red;
+
+                    }
+                    else if (adjacentMines == 4)
+                    {
+                        btn.Foreground = Brushes.Purple;
+
+                    }
+                    else if (adjacentMines == 5)
+                    {
+                        btn.Foreground = Brushes.Yellow;
+
+                    }
+                    else if (adjacentMines == 6)
+                    {
+                        btn.Foreground = Brushes.Turquoise;
+
+                    }
+                    else if (adjacentMines == 7)
+                    {
+                        btn.Foreground = Brushes.Gray;
+
+                    }
+                    else if (adjacentMines == 8)
+                    {
+                        btn.Foreground = Brushes.Black;
+
+                    }
+                    else
+                    {
+                        btn.Foreground = Brushes.Transparent;
+
+                    }
+
+
                 }
-
-
+                if (Win())
+                {
+                    // Stop the timer when the player wins
+                    timer.Stop();
+                    MessageBox.Show($"You Win! Congratulations :). Time elapsed: {timeElapsed} seconds", "Congratulations");
+                }
             }
-            if (Win())
+        }
+        public bool Lose()
+        {for (int row = 0; row<10; row++)
             {
-                // Stop the timer when the player wins
-                timer.Stop();
-                MessageBox.Show($"You Win! Congratulations :). Time elapsed: {timeElapsed} seconds", "Congratulations");
+                for (int col = 0; col < 10; col++)
+                {
+                    Button btn = mineButtons[row, col];
+
+                    // Annahme: Der Button-Zustand wird über die DataContext-Eigenschaft gespeichert
+                    CellState currentState = (CellState)btn.DataContext;
+                    if (mineField[row, col]&& currentState == CellState.Uncovered)
+                    {
+                        return true;
+                    }
+                }
             }
+            return false;
+
         }
         public bool Win()
         {
@@ -247,14 +296,20 @@ namespace OOPGames
         }
         private void Btn_RightClick(object sender, MouseButtonEventArgs e) //place flags
         {
+            
             Button btn = (Button)sender;
+            CellState currentState = (CellState)btn.DataContext;
             if ((btn.Content) != "F")
             {
                 btn.Content = "F";
+                
+                btn.DataContext = CellState.Flagged;
             }
             else
             {
                 btn.Content = "";
+
+                btn.DataContext = CellState.Covered;
             }
         }
     }
