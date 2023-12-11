@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OOPGames
 {
@@ -83,19 +84,36 @@ namespace OOPGames
 
 
 
-        public void DoMove(D_MinesweeperMove move)
+        public void DoMove(ID_MinesweeperMove move)
         {
             int _but = move.but;
             int _row = move.Row;
             int _colum = move.Colum;
-            if (_Field[_row,_colum].Mine==true)
+            if (_but == 0) //links
             {
+                if (_Field[_row, _colum].Mine == true)
+                {
+                    MessageBox.Show("Game Over! You hit a mine", "Game Over"); //verloren
+                }
+                else
+                {
+                    if (_Field[_row, _colum].Aufgedeckt == false && _Field[_row, _colum].Markiert == false) { _Field[_row, _colum].Aufgedeckt = true; }
+                    
 
-            } 
-            else
-            {
-
+                }
             }
+            else {
+                
+                if (_but == 2)//rechts
+                {
+                    if (_Field[_row, _colum].Aufgedeckt == true) { return; }
+                    else { 
+                        if (_Field[_row, _colum].Markiert == false) { _Field[_row, _colum].Markiert = true; }
+                        else { _Field[_row, _colum].Markiert = false; }
+                    }
+                }
+            }
+           
         }
 
         public void DoMove(IPlayMove move)
