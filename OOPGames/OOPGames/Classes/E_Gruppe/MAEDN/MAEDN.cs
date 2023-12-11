@@ -68,19 +68,7 @@ namespace OOPGames.Classes.E_Gruppe.MAEDN //Maria Spielfeld
 
 
         Feld_39 = new Feld(2, 2, 39, 2);
-        Feld_40 = new Feld(52, 2, 40, 2);
-
-
-        ELlipse 72 = new Ellipse() { Margin = new Thickness(x, y, 0, 0), Width = w, Height = h, Stroke = stroke, StrokeThickness = 3.0 };
-        canvas.Children.Add(72);
-
-        ELlipse 73 = new Ellipse() { Margin = new Thickness(x, y, 0, 0), Width = w, Height = h, Stroke = stroke, StrokeThickness = 3.0 };
-        canvas.Children.Add(73); 
-
-        ELlipse 74 = new Ellipse() { Margin = new Thickness(x, y, 0, 0), Width = w, Height = h, Stroke = stroke, StrokeThickness = 3.0 };
-        canvas.Children.Add(74); 
-
-         
+        Feld_40 = new Feld(52, 2, 40, 2);         
 
         //Klassen
         public class abstract Feld   // : interface / Vererbung an Haus, Start, Ende, Lauffeld
