@@ -20,7 +20,6 @@ using static System.Net.Mime.MediaTypeNames;
     - Highscore einrichen das Variable besteht
     - Score mit Zählen  (+ 1 wenn Komet reset ?)
     - kann man bei bestimmten Score gewinnenm ?
-    - Hitfunktion wird nicht mit gesammten kometen array aufgerufen! (prüft nur einen Kometen)
 
 Für Später
     - je nach Score Kometen geschwindigkeit erhöhen ?
