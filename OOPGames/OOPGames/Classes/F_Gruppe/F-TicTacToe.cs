@@ -34,10 +34,13 @@ namespace OOPGames
         // 10x10 field
         private DispatcherTimer timer;
         private int timeElapsed;
+        private TextBlock timeCounter;
+
         public override string Name { get { return "F_Minesweeper_Painter"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
+
             canvas.Children.Clear();
 
             // Initialize Minesweeper grid of buttons
@@ -57,6 +60,7 @@ namespace OOPGames
         {
             // Update the timeElapsed property every second
             timeElapsed++;
+            timeCounter.Text = $"Time: {timeElapsed}s";
         }
 
         private void InitializeMineButtons(Canvas canvas)
@@ -86,6 +90,25 @@ namespace OOPGames
                     mineButtons[row, col] = btn;
                 }
             }
+            timeCounter = new TextBlock
+            {
+                Text = "Time: 0s",
+                FontSize = 16,
+                Foreground = Brushes.Black,
+                Margin = new Thickness(10, 10, 0, 0)
+            };
+            canvas.Children.Add(timeCounter);
+            // Positioniere das Zeit-Counter
+            Canvas.SetTop(timeCounter, Rows * 30 + 10);
+            Canvas.SetLeft(timeCounter, 10);
+            Button btntime = new Button
+            {
+                Content = timeElapsed,
+
+            };
+            Canvas.SetTop(btntime,  400); // Adjust position based on the size you want
+            Canvas.SetLeft(btntime,  40);
+
             Random rand = new Random();
             int mineCount = 0;
 
@@ -133,7 +156,8 @@ namespace OOPGames
             if (mineField[row, col]) // column (De: Spalte)
             {
                 btn.Content = "☼"; // This is the mine symbol
-                MessageBox.Show("Game Over! You hit a mine :(.", "Game Over");
+                timer.Stop();
+                MessageBox.Show("Game Over! You hit a mine 😝.", "Game Over");
 
             }
             else
@@ -144,48 +168,48 @@ namespace OOPGames
                 if (adjacentMines == 1)
                 {
                     btn.Foreground = Brushes.Blue;
-                    c++;
+                    
 
                 }
                 else if (adjacentMines == 2)
                 {
                     btn.Foreground = Brushes.Green;
-                    c++;
+                    
                 }
                 else if (adjacentMines == 3)
                 {
                     btn.Foreground = Brushes.Red;
-                    c++;
+                    
                 }
                 else if (adjacentMines == 4)
                 {
                     btn.Foreground = Brushes.Purple;
-                    c++;
+                    
                 }
                 else if (adjacentMines == 5)
                 {
                     btn.Foreground = Brushes.Yellow;
-                    c++;
+                    
                 }
                 else if (adjacentMines == 6)
                 {
                     btn.Foreground = Brushes.Turquoise;
-                    c++;
+                    
                 }
                 else if (adjacentMines == 7)
                 {
                     btn.Foreground = Brushes.Gray;
-                    c++;
+                    
                 }
                 else if (adjacentMines == 8)
                 {
                     btn.Foreground = Brushes.Black;
-                    c++;
+                    
                 }
                 else
                 {
                     btn.Foreground = Brushes.Transparent;
-                    c++;
+                    
                 }
 
 
@@ -247,14 +271,20 @@ namespace OOPGames
         }
         private void Btn_RightClick(object sender, MouseButtonEventArgs e) //place flags
         {
+            
             Button btn = (Button)sender;
+            CellState currentState = (CellState)btn.DataContext;
             if ((btn.Content) != "F")
             {
                 btn.Content = "F";
+                
+                btn.DataContext = CellState.Flagged;
             }
             else
             {
                 btn.Content = "";
+
+                btn.DataContext = CellState.Covered;
             }
         }
     }
