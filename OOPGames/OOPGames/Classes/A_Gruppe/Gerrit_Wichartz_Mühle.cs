@@ -1,32 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class A_TicTacToePaint : A_BaseTicTacToePaint
+    public class A_MühlePaint : IA_PaintMühle
     {
-        public override string Name { get { return "LottesTicTacToePaint"; } }
+        public string Name { get { return "GriesbauerTicTacToePaint"; } }
 
-        public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
+        public void PaintGameField(Canvas canvas, IGameField currentField)
+        {
+
+        }
+
+        public void PaintMühleField(Canvas canvas, IA_MühleField currentField)
         {
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 120, 0);
+            Color lineColor = Color.FromRgb(255, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(120, 255, 0);
+            Color XColor = Color.FromRgb(0, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 120, 255);
+            Color OColor = Color.FromRgb(0, 0, 255);
             Brush OStroke = new SolidColorBrush(OColor);
 
             Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
@@ -57,18 +59,19 @@ namespace OOPGames
                 }
             }
         }
-    }
 
-    public class A_TicTacToeRules : A_BaseTicTacToeRules
+        public void PaintTicTacToeField(Canvas canvas, IA_MühleField currentField)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+    /*
+    public class A_TicTacToeRules : X_BaseTicTacToeRules
     {
-        IX_TicTacToeField _Field = new A_TicTacToeField();
+        X_TicTacToeField _Field = new X_TicTacToeField();
 
         public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
-
-        public override void setTicTacToeField(IX_TicTacToeField feld)
-        {
-            _Field = feld;
-        }
 
         public override bool MovesPossible
         {
@@ -89,7 +92,7 @@ namespace OOPGames
             }
         }
 
-        public override string Name { get { return "LottesTicTacToeRules"; } }
+        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
 
         public override int CheckIfPLayerWon()
         {
@@ -137,11 +140,11 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeField : IX_TicTacToeField
+    public class A_TicTacToeField : X_BaseTicTacToeField
     {
         int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
-        public  int this[int r, int c]
+        public override int this[int r, int c]
         {
             get
             {
@@ -162,11 +165,6 @@ namespace OOPGames
                     _Field[r, c] = value;
                 }
             }
-        }
-
-        public bool CanBePaintedBy(IPaintGame painter)
-        {
-            return painter is IX_PaintTicTacToe;
         }
     }
 
@@ -190,17 +188,17 @@ namespace OOPGames
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
 
-    public class A_TicTacToeHumanPlayer : A_BaseHumanTicTacToePlayer
+    public class A_TicTacToeHumanPlayer : X_BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "LottesHumanTicTacToePlayer"; } }
+        public override string Name { get { return "A_HumanTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
         public override IGamePlayer Clone()
         {
-            X_TicTacToeHumanPlayer ttthp = new X_TicTacToeHumanPlayer();
+            A_TicTacToeHumanPlayer ttthp = new A_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -233,11 +231,11 @@ namespace OOPGames
         }
     }
 
-    public class A_TicTacToeComputerPlayer : A_BaseComputerTicTacToePlayer
+    public class A_TicTacToeComputerPlayer : X_BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "LottesComputerTicTacToePlayer"; } }
+        public override string Name { get { return "A_ComputerTicTacToePlayer"; } }
 
         public override int PlayerNumber { get { return _PlayerNumber; } }
 
@@ -258,7 +256,7 @@ namespace OOPGames
                 int r = ((f - c) / 3) % 3;
                 if (field[r, c] <= 0)
                 {
-                    return new A_TicTacToeMove(r, c, _PlayerNumber);
+                    return new X_TicTacToeMove(r, c, _PlayerNumber);
                 }
                 else
                 {
@@ -274,171 +272,5 @@ namespace OOPGames
             _PlayerNumber = playerNumber;
         }
     }
-
-    public class A_TicTacToeComputerPlayer2 : IX_ComputerTicTacToePlayer
-    {
-        int _PlayerNumber = 0;
-        int _OpponentNumber = 0;
-        A_TicTacToeRules regeln = new A_TicTacToeRules();
-        public string Name { get { return "LottesBessererComputerTicTacToePlayer"; } }
-
-        public int PlayerNumber { get { return _PlayerNumber; } }
-
-        public void SetPlayerNumber(int playerNumber)
-        {
-            _PlayerNumber = playerNumber;
-            if (_PlayerNumber ==1 ) { _OpponentNumber = 2;}
-            else {  _OpponentNumber = 1;}
-        }
-
-        public bool CanBeRuledBy(IGameRules rules)
-        {
-            return rules is IX_TicTacToeRules;
-        }
-
-        public IGamePlayer Clone()
-        {
-            A_TicTacToeComputerPlayer2 cl = new A_TicTacToeComputerPlayer2();
-            return cl;
-        }
-
-        public IX_TicTacToeMove GetMove(IX_TicTacToeField field)
-        {
-            int bestVal = -1000;
-            int bestRow = 0;
-            int bestCol = 0;
-            
-
-            // Traverse all cells, evaluate minimax function 
-            // for all empty cells. And return the cell 
-            // with optimal value. 
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    // Check if cell is empty 
-                    if (field[i, j] == 0)
-                    {
-                        // Make the move 
-                        field[i, j] = _PlayerNumber;
-
-                        // compute evaluation function for this 
-                        // move. 
-                        int moveVal = minimax(field, 0, false);
-
-                        // Undo the move 
-                        field[i, j] = 0;
-
-                        // If the value of the current move is 
-                        // more than the best value, then update 
-                        // best/ 
-                        if (moveVal > bestVal)
-                        {
-                            bestRow = i;
-                            bestCol = j;
-                            bestVal = moveVal;
-                        }
-                    }
-                }
-            }
-            Console.WriteLine(bestRow);
-            Console.WriteLine(bestCol);
-            return new A_TicTacToeMove(bestRow, bestCol, _PlayerNumber);
-
-        }
-
-
-        int minimax(IX_TicTacToeField board,int depth, Boolean isMax)
-        {
-            
-            regeln.setTicTacToeField(board);
-           
-            
-            int möGewinn = regeln.CheckIfPLayerWon();
-
-            // If Maximizer has won the game 
-            // return his/her evaluated score 
-            if (möGewinn == _PlayerNumber )
-                return 10;
-
-            // If Minimizer has won the game 
-            // return his/her evaluated score 
-            if (möGewinn == _OpponentNumber)
-                return -10;
-
-            // If there are no more moves and 
-            // no winner then it is a tie 
-            if (regeln.MovesPossible == false)
-                return 0;
-
-            // If this maximizer's move 
-            if (isMax)
-            {
-                int best = -1000;
-
-                // Traverse all cells 
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        // Check if cell is empty 
-                        if (board[i, j] == 0)
-                        {
-                            // Make the move 
-                            board[i, j] = _PlayerNumber;
-
-                            // Call minimax recursively and choose 
-                            // the maximum value 
-                            best = Math.Max(best, minimax(board, depth + 1, !isMax));
-
-                            // Undo the move 
-                            board[i, j] = 0;
-                        }
-                    }
-                }
-                return best;
-            }
-
-            // If this minimizer's move 
-            else
-            {
-                int best = 1000;
-
-                // Traverse all cells 
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        // Check if cell is empty 
-                        if (board[i, j] == 0)
-                        {
-                            // Make the move 
-                            board[i, j] = _OpponentNumber;
-
-                            // Call minimax recursively and choose 
-                            // the minimum value 
-                            best = Math.Min(best, minimax(board, depth + 1, !isMax));
-
-                            // Undo the move 
-                            board[i, j] = 0;
-                        }
-                    }
-                }
-                return best;
-            }
-        }
-
-        public IPlayMove GetMove(IGameField field)
-        {
-            if (field is IX_TicTacToeField)
-            {
-                return GetMove((IX_TicTacToeField)field);
-            } else
-            {
-                return null;
-            }
-        }
-    }
 }
-
-
+    */

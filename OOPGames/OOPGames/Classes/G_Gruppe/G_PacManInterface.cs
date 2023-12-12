@@ -19,6 +19,7 @@ namespace OOPGames
     {
         bool Punkt { get; set; }
         bool GeistinFeld { get; set; }
+        bool PacinFeld { get; set; }
     }
 
     public interface IFieldWand: IFieldProperties
@@ -35,6 +36,8 @@ namespace OOPGames
     
     public interface IField_Pac : IGameField
     {
+
+        PacPosition PacPosition { get; set; }
         /*
         //Returns true, if the given this game field can be painted by the given painter
         bool CanBePaintedBy(IPaintGame painter);
@@ -42,32 +45,26 @@ namespace OOPGames
 
         //Indexer: returns 0 for a unused tictactoefield, 1 for player 1, 2 for player 2, etc.
         //indexed by the row r and column c
-        int this[int r, int c] { get; set; }
+        IFieldProperties this[int r, int c] { get; set; }
     }
 
     //TicTacToe specific game rules
-    public interface IRules_Pac : IGameRules
+    public interface IRules_Pac : IGameRules2
     {
         //Gets the current state of the tictactoe field; the class implementing
         //this interface should hold a game field corresponding to the rules
         //it implements
-        IField_Pac TicTacToeField { get; }
+        IField_Pac PacManField { get; }
 
         //Adds the given move to the current tictactoe field if possible
-        void DoTicTacToeMove(IMove_Pac move);
+        void DoPacManMove(IMove_Pac move);
     }
 
     //TicTacToeMove which is derived from row and column
     public interface IMove_Pac : IRowMove, IColumnMove
     {
-        /*
-        Number of the player doing the move.
-        int PlayerNumber { get; }
-        Row of the move
-        int Row { get; }
-        Column of the move
-        //int Column { get; }
-        */
+        int DeltaRow { get; set; }
+        int DeltaColumn { get; set; }
     }
 
     //TicTacToe specific human player
