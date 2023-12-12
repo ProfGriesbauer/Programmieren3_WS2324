@@ -99,7 +99,14 @@ namespace OOPGames
                 }
                 else
                 {
-                    if (_Field[_row, _colum].Aufgedeckt == false && _Field[_row, _colum].Markiert == false) { _Field[_row, _colum].Aufgedeckt = true; }
+                    if (_Field[_row, _colum].Aufgedeckt == false && _Field[_row, _colum].Markiert == false)
+                    { 
+                        _Field[_row, _colum].Aufgedeckt = true;
+                        if (_Field[_row, _colum].Nachbarminen == 0)
+                        {
+                            
+                        }
+                    }
                     
 
                 }
