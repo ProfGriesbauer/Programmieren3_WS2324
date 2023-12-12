@@ -16,13 +16,16 @@ using static System.Net.Mime.MediaTypeNames;
 
 // TO DO
 /*
-
-    - Highscore einrichen das Variable besteht
-    - Score mit Zählen  (+ 1 wenn Komet reset ?)
-    - kann man bei bestimmten Score gewinnenm ?
+    - Kometen Array auf 40 und zwei kometen simultan (kleiner abstand /großer abstand ) möglich mit Kometenindex % 2
+    - lampen für UFO (8)
+    - Interfaces anpassen
 
 Für Später
-    - je nach Score Kometen geschwindigkeit erhöhen ?
+    
+    - Kometenschweif (mit polygonlinie)
+    - Kometen Farben Random (grautöne)
+    - evtl highscore überarbeiten
+    - maximalgeschwindigkeit
 */
 
 namespace OOPGames
