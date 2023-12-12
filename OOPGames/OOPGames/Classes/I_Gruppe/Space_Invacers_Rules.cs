@@ -55,7 +55,7 @@ namespace OOPGames
 
         public void ClearField()
         {
-            
+            I_Field = new Game_Field();
         }
 
         public void DoMove(IPlayMove move)
@@ -157,7 +157,7 @@ namespace OOPGames
 
     public class Komet : II_Komet
     {
-        
+        //Variablen
         int _y_pos = 0;
         int _x_pos = 0;
         static int _countKometen = 0;
@@ -167,6 +167,7 @@ namespace OOPGames
         //wird verwendet für Game Over (Objekt übergreifend)
         static bool _Komet_halt_all = false;
 
+        //Getter Setter
         public bool Komet_halt_all { get { return _Komet_halt_all; } set { _Komet_halt_all = value; } }
         public int CountKometen { get { return _countKometen; } }
         public bool fällt { set { _fällt = value; } get { return _fällt; } }
@@ -240,7 +241,6 @@ namespace OOPGames
 
         //variablen
         //Random rand = new Random();
-
         int _Startabstand = 100;
         int _KometenIndex = 0;
         Random rnd = new Random();
@@ -248,7 +248,7 @@ namespace OOPGames
 
 
 
-        //geterSetter
+        //Getter Setter
         public Komet[] KometArray { get { return _KometArray; }  } 
 
             public Kometen()
@@ -273,7 +273,7 @@ namespace OOPGames
                 if (KometArray[39].Positiony >= _Startabstand && 
                     KometArray[39].Positiony <= _Startabstand + 30)
                 {
-                    KometArray[0].fällt = true;
+                    _KometArray[0].fällt = true;
                     _Startabstand = Abstand(_KometenIndex);
                     _KometenIndex++;
                 }
@@ -285,7 +285,7 @@ namespace OOPGames
                 _Startabstand = Abstand(_KometenIndex);
                 _KometenIndex++;
             }
-            if (_KometenIndex == 39)
+            if (_KometenIndex == 40)
             {
                 _KometenIndex = 0;
             }
@@ -308,11 +308,13 @@ namespace OOPGames
 
     public class Ship
     {
+        //Variablen
         int _y_pos = 550;
         int _x_pos = 20;
         static int _Geschwindigkeit = 5;
         int _hit = 0;
 
+        //Getter Setter
         public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
         public int Positiony { get { return _y_pos; } }
         public int Geschwindigkeit { get { return _Geschwindigkeit; } }
@@ -403,6 +405,7 @@ namespace OOPGames
 
     public class Background
     {
+        //variable
         int _y_pos = 0;
         int _x_pos = 0;
         int _width = 0;
@@ -445,8 +448,6 @@ namespace OOPGames
     public class Scoreboard : Anzeige
     {
         int _score = 123;
-
-        // Ziegt aktuell auf grund von Fehrbehebung den Abstand zu dem Nähesten Komenten an
 
         // Um das Scoreboard zubenutzen muss der Getter benutzt werden
         public int score { get { return _score; } set { _score = value; } }
