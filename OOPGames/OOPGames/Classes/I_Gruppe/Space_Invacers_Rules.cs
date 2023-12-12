@@ -615,25 +615,6 @@ namespace OOPGames
             canvas.Children.Add(D);
             Canvas.SetTop(D, 605);
             Canvas.SetLeft(D, 270);
-
-
-            //TextBlock Highscore = new TextBlock();
-            //Highscore.Text = "High_Score: " + _Highscore;
-            //canvas.Children.Add(Highscore);ä
-
-            //TextBlock Text = new TextBlock();
-            //Text.Text = "GAME OVER!";
-            //Text.FontSize = 25;
-            //canvas.Children.Add(Text);
-
-            ////Setzt den Kreis auf Position
-            //Canvas.SetTop(Tafel, 275);
-            //Canvas.SetLeft(Tafel, 100);
-            //Canvas.SetTop(Text, 275);
-            //Canvas.SetLeft(Text, 130);
-            //Canvas.SetTop(Highscore, 305);
-            //Canvas.SetLeft(Highscore, 165);
-
         }
 
     }
