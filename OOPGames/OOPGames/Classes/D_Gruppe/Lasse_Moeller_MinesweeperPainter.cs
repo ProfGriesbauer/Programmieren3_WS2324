@@ -90,7 +90,7 @@ namespace OOPGames
                         canvas.Children.Add(Feld);
 
 
-                        TextBox Zahl = new TextBox
+                        TextBox Zahl = new TextBox                      //
                         {
                             Width = Breite - 3,
                             Height = Höhe - 3,
@@ -98,12 +98,47 @@ namespace OOPGames
                             FontSize = 30,
                             TextAlignment = TextAlignment.Center,
                         };
+
+                        switch (Zahlstr)
+                        {
+                            case "1":
+                                Zahl.Foreground = Brushes.Blue; // Ändere die Farbe für die Zahl 1
+                                break;
+                            case "2":
+                                Zahl.Foreground = Brushes.Green; // Ändere die Farbe für die Zahl 2
+                                break;
+                            case "3":
+                                Zahl.Foreground = Brushes.Yellow; // Ändere die Farbe für die Zahl 3
+                                break;
+                            case "4":
+                                Zahl.Foreground = Brushes.Orange;
+                                break;
+                            case "5":
+                                Zahl.Foreground = Brushes.Red;
+                                break;
+                            case "6":
+                                Zahl.Foreground = Brushes.Brown;
+                                break;
+                            case "7":
+                                Zahl.Foreground = Brushes.Magenta;
+                                break;
+                            case "8":
+                                Zahl.Foreground = Brushes.Black;
+                                break;
+                            default:
+                                Zahl.Foreground = Brushes.Black; // Standardfarbe für andere Zahlen
+                                break;
+                        }
+
+
                         Canvas.SetLeft(Zahl, s * Breite + 3);
                         Canvas.SetTop(Zahl, r * Höhe + 3);
                         canvas.Children.Add(Zahl);
 
+
+
                     }
-                    if ( currentField[r, s].Markiert == true )
+                    if ( currentField[r, s].Markiert == true )          //Malen von Flagge
                     {
                         Rectangle Flagge = new Rectangle
                         {
