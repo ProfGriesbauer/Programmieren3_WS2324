@@ -47,6 +47,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new D_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new I_Space_Invader_Painter());
             OOPGamesManager.Singleton.RegisterPainter(new S_MinesweeperPainter());
+            OOPGamesManager.Singleton.RegisterPainter(new S20_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_TicTacToePaint());
 
@@ -198,32 +199,67 @@ namespace OOPGames
 
         private void PaintCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            int winner = _CurrentRules.CheckIfPLayerWon();
-            if (_CurrentRules is IGameRules3 &&
-               ((IGameRules3)_CurrentRules).CheckIfDraw())
+            //Sonderfall für das Mühle Spiel
+            if (_CurrentRules is IA_MühleRules)
             {
-                Status.Text = "Draw Game!";
-            }
-            else if (winner > 0)
-            {
-                Status.Text = "Player " + winner + " Won!";
+                int mühlewinner = _CurrentRules.CheckIfPLayerWon();
+                if (_CurrentRules is IGameRules3 &&
+                   ((IGameRules3)_CurrentRules).CheckIfDraw())
+                {
+                    Status.Text = "Draw Game!";
+                }
+                else if (mühlewinner > 0)
+                {
+                    Status.Text = "Player " + mühlewinner + " Won!";
+                }
+                else
+                {
+                    if (_CurrentRules.MovesPossible &&
+                        _CurrentPlayer is IHumanGamePlayer)
+                    {
+                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X,
+                            (int)e.GetPosition(PaintCanvas).Y, (int)e.ChangedButton), _CurrentRules.CurrentField);
+                        if (pm != null)
+                        {
+                            _CurrentRules.DoMove(pm);
+                            _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                            //_CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                            Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                        }
+
+                        DoComputerMoves();
+                    }
+                }
             }
             else
             {
-                if (_CurrentRules.MovesPossible &&
-                    _CurrentPlayer is IHumanGamePlayer)
+                int winner = _CurrentRules.CheckIfPLayerWon();
+                if (_CurrentRules is IGameRules3 &&
+                   ((IGameRules3)_CurrentRules).CheckIfDraw())
                 {
-                    IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X, 
-                        (int)e.GetPosition(PaintCanvas).Y, (int)e.ChangedButton), _CurrentRules.CurrentField);
-                    if (pm != null)
+                    Status.Text = "Draw Game!";
+                }
+                else if (winner > 0)
+                {
+                    Status.Text = "Player " + winner + " Won!";
+                }
+                else
+                {
+                    if (_CurrentRules.MovesPossible &&
+                        _CurrentPlayer is IHumanGamePlayer)
                     {
-                        _CurrentRules.DoMove(pm);
-                        _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
-                        _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
-                        Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
-                    }
+                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X,
+                            (int)e.GetPosition(PaintCanvas).Y, (int)e.ChangedButton), _CurrentRules.CurrentField);
+                        if (pm != null)
+                        {
+                            _CurrentRules.DoMove(pm);
+                            _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                            Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
+                        }
 
-                    DoComputerMoves();
+                        DoComputerMoves();
+                    }
                 }
             }
         }

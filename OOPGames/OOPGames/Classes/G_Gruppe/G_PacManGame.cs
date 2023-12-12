@@ -97,11 +97,11 @@ namespace OOPGames
         private IFieldProperties[,] _16x16Feld = new IFieldProperties[16, 16];
 
         public PacPosition PacPosition { get; set; } = new PacPosition();
-        public GeistPosition[] GeistArray { get; set; } = new GeistPosition[3];
+        public GeistPosition[] GeistArray { get; set; } = new GeistPosition[2];
 
         public Pac_16x16Feld()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
                 GeistArray[i] = new GeistPosition();
             }
@@ -279,16 +279,20 @@ namespace OOPGames
             _16x16Field[1, 8] = new Pac_FieldWand { Reihe = 1, Spalte = 8 };
             
             _16x16Field[2, 2] = new Pac_FieldWand { Reihe = 2, Spalte = 2 };
-            _16x16Field[2, 3] = new Pac_FieldWand { Reihe = 3, Spalte = 3 };
+            _16x16Field[2, 3] = new Pac_FieldWand { Reihe = 2, Spalte = 3 };
+            _16x16Field[2, 4] = new Pac_FieldWand { Reihe = 2, Spalte = 4 };
             _16x16Field[2, 5] = new Pac_FieldWand { Reihe = 2, Spalte = 5 };
             _16x16Field[2, 7] = new Pac_FieldWand { Reihe = 2, Spalte = 7 };
             _16x16Field[2, 8] = new Pac_FieldWand { Reihe = 2, Spalte = 8 };
             _16x16Field[2, 10] = new Pac_FieldWand { Reihe = 2, Spalte = 10 };
+            _16x16Field[2, 11] = new Pac_FieldWand { Reihe = 2, Spalte = 11 };
             _16x16Field[2, 12] = new Pac_FieldWand { Reihe = 2, Spalte = 12 };
             _16x16Field[2, 13] = new Pac_FieldWand { Reihe = 2, Spalte = 13 };
             
             _16x16Field[3, 2] = new Pac_FieldWand { Reihe = 3, Spalte = 2 };
             _16x16Field[3, 3] = new Pac_FieldWand { Reihe = 3, Spalte = 3 };
+            _16x16Field[3, 4] = new Pac_FieldWand { Reihe = 3, Spalte = 4 };
+            _16x16Field[3, 11] = new Pac_FieldWand { Reihe = 3, Spalte = 11 };
             _16x16Field[3, 12] = new Pac_FieldWand { Reihe = 3, Spalte = 12 };
             _16x16Field[3, 13] = new Pac_FieldWand { Reihe = 3, Spalte = 13 };
 
@@ -372,7 +376,7 @@ namespace OOPGames
             _16x16Field[14, 1] = new Pac_FieldGang { Reihe = 14, Spalte = 1, GeistinFeld = false , PacinFeld = true, Punkt = false };
 
             _16x16Field[1, 1] = new Pac_FieldGang { Reihe = 1, Spalte = 1, GeistinFeld = true, PacinFeld = false, Punkt = true};
-            _16x16Field[1, 14] = new Pac_FieldGang { Reihe = 1, Spalte = 14, GeistinFeld = true, PacinFeld = false, Punkt = true };
+            //_16x16Field[1, 14] = new Pac_FieldGang { Reihe = 1, Spalte = 14, GeistinFeld = true, PacinFeld = false, Punkt = true };
             _16x16Field[14, 14] = new Pac_FieldGang { Reihe = 14, Spalte = 14, GeistinFeld = true, PacinFeld = false, Punkt = true };
         }
 
@@ -429,10 +433,10 @@ namespace OOPGames
                 _16x16Field.GeistArray[i].DeltaColumn_GeistPosition = 0;
                 _16x16Field.GeistArray[0].Reihe = 1;
                 _16x16Field.GeistArray[0].Spalte = 1;
-                _16x16Field.GeistArray[1].Reihe = 1;
+                _16x16Field.GeistArray[1].Reihe = 14;
                 _16x16Field.GeistArray[1].Spalte = 14;
-                _16x16Field.GeistArray[2].Reihe = 14;
-                _16x16Field.GeistArray[2].Spalte = 14;
+                //_16x16Field.GeistArray[2].Reihe = 1;
+                //_16x16Field.GeistArray[2].Spalte = 14;
             }
 
             
@@ -615,12 +619,21 @@ namespace OOPGames
         int count = 0;
         int geistDeltaRow = 0;
         int geistDeltaColumn = 1;
+        bool geistTurnaround = false;
+        int ticspeed;
         
         public void TickGameCall()
         {
-            
+            if (Pac_HumanPlayer.checkBox1Checked)
+            {
+                ticspeed = 3;
+            }
+            else
+            {
+                ticspeed = 6;
+            }
             Random random = new Random();  
-            if (count >= 5)
+            if (count >= ticspeed)
             {
 
                 IMove_Pac TickMovePacMan = new Move_Pac { DeltaRow = _16x16Field.PacPosition.DeltaRow_PacPosition, DeltaColumn = _16x16Field.PacPosition.DeltaColumn_PacPosition };
@@ -634,23 +647,45 @@ namespace OOPGames
                 for (int i = 0; i < _16x16Field.GeistArray.Length; i++)
                 {
                     bool Zufallsentscheidung = false;
-                    while (Zufallsentscheidung == false)
+                    if (geistTurnaround == false)
                     {
-                        (geistDeltaRow, geistDeltaColumn) = Bewegung(random.Next(0, 4));
-                        int newZufallReihe = _16x16Field.GeistArray[i].Reihe + geistDeltaRow;
-                        int newZufallSpalte = _16x16Field.GeistArray[i].Spalte + geistDeltaColumn;
-
-                        if (_16x16Field[newZufallReihe, newZufallSpalte].Befahrbar == true)
+                        while (Zufallsentscheidung == false)
                         {
-                            if (geistDeltaRow != -(_16x16Field.GeistArray[i].DeltaRow_GeistPosition) || geistDeltaRow == 0)
+                            (geistDeltaRow, geistDeltaColumn) = Bewegung(random.Next(0, 4));
+                            int newZufallReihe = _16x16Field.GeistArray[i].Reihe + geistDeltaRow;
+                            int newZufallSpalte = _16x16Field.GeistArray[i].Spalte + geistDeltaColumn;
+
+                            if (_16x16Field[newZufallReihe, newZufallSpalte].Befahrbar == true)
                             {
-                                if (geistDeltaColumn != -(_16x16Field.GeistArray[i].DeltaColumn_GeistPosition) || geistDeltaColumn == 0)
+                                IFieldGang FeldGeist = (IFieldGang)_16x16Field[newZufallReihe, newZufallSpalte];
+                                if (!FeldGeist.GeistinFeld)
+                                {
+                                    if (geistDeltaRow != -(_16x16Field.GeistArray[i].DeltaRow_GeistPosition) || geistDeltaRow == 0)
+                                    {
+                                        if (geistDeltaColumn != -(_16x16Field.GeistArray[i].DeltaColumn_GeistPosition) || geistDeltaColumn == 0)
+                                        {
+                                            Zufallsentscheidung = true;
+                                        }
+
+                                    }
+                                }
+                                else
                                 {
                                     Zufallsentscheidung = true;
+                                    geistDeltaRow = -(_16x16Field.GeistArray[i].DeltaRow_GeistPosition);
+                                    geistDeltaColumn = -(_16x16Field.GeistArray[i].DeltaColumn_GeistPosition);
+                                    geistTurnaround = true;
+
                                 }
                             }
-                        }
 
+                        }
+                    }
+                    else
+                    {
+                        geistDeltaRow = -(_16x16Field.GeistArray[i].DeltaRow_GeistPosition);
+                        geistDeltaColumn = -(_16x16Field.GeistArray[i].DeltaColumn_GeistPosition);
+                        geistTurnaround = false;
                     }
 
 
@@ -773,8 +808,7 @@ namespace OOPGames
                             else
                             {
                                 AnzahlPunkte++;
-                                //if (AnzahlPunkte == 118)
-                                if (AnzahlPunkte >= 118)
+                                if (AnzahlPunkte >= 114)
                                 {
                                     pacField.PacPosition.PacWon = true;
                                     pacField.PacPosition.PacGefressen = false;
@@ -847,6 +881,29 @@ namespace OOPGames
                     canvas.Children.Add(Game);
                     canvas.Children.Add(Over);
                 }
+
+                Rectangle checkBox1 = new Rectangle() { Width = 20, Height = 20, Stroke = Brushes.Black, StrokeThickness = 3 };
+                TextBlock checkBox1Text = new TextBlock() { FontSize = 15 };
+                
+                if (Pac_HumanPlayer.checkBox1Checked)
+                {
+                    checkBox1.Fill = Brushes.Gray;
+                    checkBox1Text.Text = "Difficulty - Hard";
+                    checkBox1Text.Foreground = Brushes.Red;
+                }
+            
+                else
+                {
+                    checkBox1.Fill = Brushes.White;
+                    checkBox1Text.Text = "Difficulty - Easy";
+                    checkBox1Text.Foreground = Brushes.Green;
+                }
+                Canvas.SetLeft(checkBox1, 20);
+                Canvas.SetTop(checkBox1, 350);
+                Canvas.SetLeft(checkBox1Text, 50);
+                Canvas.SetTop(checkBox1Text, 350);
+                canvas.Children.Add(checkBox1);
+                canvas.Children.Add(checkBox1Text);
             }
         }
 
@@ -876,6 +933,8 @@ namespace OOPGames
         int _PlayerNumber = 0;
         public string Name { get { return "PacMan_HumanPlayer"; } }
 
+        private static bool _checkBox1Checked = false;
+        public static bool checkBox1Checked { get { return _checkBox1Checked; } }
 
         public int PlayerNumber { get { return 1; } }
 
@@ -898,8 +957,21 @@ namespace OOPGames
         
         public IMove_Pac GetMove(IMoveSelection selection, IField_Pac field)
         {
-            
-            if (selection is IKeySelection)
+            if (selection is IClickSelection)
+            {
+                // Wandelt die Auswahl in ein IClickSelection-Objekt um.
+                IClickSelection sel = (IClickSelection)selection;
+
+                if (sel.XClickPos >= 20 && sel.XClickPos <= 40 &&
+                    sel.YClickPos >= 350 && sel.YClickPos <= 370)
+                {
+                    _checkBox1Checked = !_checkBox1Checked;
+
+                    return null;
+                }
+            }
+
+                if (selection is IKeySelection)
             {
                 IKeySelection sel = (IKeySelection)selection;
 

@@ -23,7 +23,7 @@ namespace OOPGames
 
     //TicTacToe specific game rules
     //DIESES INTERFACE NICHT ÄNDERN!
-    public interface IA_MühleRules : IGameRules
+    public interface IA_MühleRules : IGameRules3
     {
         //Gets the current state of the tictactoe field; the class implementing
         //this interface should hold a game field corresponding to the rules

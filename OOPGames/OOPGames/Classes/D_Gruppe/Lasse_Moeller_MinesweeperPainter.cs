@@ -39,11 +39,8 @@ namespace OOPGames
             Color bgColor = Color.FromRgb(0, 0, 0);
             canvas.Background = new SolidColorBrush(bgColor);
             Color lineColor = Color.FromRgb(20, 20, 20);
-            Color lineColor2 = Color.FromRgb(255, 0, 0);
-            Color lineColor3 = Color.FromRgb(255, 255, 255);
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Brush lineStroke2 = new SolidColorBrush(lineColor2);
-            Brush lineStroke3 = new SolidColorBrush(lineColor3);
+
 
 
 
@@ -74,24 +71,92 @@ namespace OOPGames
             {
                 for (int s = 0; s < 10; s++)
                 {
+                    int Höhe =Convert.ToInt32(canvas.ActualHeight/10);
+                    int Breite = Convert.ToInt32(canvas.ActualWidth / 10);
+
                     if ( currentField[r, s].Aufgedeckt == true )
                     {
-                        int Zahlvar = currentField[r, s].Nachbarminen;
-                        string Zahlstr = Zahlvar.ToString();
-                        Rectangle Feld = new Rectangle() { Margin = new Thickness((r * (canvas.ActualWidth / 10)), (s * (canvas.ActualHeight / 10)), ((r+1) * (canvas.ActualWidth / 10)), ((s+1) * (canvas.ActualHeight / 10))), Stroke = lineStroke3, StrokeThickness = 3.0, Fill = lineStroke3 };
+                        int Zahlint = currentField[r, s].Nachbarminen;
+                        string Zahlstr = Zahlint.ToString();
+
+                        Rectangle Feld = new Rectangle
+                        {
+                            Width = Breite - 3,
+                            Height = Höhe - 3,
+                            Fill = new SolidColorBrush(Colors.White)
+                        };
+                        Canvas.SetLeft(Feld, s * Breite + 3);
+                        Canvas.SetTop(Feld, r * Höhe + 3);
                         canvas.Children.Add(Feld);
-                        TextBox Zahl = new TextBox() { Margin = new Thickness((r * (canvas.ActualWidth / 10)), (s * (canvas.ActualHeight / 10)), ((r + 1) * (canvas.ActualWidth / 10)), ((s + 1) * (canvas.ActualHeight / 10))), Text = Zahlstr};
+
+
+                        TextBox Zahl = new TextBox                      //
+                        {
+                            Width = Breite - 3,
+                            Height = Höhe - 3,
+                            Text = Zahlstr,
+                            FontSize = 30,
+                            TextAlignment = TextAlignment.Center,
+                        };
+                        byte red = 175;
+                        byte g = 175;
+                        byte b = 0;
+                        Color MyYellow = Color.FromRgb(red, g, b);
+                        SolidColorBrush MyYellowBrush = new SolidColorBrush(MyYellow); // Ändere den Namen von Brushes zu MyYellowBrush
+
+                        switch (Zahlstr)
+                        {
+                            case "1":
+                                Zahl.Foreground = Brushes.Blue;
+                                break;
+                            case "2":
+                                Zahl.Foreground = Brushes.Green;
+                                break;
+                            case "3":
+                                Zahl.Foreground = MyYellowBrush; // Verwende die erstellte MyYellowBrush für die Zahl 3
+                                break;
+                            case "4":
+                                Zahl.Foreground = Brushes.Orange;
+                                break;
+                            case "5":
+                                Zahl.Foreground = Brushes.Red;
+                                break;
+                            case "6":
+                                Zahl.Foreground = Brushes.Brown;
+                                break;
+                            case "7":
+                                Zahl.Foreground = Brushes.Magenta;
+                                break;
+                            case "8":
+                                Zahl.Foreground = Brushes.Black;
+                                break;
+                            default:
+                                Zahl.Foreground = Brushes.Black;
+                                break;
+                        }
+
+
+                        Canvas.SetLeft(Zahl, s * Breite + 3);
+                        Canvas.SetTop(Zahl, r * Höhe + 3);
                         canvas.Children.Add(Zahl);
-                        
+
+
+
                     }
-                    if ( currentField[r, s].Markiert == true )
+                    if ( currentField[r, s].Markiert == true )          //Malen von Flagge
                     {
-                        Rectangle Flagge = new Rectangle() { Margin = new Thickness((r * (canvas.ActualWidth / 10)), (s * (canvas.ActualHeight / 10)), ((r + 1) * (canvas.ActualWidth / 10)), ((s + 1) * (canvas.ActualHeight / 10))), Stroke = lineStroke2, StrokeThickness = 3.0 , Fill = lineStroke2 };
+                        Rectangle Flagge = new Rectangle
+                        {
+                            Width = Breite - 3,
+                            Height = Höhe - 3,
+                            Fill = new SolidColorBrush(Colors.Red)
+                        };
+                        Canvas.SetLeft(Flagge, s * Breite + 3);
+                        Canvas.SetTop(Flagge, r * Höhe + 3);
                         canvas.Children.Add(Flagge);
                     }
                 }
             }
-            //Width = ((canvas.ActualWidth / 10) - 6), Height = ((canvas.ActualHeight / 10) - 6),
         }
 
     }

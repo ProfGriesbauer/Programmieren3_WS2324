@@ -50,10 +50,18 @@ namespace OOPGames
                 }
             }
 
-            int MineCount = 0;                          //15 Minen werden zufällig generiert
+            int MineCount = 0;                          //Minen werden gelöscht
             Random rnd = new Random();
 
-            while (MineCount < 20) 
+            for(int i = 0; i < 10; i++)
+            {
+                for(int j = 0; j < 10; j++)
+                {
+                    _Field[i, j].Mine = false; 
+                }
+            } 
+
+           while (MineCount < 15) 
             {
                 int row= rnd.Next(10);
                 int col= rnd.Next(10);
