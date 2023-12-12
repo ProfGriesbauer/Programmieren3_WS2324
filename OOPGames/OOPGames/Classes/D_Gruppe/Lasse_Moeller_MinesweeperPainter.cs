@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
 namespace OOPGames
@@ -69,7 +70,7 @@ namespace OOPGames
             canvas.Children.Add(l4);
 
             //Feld
-            for (int r = 1; r < 10; r++)
+            for (int r = 0; r < 10; r++)
             {
                 for (int s = 0; s < 10; s++)
                 {
@@ -77,20 +78,20 @@ namespace OOPGames
                     {
                         int Zahlvar = currentField[r, s].Nachbarminen;
                         string Zahlstr = Zahlvar.ToString();
-                        Rectangle Feld = new Rectangle() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10) - 6), Height = ((canvas.ActualHeight / 10) - 6), Stroke = lineStroke3, StrokeThickness = 3.0, Fill = lineStroke3 };
+                        Rectangle Feld = new Rectangle() { Margin = new Thickness((r * (canvas.ActualWidth / 10)), (s * (canvas.ActualHeight / 10)), ((r+1) * (canvas.ActualWidth / 10)), ((s+1) * (canvas.ActualHeight / 10))), Stroke = lineStroke3, StrokeThickness = 3.0, Fill = lineStroke3 };
                         canvas.Children.Add(Feld);
-                        TextBox Zahl = new TextBox() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10) - 6), Height = ((canvas.ActualHeight / 10) - 6), Text = Zahlstr};
+                        TextBox Zahl = new TextBox() { Margin = new Thickness((r * (canvas.ActualWidth / 10)), (s * (canvas.ActualHeight / 10)), ((r + 1) * (canvas.ActualWidth / 10)), ((s + 1) * (canvas.ActualHeight / 10))), Text = Zahlstr};
                         canvas.Children.Add(Zahl);
                         
                     }
                     if ( currentField[r, s].Markiert == true )
                     {
-                        Rectangle Flagge = new Rectangle() { Margin = new Thickness(3 + (r * (canvas.ActualWidth / 10)), 3 + (canvas.ActualHeight / 10), 0, 0), Width = ((canvas.ActualWidth / 10)-6), Height = ((canvas.ActualHeight / 10)-6), Stroke = lineStroke2, StrokeThickness = 3.0 , Fill = lineStroke2 };
+                        Rectangle Flagge = new Rectangle() { Margin = new Thickness((r * (canvas.ActualWidth / 10)), (s * (canvas.ActualHeight / 10)), ((r + 1) * (canvas.ActualWidth / 10)), ((s + 1) * (canvas.ActualHeight / 10))), Stroke = lineStroke2, StrokeThickness = 3.0 , Fill = lineStroke2 };
                         canvas.Children.Add(Flagge);
                     }
                 }
             }
-
+            //Width = ((canvas.ActualWidth / 10) - 6), Height = ((canvas.ActualHeight / 10) - 6),
         }
 
     }
