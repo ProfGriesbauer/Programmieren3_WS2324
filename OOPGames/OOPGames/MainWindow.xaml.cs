@@ -50,6 +50,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPainter(new S20_MinesweeperPainter());
             OOPGamesManager.Singleton.RegisterPainter(new X_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new E_TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new A_TicTacToePaint());
 
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new D_MinesweeperRules());
@@ -79,11 +80,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new A_TicTacToeComputerPlayer2());
 
 
-            //Painters
-
-            //Rules
-
-            //Players
+            
 
 
             InitializeComponent();
