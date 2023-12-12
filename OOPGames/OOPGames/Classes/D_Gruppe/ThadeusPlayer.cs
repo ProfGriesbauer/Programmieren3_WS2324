@@ -92,10 +92,21 @@ namespace OOPGames
 
         public int PlayerNumber { get { return _playernumber; } }
 
-        public int but { get { return _but; } }
-        public int Row { get { return _row; } }
+        public int but { 
+            get { return _but; } 
+            set { _but =value; } }
+        public int Row { 
+            get { return _row; }
+            set { _row=value; } }
 
-        public int Colum { get { return _colum;} }
+        public int Colum
+        {
+            get { return _colum; }
+            set { _colum = value; }
+        }
+        
+
+      
     }
 
 }
