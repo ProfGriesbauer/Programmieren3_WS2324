@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -78,11 +79,14 @@ namespace OOPGames
                     Button btn = new Button
                     {
                         Name = $"btn_{row}_{col}",
-                        Content = "", // Content will be empty initially
+                        Content = "0", // Content will be empty initially
                         Tag = new { Row = row, Col = col }, // Set Row and Col as properties using an anonymous type
                         DataContext = CellState.Covered
 
                     };
+                    
+                    btn.Foreground = Brushes.Transparent;
+                    btn.FontSize = 13;
                     btn.FontWeight = FontWeights.Bold;
                     btn.Click += Btn_Click;
                     btn.MouseRightButtonDown += Btn_RightClick;
@@ -127,9 +131,9 @@ namespace OOPGames
             }
             // 10 mines randomly placed
         }
-        
-    
 
+
+        
 
 
         private void UpdateButtonContent(IX_TicTacToeField currentField)
@@ -248,6 +252,7 @@ namespace OOPGames
                 {
                     btn.DataContext = CellState.Uncovered;
                     btn.Background = Brushes.Transparent;
+                    btn.Foreground = Brushes.Red;
                     btn.Content = "☼"; // This is the mine symbol
                     timer.Stop();
                     MessageBox.Show("Game Over! You hit a mine 😝.", "Game Over");
@@ -337,22 +342,26 @@ namespace OOPGames
         {
             Button btn = (Button)sender;
             CellState currentState = (CellState)btn.DataContext;
-            
-            if (currentState==CellState.Covered|| currentState == CellState.Flagged) { }
-            if (!Win() && !Lose())
+
+            if (currentState == CellState.Covered || currentState == CellState.Flagged)
             {
-
-                if (currentState == CellState.Covered)
+                if (!Win() && !Lose())
                 {
-                    btn.Content = "F";
 
-                    btn.DataContext = CellState.Flagged;
-                }
-                else
-                {
-                    btn.Content = "";
+                    if (currentState == CellState.Covered)
+                    {
+                        btn.Foreground = Brushes.Red;
+                        btn.Content = "🚩";
 
-                    btn.DataContext = CellState.Covered;
+                        btn.DataContext = CellState.Flagged;
+                    }
+                    else
+                    {
+                        btn.Foreground = Brushes.Transparent;
+                        btn.Content = "0";
+
+                        btn.DataContext = CellState.Covered;
+                    }
                 }
             }
         }
@@ -414,11 +423,13 @@ namespace OOPGames
                     Button btn = new Button
                     {
                         Name = $"btn_{row}_{col}",
-                        Content = "", // Content will be empty initially
+                        Content = "0", // Content will be empty initially
                         Tag = new { Row = row, Col = col }, // Set Row and Col as properties using an anonymous type
                         DataContext = CellState.Covered
 
                     };
+                    btn.Foreground = Brushes.Transparent;
+                    btn.FontSize = 13;
                     btn.FontWeight = FontWeights.Bold;
                     btn.Click += Btn_Click;
                     btn.MouseRightButtonDown += Btn_RightClick;
@@ -584,6 +595,7 @@ namespace OOPGames
                 {
                     btn.DataContext = CellState.Uncovered;
                     btn.Background = Brushes.Transparent;
+                    btn.Foreground = Brushes.Red;
                     btn.Content = "☼"; // This is the mine symbol
                     timer.Stop();
                     MessageBox.Show("Game Over! You hit a mine 😝.", "Game Over");
@@ -675,21 +687,26 @@ namespace OOPGames
             Button btn = (Button)sender;
             CellState currentState = (CellState)btn.DataContext;
 
-            if (currentState == CellState.Covered || currentState == CellState.Flagged) { }
-            if (!Win() && !Lose())
+            if (currentState == CellState.Covered || currentState == CellState.Flagged)
             {
-
-                if (currentState == CellState.Covered)
+                if (!Win() && !Lose())
                 {
-                    btn.Content = "F";
 
-                    btn.DataContext = CellState.Flagged;
-                }
-                else
-                {
-                    btn.Content = "";
+                    if (currentState == CellState.Covered)
+                    {
+                        btn.Foreground = Brushes.Red;
+                        btn.Content = "🚩";
 
-                    btn.DataContext = CellState.Covered;
+
+                        btn.DataContext = CellState.Flagged;
+                    }
+                    else
+                    {
+                        btn.Foreground = Brushes.Transparent;
+                        btn.Content = "0";
+
+                        btn.DataContext = CellState.Covered;
+                    }
                 }
             }
         }
