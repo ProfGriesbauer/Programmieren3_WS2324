@@ -1,6 +1,7 @@
 ﻿using OOPGames.Classes.D_Gruppe;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +67,10 @@ namespace OOPGames
         {
             return 1;
         }
+        if (GameLost == true) 
+        {
+                return 1;
+        }
         else return -1;
     }
         
@@ -81,9 +86,11 @@ namespace OOPGames
                     _Field[r, s].Markiert = false;
                 }
             }
+        GameLost = false;
     }
 
 
+        public bool GameLost = false;
 
         public void DoMove(ID_MinesweeperMove move)
         {
@@ -95,6 +102,8 @@ namespace OOPGames
                 if (_Field[_row, _colum].Mine == true)
                 {
                     MessageBox.Show("Game Over! You hit a mine", "Game Over"); //verloren
+                    GameLost = true;
+                    //LockLaptop();  
                 }
                 else
                 {
@@ -125,5 +134,20 @@ namespace OOPGames
             }
             
         }
+
+
+        /*
+        public void LockLaptop()
+        {
+            try
+            {
+                Process.Start("rundll32.exe", "user32.dll,LockWorkStation");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Systemfehler: " + ex.Message);
+            }
+        }
+        */
     }
 }
