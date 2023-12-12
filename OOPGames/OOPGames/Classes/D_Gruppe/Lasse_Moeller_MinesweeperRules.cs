@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OOPGames
 {
@@ -12,7 +13,7 @@ namespace OOPGames
     {
 
         Hannes_Kochendörfer_MinesweeperField _Field = new Hannes_Kochendörfer_MinesweeperField();
-        public string Name { get { return "LasseMinesweeperRules"; } }
+        public string Name { get { return "D Minesweeper_Rules"; } }
 
         public IGameField CurrentField { get { return (IGameField) _Field; } }
 
@@ -72,30 +73,49 @@ namespace OOPGames
         public void ClearField() 
         
     {
-        for (int r = 1; r < 10; r++)
+        for (int r = 0; r < 10; r++)
         {
             for (int s = 0; s < 10; s++)
             {
                 _Field[r, s].Aufgedeckt = false;
-            }
+                _Field[r, s].Mine = false;
+                _Field[r, s].Markiert = false;
+                }
         }
     }
 
 
 
-        public void DoMove(D_MinesweeperMove move)
+        public void DoMove(ID_MinesweeperMove move)
         {
             int _but = move.but;
             int _row = move.Row;
             int _colum = move.Colum;
-            if (_Field[_row,_colum].Mine==true)
+            if (_but == 0) //links
             {
+                if (_Field[_row, _colum].Mine == true)
+                {
+                    MessageBox.Show("Game Over! You hit a mine", "Game Over"); //verloren
+                }
+                else
+                {
+                    if (_Field[_row, _colum].Aufgedeckt == false && _Field[_row, _colum].Markiert == false) { _Field[_row, _colum].Aufgedeckt = true; }
+                    
 
-            } 
-            else
-            {
-
+                }
             }
+            else {
+                
+                if (_but == 2)//rechts
+                {
+                    if (_Field[_row, _colum].Aufgedeckt == true) { return; }
+                    else { 
+                        if (_Field[_row, _colum].Markiert == false) { _Field[_row, _colum].Markiert = true; }
+                        else { _Field[_row, _colum].Markiert = false; }
+                    }
+                }
+            }
+           
         }
 
         public void DoMove(IPlayMove move)

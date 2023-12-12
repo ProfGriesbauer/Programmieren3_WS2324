@@ -16,6 +16,9 @@ namespace OOPGames
 
         double CanvasHöhe { get; set; }
         double CanvasBreite { get; set; }
+        bool Aufgedeckt { get; }   
+        bool Markiert {  get; }
+        int Nachbarminen { get; }  
 
     }
 
@@ -33,5 +36,7 @@ namespace OOPGames
     public interface ID_MinesweeperMove : IPlayMove
     {
         int but {  get; }
+        int Row { get;}
+        int Colum { get;}
     }
 }

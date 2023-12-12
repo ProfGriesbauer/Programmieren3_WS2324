@@ -11,7 +11,7 @@ namespace OOPGames
     {
         int _playernumber;
 
-        public string Name { get { return "D Minesweeperplayer"; } }
+        public string Name { get { return "D Minesweeper_Player"; } }
 
         public int PlayerNumber { get { return _playernumber; } }
 
@@ -32,12 +32,12 @@ namespace OOPGames
 
         public IPlayMove GetMove(IMoveSelection selection, ID_MinesweeperField field)
         {
-            double _feldbreite = field.CanvasHöhe / 10;
-            double _feldhöhe = field.CanvasBreite / 10;
-            
-            if (_playernumber == 1)
-            {
-                if (selection is IClickSelection)
+            double _feldbreite = field.CanvasBreite / 10;
+            double _feldhöhe =  field.CanvasHöhe / 10;
+
+            // if (_playernumber == 1)
+            // {
+            if (selection is IClickSelection)
                 {
                     IClickSelection sel = (IClickSelection)selection;
                     for (int i = 0; i < 10; i++)
@@ -54,7 +54,7 @@ namespace OOPGames
                         }
                     }
                 }
-            }
+           // }
             return null;
         }
 
