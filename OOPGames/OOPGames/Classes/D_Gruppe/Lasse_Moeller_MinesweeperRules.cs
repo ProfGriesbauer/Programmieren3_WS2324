@@ -98,12 +98,42 @@ namespace OOPGames
                 }
                 else
                 {
-                    if (_Field[_row, _colum].Aufgedeckt == false && _Field[_row, _colum].Markiert == false)
+                    if (_Field[_row, _colum].Aufgedeckt == false && _Field[_row, _colum].Markiert == false)//feld aufdecken
                     { 
                         _Field[_row, _colum].Aufgedeckt = true;
-                        if (_Field[_row, _colum].Nachbarminen == 0)
+                        if (_Field[_row, _colum].Nachbarminen == 0)//wennfeld null nachbarfelder aufdecken
                         {
+                            int _vertikal = -1;
+                            int _vertikalmax = 1;
                             
+                            if (_row == 0) { _vertikal = 0; }
+                            if (_row == 9) { _vertikalmax = 0; }
+                            
+                            while (_vertikal <= _vertikalmax) 
+                            { 
+                                
+                                int _horizontal = -1;
+                                int _horizontalmax = 1;
+                                if (_colum == 0) { _horizontal = 0; }
+                                if (_colum == 9) { _horizontalmax = 0; }
+                                
+                                while (_horizontal <= _horizontalmax)
+                                {
+                                    
+                                    
+                                   
+                                    //_Field[_row+_vertikal, _colum+_horizontal].Aufgedeckt = true;
+                                   
+                                    move = new D_MinesweeperMove(_row + _vertikal, _colum + _horizontal, 0);
+                                    DoMove(move);
+                                    
+                                   _horizontal++;
+                                    
+                                }
+                                _vertikal++;
+                            }
+
+
                         }
                     }
                     
