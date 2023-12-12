@@ -53,6 +53,7 @@ namespace OOPGames
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
+            timeElapsed = 0;
 
             // Start the timer
             timer.Start();
