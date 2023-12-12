@@ -33,7 +33,7 @@ namespace OOPGames
         private bool[,] mineField;
         // 10x10 field
         private DispatcherTimer timer;
-        private int timeElapsed;
+        private int timeElapsed=0;
         private TextBlock timeCounter;
         private bool gameEnded = false;
 
@@ -296,20 +296,25 @@ namespace OOPGames
         }
         private void Btn_RightClick(object sender, MouseButtonEventArgs e) //place flags
         {
-            
             Button btn = (Button)sender;
             CellState currentState = (CellState)btn.DataContext;
-            if ((btn.Content) != "F")
+            
+            if (currentState==CellState.Covered|| currentState == CellState.Flagged) { }
+            if (!Win() && !Lose())
             {
-                btn.Content = "F";
-                
-                btn.DataContext = CellState.Flagged;
-            }
-            else
-            {
-                btn.Content = "";
 
-                btn.DataContext = CellState.Covered;
+                if (currentState == CellState.Covered)
+                {
+                    btn.Content = "F";
+
+                    btn.DataContext = CellState.Flagged;
+                }
+                else
+                {
+                    btn.Content = "";
+
+                    btn.DataContext = CellState.Covered;
+                }
             }
         }
     }
