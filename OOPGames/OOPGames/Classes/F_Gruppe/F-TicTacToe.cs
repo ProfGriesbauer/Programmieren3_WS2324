@@ -212,8 +212,12 @@ namespace OOPGames
             if (CountAdjacentMines(row, col) == 0)
             {
                 // Rekursiv die benachbarten Felder aufdecken
-                UncoverField(row - 1, col); // oben
+                UncoverField(row - 1, col);//oben
+                UncoverField(row - 1, col+1);// obenrechts
+                UncoverField(row - 1, col-1);// obenlinks
                 UncoverField(row + 1, col); // unten
+                UncoverField(row + 1, col+1); // untenrechts
+                UncoverField(row + 1, col-1); // untenlinks
                 UncoverField(row, col - 1); // links
                 UncoverField(row, col + 1); // rechts
             }
@@ -335,6 +339,343 @@ namespace OOPGames
             CellState currentState = (CellState)btn.DataContext;
             
             if (currentState==CellState.Covered|| currentState == CellState.Flagged) { }
+            if (!Win() && !Lose())
+            {
+
+                if (currentState == CellState.Covered)
+                {
+                    btn.Content = "F";
+
+                    btn.DataContext = CellState.Flagged;
+                }
+                else
+                {
+                    btn.Content = "";
+
+                    btn.DataContext = CellState.Covered;
+                }
+            }
+        }
+    }
+    public class S20_MinesweeperPainter : X_BaseTicTacToePaint
+    {
+        private const int Rows = 20;
+        private const int Cols = 20;
+
+        private int c = 0;
+
+
+        private Button[,] mineButtons;
+        private bool[,] mineField;
+        // 10x10 field
+        private DispatcherTimer timer;
+        private int timeElapsed = 0;
+        private TextBlock timeCounter;
+        private bool gameEnded = false;
+
+        public override string Name { get { return "F_20_Minesweeper_Painter"; } }
+
+        public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
+        {
+
+            canvas.Children.Clear();
+
+            // Initialize Minesweeper grid of buttons
+            InitializeMineButtons(canvas);
+
+            // Update button content based on the current field
+            UpdateButtonContent(currentField);
+            // Initialize the timer
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timeElapsed = 0;
+
+            // Start the timer
+            timer.Start();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // Update the timeElapsed property every second
+            timeElapsed++;
+            timeCounter.Text = $"Time: {timeElapsed}s";
+        }
+
+        private void InitializeMineButtons(Canvas canvas)
+        {
+            mineButtons = new Button[Rows, Cols];
+            mineField = new bool[Rows, Cols];
+
+
+            for (int row = 0; row < Rows; row++)
+            {
+                for (int col = 0; col < Cols; col++)
+                {
+                    Button btn = new Button
+                    {
+                        Name = $"btn_{row}_{col}",
+                        Content = "", // Content will be empty initially
+                        Tag = new { Row = row, Col = col }, // Set Row and Col as properties using an anonymous type
+                        DataContext = CellState.Covered
+
+                    };
+                    btn.FontWeight = FontWeights.Bold;
+                    btn.Click += Btn_Click;
+                    btn.MouseRightButtonDown += Btn_RightClick;
+                    Canvas.SetTop(btn, row * 30); // Adjust position based on the size you want
+                    Canvas.SetLeft(btn, col * 30);
+                    canvas.Children.Add(btn);
+                    mineButtons[row, col] = btn;
+                }
+            }
+            timeCounter = new TextBlock
+            {
+                Text = "Time: 0s",
+                FontSize = 16,
+                Foreground = Brushes.Black,
+                Margin = new Thickness(10, 10, 0, 0)
+            };
+            canvas.Children.Add(timeCounter);
+            // Positioniere das Zeit-Counter
+            Canvas.SetTop(timeCounter, Rows * 30 + 10);
+            Canvas.SetLeft(timeCounter, 10);
+            Button btntime = new Button
+            {
+                Content = timeElapsed,
+
+            };
+            Canvas.SetTop(btntime, 400); // Adjust position based on the size you want
+            Canvas.SetLeft(btntime, 40);
+
+            Random rand = new Random();
+            int mineCount = 0;
+
+            while (mineCount < 40)
+            {
+                int row = rand.Next(Rows);
+                int col = rand.Next(Cols);
+
+                if (!mineField[row, col])
+                {
+                    mineField[row, col] = true;
+                    mineCount++;
+                }
+            }
+            // 10 mines randomly placed
+        }
+
+
+
+
+
+        private void UpdateButtonContent(IX_TicTacToeField currentField)
+        {
+
+        }
+        //raus?????????????????????????????????????????????????????????????????????????????????????????????????????????
+        private void UncoverField(int row, int col)
+        {
+            // Überprüfe, ob das Feld innerhalb der Spielfeldgrenzen liegt
+            if (row < 0 || col < 0 || row >= Rows || col >= Cols)
+                return;
+
+            Button btn = mineButtons[row, col];
+            CellState currentState = (CellState)btn.DataContext;
+
+            // Überprüfe, ob das Feld bereits aufgedeckt ist oder als "Flagged" markiert ist
+            if (currentState == CellState.Uncovered || currentState == CellState.Flagged)
+                return;
+
+            // Decke das Feld auf
+            btn.Background = Brushes.Transparent;
+            btn.DataContext = CellState.Uncovered;
+
+            int adjacentMines = CountAdjacentMines(row, col);
+
+            btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
+            if (adjacentMines == 1)
+            {
+                btn.Foreground = Brushes.Blue;
+
+
+            }
+            else if (adjacentMines == 2)
+            {
+                btn.Foreground = Brushes.Green;
+
+            }
+            else if (adjacentMines == 3)
+            {
+                btn.Foreground = Brushes.Red;
+
+            }
+            else if (adjacentMines == 4)
+            {
+                btn.Foreground = Brushes.Purple;
+
+            }
+            else if (adjacentMines == 5)
+            {
+                btn.Foreground = Brushes.Yellow;
+
+            }
+            else if (adjacentMines == 6)
+            {
+                btn.Foreground = Brushes.Turquoise;
+
+            }
+            else if (adjacentMines == 7)
+            {
+                btn.Foreground = Brushes.Gray;
+
+            }
+            else if (adjacentMines == 8)
+            {
+                btn.Foreground = Brushes.Black;
+
+            }
+            else
+            {
+                btn.Foreground = Brushes.Transparent;
+
+            }
+
+
+
+
+
+            // Überprüfe, ob das Feld keine benachbarten Minen hat
+            if (CountAdjacentMines(row, col) == 0)
+            {
+                // Rekursiv die benachbarten Felder aufdecken
+                UncoverField(row - 1, col);//oben
+                UncoverField(row - 1, col + 1);// obenrechts
+                UncoverField(row - 1, col - 1);// obenlinks
+                UncoverField(row + 1, col); // unten
+                UncoverField(row + 1, col + 1); // untenrechts
+                UncoverField(row + 1, col - 1); // untenlinks
+                UncoverField(row, col - 1); // links
+                UncoverField(row, col + 1); // rechts
+            }
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+
+            Button btn = (Button)sender;
+            int row = (int)((dynamic)btn.Tag).Row;
+            int col = (int)((dynamic)btn.Tag).Col;
+            if (!Win() && !Lose())
+            {
+
+
+                CellState currentState = (CellState)btn.DataContext;
+
+
+
+
+
+
+
+
+
+
+                if (mineField[row, col]) // column (De: Spalte)
+                {
+                    btn.DataContext = CellState.Uncovered;
+                    btn.Background = Brushes.Transparent;
+                    btn.Content = "☼"; // This is the mine symbol
+                    timer.Stop();
+                    MessageBox.Show("Game Over! You hit a mine 😝.", "Game Over");
+
+                }
+                else
+                {
+                    UncoverField(row, col);
+
+
+                }
+                if (Win())
+                {
+                    // Stop the timer when the player wins
+                    timer.Stop();
+                    MessageBox.Show($"You Win! Congratulations :). Time elapsed: {timeElapsed} seconds", "Congratulations");
+                }
+            }
+        }
+        public bool Lose()
+        {
+            for (int row = 0; row < 20; row++)
+            {
+                for (int col = 0; col < 20; col++)
+                {
+                    Button btn = mineButtons[row, col];
+
+                    // Annahme: Der Button-Zustand wird über die DataContext-Eigenschaft gespeichert
+                    CellState currentState = (CellState)btn.DataContext;
+                    if (mineField[row, col] && currentState == CellState.Uncovered)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        }
+        public bool Win()
+        {
+            int uncoveredButtonCount = 0;
+            for (int col = 0; col < 20; col++)
+            {
+                for (int row = 0; row < 20; row++)
+                {
+                    Button btn = mineButtons[row, col];
+
+                    // Assuming CellState is assigned to DataContext property
+                    CellState currentState = (CellState)btn.DataContext;
+
+                    // Compare with CellState.Uncovered
+                    if (currentState == CellState.Uncovered)
+                    {
+                        // Erhöhe den Zähler, wenn der Button im "Uncovered"-Zustand ist
+                        uncoveredButtonCount++;
+                    }
+                }
+
+
+            }
+            if (uncoveredButtonCount == 360)
+            {
+                return true;
+            }
+            else { return false; }
+        }
+
+
+
+
+
+        private int CountAdjacentMines(int row, int col) //neighbor mines :)
+        {
+            int counter = 0;
+            for (int i = row - 1; i <= row + 1; i++)
+            {
+                for (int j = col - 1; j <= col + 1; j++)
+                {
+                    if (i >= 0 && j >= 0 && i < 20 && j < 20)
+                    {
+                        if (mineField[i, j]) { counter++; }
+                    }
+                }
+            }
+            return counter;
+        }
+        private void Btn_RightClick(object sender, MouseButtonEventArgs e) //place flags
+        {
+            Button btn = (Button)sender;
+            CellState currentState = (CellState)btn.DataContext;
+
+            if (currentState == CellState.Covered || currentState == CellState.Flagged) { }
             if (!Win() && !Lose())
             {
 
