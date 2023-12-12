@@ -11,8 +11,34 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public interface II_TikTakToe_Painter : IX_PaintTicTacToe
+    public interface II_PlayerSpaceIn : IHumanGamePlayer
+    {
+        II_SpaceShipMove GetMove(IMoveSelection selection, Game_Field field);
+    }
+
+    public interface II_RulesSpaceIn : IGameRules2
+    {
+        void DoSpaceMove(II_SpaceShipMove move);
+    }
+
+    public interface II_PaintSpaceIn : IPaintGame2 
     {
 
     }
+
+    public interface II_Komet
+    {
+        void Komet_Move();
+        int CountKometen { get; } 
+    }
+    public interface II_SpaceShipMove : IPlayMove, IColumnMove
+    {
+
+    }
+
+    public interface Anzeige
+    {
+
+    }
+
 }

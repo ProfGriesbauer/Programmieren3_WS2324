@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using OOPGames.Classes.D_Gruppe;
 
 namespace OOPGames
 {
@@ -11,7 +12,14 @@ namespace OOPGames
     {
         //Indexer: returns 0 for a unused tictactoefield, 1 for player 1, 2 for player 2, etc.
         //indexed by the row r and column c
-        D_MinesweeperField this[int r, int c] { get; set; }
+        MineField this[int r, int s] { get; set; }
+
+        double CanvasHöhe { get; set; }
+        double CanvasBreite { get; set; }
+        bool Aufgedeckt { get; }   
+        bool Markiert {  get; }
+        int Nachbarminen { get; }  
+
     }
 
     public interface ID_MinesweeperPainter : IPaintGame
@@ -21,15 +29,14 @@ namespace OOPGames
         void PaintMinesweeperField(Canvas canvas, ID_MinesweeperField currentField);
     }
 
-    public class D_MinesweeperField
+    public interface ID_Minesweeperplayer :IHumanGamePlayer
     {
-        public bool Mine;
-        public bool Aufgedeckt;
-        public bool Markiert;
-        public int Nachbarminen;
-        }
-    public interface D_Minsweeperplayer 
+        
+    }
+    public interface ID_MinesweeperMove : IPlayMove
     {
-        void Minsweeperplayer();
+        int but { get; set; }
+        int Row { get; set; }
+        int Colum { get; set; }
     }
 }

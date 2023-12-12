@@ -151,7 +151,7 @@ namespace OOPGames
         }
     }
 
-    public class X_TicTacToeFieldSH : X_BaseTicTacToeField
+    public class X_TicTacToeFieldSH : X_BaseTicTacToeFieldSH
     {
         int[,] _FieldSH = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
 

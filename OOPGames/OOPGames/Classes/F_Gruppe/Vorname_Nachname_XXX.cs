@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames
 {
-    public class B_XXX
+    public class F_XXX
     {
     }
 }
