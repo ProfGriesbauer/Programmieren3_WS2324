@@ -273,7 +273,7 @@ namespace OOPGames
                 if (KometArray[39].Positiony >= _Startabstand && 
                     KometArray[39].Positiony <= _Startabstand + 30)
                 {
-                    KometArray[0].fällt = true;
+                    _KometArray[0].fällt = true;
                     _Startabstand = Abstand(_KometenIndex);
                     _KometenIndex++;
                 }
