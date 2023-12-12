@@ -74,14 +74,14 @@ namespace OOPGames
         
     {
         for (int r = 0; r < 10; r++)
-        {
+            {/*
             for (int s = 0; s < 10; s++)
-            {
-                _Field[r, s].Aufgedeckt = false;
-                _Field[r, s].Mine = false;
-                _Field[r, s].Markiert = false;
-                }
-        }
+                {
+                    _Field[r, s].Aufgedeckt = false;
+                    _Field[r, s].Mine = false;
+                    _Field[r, s].Markiert = false;
+                }*/
+            }
     }
 
 
