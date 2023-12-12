@@ -50,7 +50,7 @@ namespace OOPGames
                 }
             }
 
-            int MineCount = 0;                          //Minen werden zufällig generiert
+            int MineCount = 0;                          //Minen werden gelöscht
             Random rnd = new Random();
 
             for(int i = 0; i < 10; i++)
@@ -61,7 +61,7 @@ namespace OOPGames
                 }
             } 
 
-            while (MineCount < 15) 
+           while (MineCount < 15) 
             {
                 int row= rnd.Next(10);
                 int col= rnd.Next(10);

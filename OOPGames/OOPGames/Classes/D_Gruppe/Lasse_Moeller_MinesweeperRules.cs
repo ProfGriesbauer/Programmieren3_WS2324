@@ -1,6 +1,7 @@
 ﻿using OOPGames.Classes.D_Gruppe;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace OOPGames
     {
         int q = 0;
 
-        for (int r = 1; r < 10; r++)
+        for (int r = 0; r < 10; r++)
         {
             for (int s = 0; s < 10; s++)
             {
@@ -66,24 +67,31 @@ namespace OOPGames
         {
             return 1;
         }
+        if (GameLost == true) 
+        {
+                return 1;
+        }
         else return -1;
     }
-        
 
-        public void ClearField() 
-        
-    {
-        for (int r = 0; r < 10; r++)
+
+        public void ClearField()
+
+        {
+            for (int r = 0; r < 10; r++)
             {
-            for (int s = 0; s < 10; s++)
+                for (int s = 0; s < 10; s++)
                 {
                     _Field[r, s].Aufgedeckt = false;
                     _Field[r, s].Markiert = false;
                 }
             }
-    }
+            _Field = new Hannes_Kochendörfer_MinesweeperField();
+            GameLost = false;
+        }
 
 
+        public bool GameLost = false;
 
         public void DoMove(ID_MinesweeperMove move)
         {
@@ -95,6 +103,8 @@ namespace OOPGames
                 if (_Field[_row, _colum].Mine == true && _Field[_row, _colum].Markiert == false)
                 {
                     MessageBox.Show("Game Over! You hit a mine", "Game Over"); //verloren
+                    GameLost = true;
+                    //LockLaptop();  
                 }
                 else
                 {
@@ -162,5 +172,20 @@ namespace OOPGames
             }
             
         }
+
+
+        /*
+        public void LockLaptop()
+        {
+            try
+            {
+                Process.Start("rundll32.exe", "user32.dll,LockWorkStation");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Systemfehler: " + ex.Message);
+            }
+        }
+        */
     }
 }
