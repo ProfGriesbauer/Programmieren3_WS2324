@@ -285,7 +285,7 @@ namespace OOPGames
                 _Startabstand = Abstand(_KometenIndex);
                 _KometenIndex++;
             }
-            if (_KometenIndex == 39)
+            if (_KometenIndex == 40)
             {
                 _KometenIndex = 0;
             }

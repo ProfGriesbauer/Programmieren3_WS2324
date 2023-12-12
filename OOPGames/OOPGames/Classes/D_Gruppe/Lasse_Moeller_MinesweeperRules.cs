@@ -72,17 +72,17 @@ namespace OOPGames
 
         public void ClearField() 
         
-    {
-        for (int r = 0; r < 10; r++)
-            {/*
-            for (int s = 0; s < 10; s++)
+        {
+            for (int r = 0; r < 10; r++)
+                {
+                for (int s = 0; s < 10; s++)
                 {
                     _Field[r, s].Aufgedeckt = false;
-                    _Field[r, s].Mine = false;
                     _Field[r, s].Markiert = false;
-                }*/
+                }
             }
-    }
+            _Field = new Hannes_Kochendörfer_MinesweeperField();
+        }
 
 
 
@@ -93,13 +93,20 @@ namespace OOPGames
             int _colum = move.Colum;
             if (_but == 0) //links
             {
-                if (_Field[_row, _colum].Mine == true)
+                if (_Field[_row, _colum].Mine == true && _Field[_row, _colum].Markiert == false)
                 {
                     MessageBox.Show("Game Over! You hit a mine", "Game Over"); //verloren
                 }
                 else
                 {
-                    if (_Field[_row, _colum].Aufgedeckt == false && _Field[_row, _colum].Markiert == false) { _Field[_row, _colum].Aufgedeckt = true; }
+                    if (_Field[_row, _colum].Aufgedeckt == false && _Field[_row, _colum].Markiert == false)
+                    { 
+                        _Field[_row, _colum].Aufgedeckt = true;
+                        if (_Field[_row, _colum].Nachbarminen == 0)
+                        {
+                            
+                        }
+                    }
                     
 
                 }
