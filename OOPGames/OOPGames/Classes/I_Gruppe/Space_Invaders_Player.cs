@@ -16,7 +16,7 @@ namespace OOPGames
 
         public int PlayerNumber { get { return 1; } }
 
-        public int DeltaColumn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        // test public int DeltaColumn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
         public bool CanBeRuledBy(IGameRules rules)

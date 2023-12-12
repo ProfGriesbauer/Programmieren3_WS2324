@@ -44,7 +44,7 @@ namespace OOPGames
 
 
                 //Background und Ufo Zeichnen und Endscreen
-                ((Game_Field)currentField).Background_o.Background_Paint(canvas);
+                //test ((Game_Field)currentField).Background_o.Background_Paint(canvas);
                 ((Game_Field)currentField).Background_u.Background_Paint(canvas);
                 ((Game_Field)currentField).scoreboard.Paint(canvas);
                 if (((Game_Field)currentField).UFO.isHit == 1)

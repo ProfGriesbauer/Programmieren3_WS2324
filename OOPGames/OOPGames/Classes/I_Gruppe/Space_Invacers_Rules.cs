@@ -56,6 +56,12 @@ namespace OOPGames
         public void ClearField()
         {
             I_Field = new Game_Field();
+            I_Field.KometenFolge.KometArray[39].fällt = true; // test
+            I_Field.KometenFolge.KometArray[0].Komet_halt_all = false; //test
+            I_Field.KometenFolge.KometArray[0].CountKometen = 0; //test
+            //test I_Field.scoreboard.score = 0;
+
+
         }
 
         public void DoMove(IPlayMove move)
@@ -169,7 +175,7 @@ namespace OOPGames
 
         //Getter Setter
         public bool Komet_halt_all { get { return _Komet_halt_all; } set { _Komet_halt_all = value; } }
-        public int CountKometen { get { return _countKometen; } }
+        public int CountKometen { get { return _countKometen; } set { _countKometen = value; } }
         public bool fällt { set { _fällt = value; } get { return _fällt; } }
         public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
         public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
@@ -447,7 +453,7 @@ namespace OOPGames
 
     public class Scoreboard : Anzeige
     {
-        int _score = 123;
+        int _score = 0;
 
         // Um das Scoreboard zubenutzen muss der Getter benutzt werden
         public int score { get { return _score; } set { _score = value; } }
