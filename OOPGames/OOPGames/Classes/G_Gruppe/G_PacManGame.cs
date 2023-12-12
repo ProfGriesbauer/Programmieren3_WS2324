@@ -15,7 +15,7 @@ using OOPGames;
 using System.Threading;
 using System.Data;
 using System.Timers;
-
+using System.Windows.Media.Effects;
 
 namespace OOPGames
 {
@@ -158,6 +158,7 @@ namespace OOPGames
         private int _Spalte = 1;
         private bool _Befahrbar = false;
         private bool _PacGefressen = false;
+        private bool _PacWon = false;
 
         private int _DeltaRow;
         private int _DeltaColumn;
@@ -196,6 +197,12 @@ namespace OOPGames
             get { return _PacGefressen; }
 
             set { _PacGefressen = value; }
+        }
+        public bool PacWon
+        {
+            get { return _PacWon; }
+
+            set { _PacWon = value; }
         }
     }
 
@@ -379,8 +386,15 @@ namespace OOPGames
 
         public int CheckIfPLayerWon()
         {
-            
-            return -1; // Nicht implementiert!!!!!!!!!!!!!!!!!
+            if (_16x16Field.PacPosition.PacWon == true)
+            {
+                return 1;
+            }
+            if (_16x16Field.PacPosition.PacGefressen == true)
+            {
+                return 2;
+            }
+            return -1;
         }
 
         public void ClearField()
@@ -394,7 +408,7 @@ namespace OOPGames
             }
             InitialisiereFeld();
         }
-        
+
         public void DoPacManMove(IMove_Pac move)
         {
 
@@ -479,16 +493,11 @@ namespace OOPGames
                     if (targetField.Befahrbar)
                     {
                         //Alle Werte aus IFieldProperies & IFiedGang im 16x16Field abfragbar
-                        IFieldGang GangFeld = (IFieldGang)_16x16Field[currentRow, currentColumn];
-                        bool currentPunkt = GangFeld.Punkt;
-                        bool currentPacinFeld = GangFeld.PacinFeld;
+                        IFieldGang currentGangFeld = (IFieldGang)_16x16Field[currentRow, currentColumn];
+                        bool currentPunkt = currentGangFeld.Punkt;
+                        bool currentPacinFeld = currentGangFeld.PacinFeld;
                         // Pacman aus dem aktuellen Feld entfernen
-                        if (currentPacinFeld==true)
-                        {
-                            _16x16Field.PacPosition.PacGefressen = true;
-                            _16x16Field.PacPosition.Reihe = 0;
-                            _16x16Field.PacPosition.Spalte = 0;
-                        }
+
                         _16x16Field[currentRow, currentColumn] = new Pac_FieldGang { Punkt = currentPunkt, PacinFeld = false, Reihe = currentRow, Spalte = currentColumn, GeistinFeld = false};
 
                         // Die Pac-Position im Spielfeld aktualisieren
@@ -499,10 +508,23 @@ namespace OOPGames
                         _16x16Field.GeistPosition.Reihe = newRow;
                         _16x16Field.GeistPosition.Spalte = newColumn;
 
+                        IFieldGang newGangFeld = (IFieldGang)_16x16Field[newRow, newColumn];
+                        bool newPacinFeld = newGangFeld.PacinFeld;
+                        bool newPunkt = newGangFeld.Punkt;
+
+                        if (currentPacinFeld == true || newPacinFeld == true)
+                        {
+                            _16x16Field.PacPosition.PacGefressen = true;
+                            _16x16Field.PacPosition.Reihe = 0;
+                            _16x16Field.PacPosition.Spalte = 0;
+                            _16x16Field.PacPosition.DeltaRow_PacPosition = 0;
+                            _16x16Field.PacPosition.DeltaColumn_PacPosition = 0;
+                        }
+
                         // Pacman in das Ziel-Feld einfügen
                         _16x16Field[newRow, newColumn] = new Pac_FieldGang
                         {
-                            Punkt = currentPunkt,
+                            Punkt = newPunkt,
                             GeistinFeld = true,
                             Reihe = newRow,
                             Spalte = newColumn,
@@ -645,6 +667,7 @@ namespace OOPGames
                 // Holen Sie die aktuelle Position des Pacman im Feld
                 int currentRow = pacField.PacPosition.Reihe;
                 int currentColumn = pacField.PacPosition.Spalte;
+                bool GameOver = pacField.PacPosition.PacGefressen;
                 int GeistRow = pacField.GeistPosition.Reihe;
                 int GeistColumn = pacField.GeistPosition.Spalte;
 
@@ -719,8 +742,13 @@ namespace OOPGames
                             }
                             else
                             {
-
                                 AnzahlPunkte++;
+                                //if (AnzahlPunkte == 118)
+                                if (AnzahlPunkte >= 118)
+                                {
+                                    pacField.PacPosition.PacWon = true;
+                                    pacField.PacPosition.PacGefressen = false;
+                                }
                             }
                             if (IstGeist)
                             {
@@ -730,7 +758,6 @@ namespace OOPGames
                                 Canvas.SetLeft(GeistBody, (Spalte * 20) + 2); // 8 ist der halbe Durchmesser der Ellipse
                                 Canvas.SetTop(GeistBody, (Zeile * 20) + 2);
                             }
-
 
                         }
                         else
@@ -746,25 +773,54 @@ namespace OOPGames
 
                     }
                 }
+
+                //TextBlock PacTime = new TextBlock() { FontSize = 20 };
+                //PacTime.Text = "Zeit: " + Math.Round(Time); 
+                //Canvas.SetLeft(PacTime, 20);
+                //Canvas.SetTop(PacTime, 400);
+                //canvas.Children.Add(PacTime);
+
+                bool GameWon = pacField.PacPosition.PacWon;
+
+                if (GameWon)
+                {
+                    TextBlock Game = new TextBlock() { Text = "Game", FontSize = 80, Foreground = Brushes.Green, FontWeight = FontWeights.UltraBold };
+                    Canvas.SetLeft(Game, 48);
+                    Canvas.SetTop(Game, 50);
+                    TextBlock Over = new TextBlock() { Text = "Won", FontSize = 80, Foreground = Brushes.Green, FontWeight = FontWeights.UltraBold };
+                    Canvas.SetLeft(Over, 66);
+                    Canvas.SetTop(Over, 150);
+                    //Alle Punkte = 118
+                    TextBlock PacScore = new TextBlock() { Text = "Score: " + (AnzahlPunkte - 1), FontSize = 40, Foreground = Brushes.Orange, FontWeight = FontWeights.UltraBold };
+                    Canvas.SetLeft(PacScore, 76);
+                    Canvas.SetTop(PacScore, 230);
+                    canvas.Children.Add(PacScore);
+
+                    canvas.Children.Add(Game);
+                    canvas.Children.Add(Over);
+                }
+
+                if (GameOver)
+                {
+                    TextBlock Game = new TextBlock() { Text = "Game",FontSize = 80, Foreground = Brushes.Red, FontWeight = FontWeights.UltraBold};
+                    Canvas.SetLeft(Game, 48);
+                    Canvas.SetTop(Game, 50);
+                    TextBlock Over = new TextBlock() { Text = "Over", FontSize = 80, Foreground = Brushes.Red, FontWeight = FontWeights.UltraBold };
+                    Canvas.SetLeft(Over, 66);
+                    Canvas.SetTop(Over, 150);
+                    //Alle Punkte = 118
+                    TextBlock PacScore = new TextBlock() { Text = "Score: " + (AnzahlPunkte - 1), FontSize = 40, Foreground = Brushes.Orange, FontWeight = FontWeights.UltraBold };
+                    Canvas.SetLeft(PacScore, 76);
+                    Canvas.SetTop(PacScore, 230);
+                    canvas.Children.Add(PacScore);
+
+                    canvas.Children.Add(Game);
+                    canvas.Children.Add(Over);
+                }
             }
-                //int currentPunktzahl= pacField.PacPosition.I;
-                TextBlock PacScore = new TextBlock() { FontSize = 20 };
-                PacScore.Text = "Score: " + AnzahlPunkte; // das ist das wie ich es bei unserem game brauchen werde 
-                Canvas.SetLeft(PacScore, 20);
-                Canvas.SetTop(PacScore, 330);
-                canvas.Children.Add(PacScore);
+        }
 
-                TextBlock PacTime = new TextBlock() { FontSize = 20 };
-                PacTime.Text = "Zeit: " + Math.Round(Time); // das ist das wie ich es bei unserem game brauchen werde 
-                Canvas.SetLeft(PacTime, 20);
-                Canvas.SetTop(PacTime, 400);
-                canvas.Children.Add(PacTime);
-                //
-                
 
-            }
-
-        
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
@@ -822,8 +878,7 @@ namespace OOPGames
                 if (field is IField_Pac)
                 {
                     IField_Pac pacField = (IField_Pac)field;
-                    if (pacField.PacPosition.PacGefressen == false)
-                    {
+                                        
                         // Holen Sie die aktuelle Position des Pacman im Feld
                         int currentRow = pacField.PacPosition.Reihe;
                         int currentColumn = pacField.PacPosition.Spalte;
@@ -869,7 +924,7 @@ namespace OOPGames
                             }
                         }
 
-                    }
+                    
                 }
             }
             
