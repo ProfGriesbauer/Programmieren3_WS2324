@@ -61,7 +61,7 @@ namespace OOPGames
                 }
             } 
 
-            while (MineCount < 20)                      //Minen werden generiert
+           while (MineCount < 15) 
             {
                 int row= rnd.Next(10);
                 int col= rnd.Next(10);

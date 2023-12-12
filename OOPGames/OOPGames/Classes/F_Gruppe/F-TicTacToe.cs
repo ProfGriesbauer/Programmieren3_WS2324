@@ -137,7 +137,87 @@ namespace OOPGames
 
         }
         //raus?????????????????????????????????????????????????????????????????????????????????????????????????????????
+        private void UncoverField(int row, int col)
+        {
+            // Überprüfe, ob das Feld innerhalb der Spielfeldgrenzen liegt
+            if (row < 0 || col < 0 || row >= Rows || col >= Cols)
+                return;
 
+            Button btn = mineButtons[row, col];
+            CellState currentState = (CellState)btn.DataContext;
+
+            // Überprüfe, ob das Feld bereits aufgedeckt ist oder als "Flagged" markiert ist
+            if (currentState == CellState.Uncovered || currentState == CellState.Flagged)
+                return;
+
+            // Decke das Feld auf
+            btn.Background = Brushes.Transparent;
+            btn.DataContext = CellState.Uncovered;
+            
+            int adjacentMines = CountAdjacentMines(row, col);
+
+            btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
+            if (adjacentMines == 1)
+            {
+                btn.Foreground = Brushes.Blue;
+
+
+            }
+            else if (adjacentMines == 2)
+            {
+                btn.Foreground = Brushes.Green;
+
+            }
+            else if (adjacentMines == 3)
+            {
+                btn.Foreground = Brushes.Red;
+
+            }
+            else if (adjacentMines == 4)
+            {
+                btn.Foreground = Brushes.Purple;
+
+            }
+            else if (adjacentMines == 5)
+            {
+                btn.Foreground = Brushes.Yellow;
+
+            }
+            else if (adjacentMines == 6)
+            {
+                btn.Foreground = Brushes.Turquoise;
+
+            }
+            else if (adjacentMines == 7)
+            {
+                btn.Foreground = Brushes.Gray;
+
+            }
+            else if (adjacentMines == 8)
+            {
+                btn.Foreground = Brushes.Black;
+
+            }
+            else
+            {
+                btn.Foreground = Brushes.Transparent;
+
+            }
+
+
+
+
+
+            // Überprüfe, ob das Feld keine benachbarten Minen hat
+            if (CountAdjacentMines(row, col) == 0)
+            {
+                // Rekursiv die benachbarten Felder aufdecken
+                UncoverField(row - 1, col); // oben
+                UncoverField(row + 1, col); // unten
+                UncoverField(row, col - 1); // links
+                UncoverField(row, col + 1); // rechts
+            }
+        }
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
@@ -147,10 +227,10 @@ namespace OOPGames
             int col = (int)((dynamic)btn.Tag).Col;
             if (!Win()&&!Lose())
             {
-                gameEnded = true;
-                btn.Background = Brushes.Transparent;
+                
+                
                 CellState currentState = (CellState)btn.DataContext;
-                btn.DataContext = CellState.Uncovered;
+                
 
 
 
@@ -162,6 +242,8 @@ namespace OOPGames
 
                 if (mineField[row, col]) // column (De: Spalte)
                 {
+                    btn.DataContext = CellState.Uncovered;
+                    btn.Background = Brushes.Transparent;
                     btn.Content = "☼"; // This is the mine symbol
                     timer.Stop();
                     MessageBox.Show("Game Over! You hit a mine 😝.", "Game Over");
@@ -169,55 +251,7 @@ namespace OOPGames
                 }
                 else
                 {
-                    int adjacentMines = CountAdjacentMines(row, col);
-
-                    btn.Content = (adjacentMines >= 0) ? adjacentMines.ToString() : "";
-                    if (adjacentMines == 1)
-                    {
-                        btn.Foreground = Brushes.Blue;
-
-
-                    }
-                    else if (adjacentMines == 2)
-                    {
-                        btn.Foreground = Brushes.Green;
-
-                    }
-                    else if (adjacentMines == 3)
-                    {
-                        btn.Foreground = Brushes.Red;
-
-                    }
-                    else if (adjacentMines == 4)
-                    {
-                        btn.Foreground = Brushes.Purple;
-
-                    }
-                    else if (adjacentMines == 5)
-                    {
-                        btn.Foreground = Brushes.Yellow;
-
-                    }
-                    else if (adjacentMines == 6)
-                    {
-                        btn.Foreground = Brushes.Turquoise;
-
-                    }
-                    else if (adjacentMines == 7)
-                    {
-                        btn.Foreground = Brushes.Gray;
-
-                    }
-                    else if (adjacentMines == 8)
-                    {
-                        btn.Foreground = Brushes.Black;
-
-                    }
-                    else
-                    {
-                        btn.Foreground = Brushes.Transparent;
-
-                    }
+                    UncoverField(row,col);
 
 
                 }
