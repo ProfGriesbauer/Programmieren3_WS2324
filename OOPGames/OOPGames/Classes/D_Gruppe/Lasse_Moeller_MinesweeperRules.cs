@@ -46,7 +46,7 @@ namespace OOPGames
     {
         int q = 0;
 
-        for (int r = 1; r < 10; r++)
+        for (int r = 0; r < 10; r++)
         {
             for (int s = 0; s < 10; s++)
             {
