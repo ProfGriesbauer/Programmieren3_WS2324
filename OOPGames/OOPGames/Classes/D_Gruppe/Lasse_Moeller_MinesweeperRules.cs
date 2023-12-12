@@ -73,13 +73,13 @@ namespace OOPGames
         }
         else return -1;
     }
-        
 
-        public void ClearField() 
-        
+
+        public void ClearField()
+
         {
             for (int r = 0; r < 10; r++)
-                {
+            {
                 for (int s = 0; s < 10; s++)
                 {
                     _Field[r, s].Aufgedeckt = false;
@@ -87,7 +87,8 @@ namespace OOPGames
                 }
             }
             _Field = new Hannes_Kochendörfer_MinesweeperField();
-        GameLost = false;
+            GameLost = false;
+        }
 
 
         public bool GameLost = false;
