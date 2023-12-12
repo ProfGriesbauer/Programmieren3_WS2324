@@ -98,17 +98,22 @@ namespace OOPGames
                             FontSize = 30,
                             TextAlignment = TextAlignment.Center,
                         };
+                        byte red = 175;
+                        byte g = 175;
+                        byte b = 0;
+                        Color MyYellow = Color.FromRgb(red, g, b);
+                        SolidColorBrush MyYellowBrush = new SolidColorBrush(MyYellow); // Ändere den Namen von Brushes zu MyYellowBrush
 
                         switch (Zahlstr)
                         {
                             case "1":
-                                Zahl.Foreground = Brushes.Blue; // Ändere die Farbe für die Zahl 1
+                                Zahl.Foreground = Brushes.Blue;
                                 break;
                             case "2":
-                                Zahl.Foreground = Brushes.Green; // Ändere die Farbe für die Zahl 2
+                                Zahl.Foreground = Brushes.Green;
                                 break;
                             case "3":
-                                Zahl.Foreground = Brushes.Yellow; // Ändere die Farbe für die Zahl 3
+                                Zahl.Foreground = MyYellowBrush; // Verwende die erstellte MyYellowBrush für die Zahl 3
                                 break;
                             case "4":
                                 Zahl.Foreground = Brushes.Orange;
@@ -126,7 +131,7 @@ namespace OOPGames
                                 Zahl.Foreground = Brushes.Black;
                                 break;
                             default:
-                                Zahl.Foreground = Brushes.Black; // Standardfarbe für andere Zahlen
+                                Zahl.Foreground = Brushes.Black;
                                 break;
                         }
 
