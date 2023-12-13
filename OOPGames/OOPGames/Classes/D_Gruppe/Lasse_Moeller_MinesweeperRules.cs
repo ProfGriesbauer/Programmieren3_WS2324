@@ -65,7 +65,8 @@ namespace OOPGames
         }
         if (q == 100)
         {
-            return 1;
+                MessageBox.Show("You found all mines", "Gratulations");
+                return 1;                
         }
         if (GameLost == true) 
         {
