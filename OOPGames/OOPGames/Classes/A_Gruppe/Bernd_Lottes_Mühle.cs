@@ -155,12 +155,12 @@ namespace OOPGames
 
         public void StartedGameCall()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void TickGameCall()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 
