@@ -51,7 +51,7 @@ namespace OOPGames
         {
             for (int s = 0; s < 10; s++)
             {
-                if ( _Field[r, s].Mine == true && _Field[r, s].Markiert == true )
+                if ( _Field[r, s].Mine == true /*&& _Field[r, s].Markiert == true */)
                 {
                     q++;
                 }
