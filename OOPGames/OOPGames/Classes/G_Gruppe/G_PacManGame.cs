@@ -67,8 +67,6 @@ namespace OOPGames
 
     public class Pac_FieldWand : IFieldWand
     {
-        private bool _Punkt = true;
-        private bool _GeistinFeld = false;
         private int _Reihe = 0;
         private int _Spalte = 0;
         private bool _Befahrbar = false;
