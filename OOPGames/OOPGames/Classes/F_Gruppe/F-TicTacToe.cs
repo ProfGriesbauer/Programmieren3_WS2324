@@ -33,13 +33,13 @@ namespace OOPGames
         private Button[,] mineButtons;
         private bool[,] mineField;
         // 10x10 field
-        private DispatcherTimer timer;
+        
         private int timeElapsed=0;
         private TextBlock timeCounter;
-        private bool gameEnded = false;
+        
 
         public override string Name { get { return "F_Minesweeper_Painter"; } }
-
+        private DispatcherTimer timer;
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
 
@@ -51,9 +51,11 @@ namespace OOPGames
             // Update button content based on the current field
             UpdateButtonContent(currentField);
             // Initialize the timer
+
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
+            
             timeElapsed = 0;
 
             // Start the timer
@@ -291,7 +293,11 @@ namespace OOPGames
 
         }
         public bool Win()
-        {
+        { 
+            if (Lose())
+            {
+                return false;
+            }
             int uncoveredButtonCount=0;
             for (int col = 0; col < 10; col++)
             {
@@ -377,13 +383,13 @@ namespace OOPGames
         private Button[,] mineButtons;
         private bool[,] mineField;
         // 10x10 field
-        private DispatcherTimer timer;
+        
         private int timeElapsed = 0;
         private TextBlock timeCounter;
         private bool gameEnded = false;
 
         public override string Name { get { return "F_20_Minesweeper_Painter"; } }
-
+        private DispatcherTimer timer;
         public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
         {
 
@@ -636,6 +642,10 @@ namespace OOPGames
         }
         public bool Win()
         {
+            if (Lose())
+            {
+                return false;
+            }
             int uncoveredButtonCount = 0;
             for (int col = 0; col < 20; col++)
             {
