@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -52,6 +53,8 @@ namespace OOPGames
                     ((Game_Field)currentField).gameend.Paint(canvas);
                 }
                 
+                ((Game_Field)currentField).steuerung.Paint(canvas);
+
 
             }
             

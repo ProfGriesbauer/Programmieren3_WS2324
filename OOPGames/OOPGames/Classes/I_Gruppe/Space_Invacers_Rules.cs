@@ -6,6 +6,7 @@ using System.Runtime.DesignerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -56,6 +57,12 @@ namespace OOPGames
         public void ClearField()
         {
             I_Field = new Game_Field();
+            I_Field.KometenFolge.KometArray[39].fällt = true; // test
+            I_Field.KometenFolge.KometArray[0].Komet_halt_all = false; //test
+            I_Field.KometenFolge.KometArray[0].CountKometen = 0; //test
+            //test I_Field.scoreboard.score = 0;
+
+
         }
 
         public void DoMove(IPlayMove move)
@@ -131,7 +138,7 @@ namespace OOPGames
         Background _Background_u = new Background(600, 0, 400, 100, 1);
         public Background Background_u { get { return _Background_u; } }
 
-        Background _Background_o = new Background(-50, 0, 400, 100, 1);
+        Background _Background_o = new Background(-50, 0, 400, 100, 2);
         public Background Background_o { get { return _Background_o; } }
 
         // test Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
@@ -142,6 +149,9 @@ namespace OOPGames
 
         Gameend _gameend = new Gameend();
         public Gameend gameend { get { return _gameend; } }
+
+        Controll _steuerung = new Controll();    
+        public Controll steuerung { get { return _steuerung; } }
 
 
         //erstellt ein Array mit der länge anzähl aus kometen
@@ -169,7 +179,7 @@ namespace OOPGames
 
         //Getter Setter
         public bool Komet_halt_all { get { return _Komet_halt_all; } set { _Komet_halt_all = value; } }
-        public int CountKometen { get { return _countKometen; } }
+        public int CountKometen { get { return _countKometen; } set { _countKometen = value; } }
         public bool fällt { set { _fällt = value; } get { return _fällt; } }
         public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
         public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
@@ -310,7 +320,7 @@ namespace OOPGames
     {
         //Variablen
         int _y_pos = 550;
-        int _x_pos = 20;
+        int _x_pos = 185;
         static int _Geschwindigkeit = 5;
         int _hit = 0;
 
@@ -334,6 +344,11 @@ namespace OOPGames
             Glas.Height = 10; // Durchmesser von 10 Pixeln
             Glas.Fill = Brushes.Silver;
             canvas.Children.Add(Glas);
+            Ellipse Alien = new Ellipse();
+            Alien.Width = 4; // Durchmesser von 4 Pixeln
+            Alien.Height = 4; // Durchmesser von 4 Pixeln
+            Alien.Fill = Brushes.LimeGreen;
+            canvas.Children.Add(Alien);
             Ellipse Lightv = new Ellipse();
             Lightv.Width = 2; // Durchmesser von 2 Pixeln
             Lightv.Height = 2; // Durchmesser von 2 Pixeln
@@ -354,6 +369,26 @@ namespace OOPGames
             Lightr.Height = 2; // Durchmesser von 2 Pixeln
             Lightr.Fill = Brushes.Yellow;
             canvas.Children.Add(Lightr);
+            Ellipse Lightvl = new Ellipse();
+            Lightvl.Width = 2; // Durchmesser von 2 Pixeln
+            Lightvl.Height = 2; // Durchmesser von 2 Pixeln
+            Lightvl.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lightvl);
+            Ellipse Lightvr = new Ellipse();
+            Lightvr.Width = 2; // Durchmesser von 2 Pixeln
+            Lightvr.Height = 2; // Durchmesser von 2 Pixeln
+            Lightvr.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lightvr);
+            Ellipse Lighthl = new Ellipse();
+            Lighthl.Width = 2; // Durchmesser von 2 Pixeln
+            Lighthl.Height = 2; // Durchmesser von 2 Pixeln
+            Lighthl.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lighthl);
+            Ellipse Lighthr = new Ellipse();
+            Lighthr.Width = 2; // Durchmesser von 2 Pixeln
+            Lighthr.Height = 2; // Durchmesser von 2 Pixeln
+            Lighthr.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lighthr);
 
 
             //Setzt den alle Formen auf Position
@@ -361,6 +396,8 @@ namespace OOPGames
             Canvas.SetLeft(Ship, _x_pos);
             Canvas.SetTop(Glas, _y_pos + 10);
             Canvas.SetLeft(Glas, _x_pos + 10);
+            Canvas.SetTop(Alien, _y_pos + 14);
+            Canvas.SetLeft(Alien, _x_pos + 13);
             Canvas.SetTop(Lightv, _y_pos + 3);
             Canvas.SetLeft(Lightv, _x_pos + 14);
             Canvas.SetTop(Lightl, _y_pos + 14);
@@ -369,6 +406,14 @@ namespace OOPGames
             Canvas.SetLeft(Lighth, _x_pos + 14);
             Canvas.SetTop(Lightr, _y_pos + 14);
             Canvas.SetLeft(Lightr, _x_pos + 25);
+            Canvas.SetTop(Lightvl, _y_pos + 6);
+            Canvas.SetLeft(Lightvl, _x_pos + 6);
+            Canvas.SetTop(Lightvr, _y_pos + 6);
+            Canvas.SetLeft(Lightvr, _x_pos + 22);
+            Canvas.SetTop(Lighthl, _y_pos + 22);
+            Canvas.SetLeft(Lighthl, _x_pos + 6);
+            Canvas.SetTop(Lighthr, _y_pos + 22);
+            Canvas.SetLeft(Lighthr, _x_pos + 22);
 
         }
 
@@ -431,11 +476,11 @@ namespace OOPGames
             else {
                 if (_color == 1)
                 {
-                    Background.Fill = Brushes.Blue;
+                    Background.Fill = Brushes.White;
                 }
                 else
                 {
-                    Background.Fill = Brushes.Pink;
+                    Background.Fill = Brushes.DarkGray;
                 }
             }
             canvas.Children.Add(Background);
@@ -447,7 +492,7 @@ namespace OOPGames
 
     public class Scoreboard : Anzeige
     {
-        int _score = 123;
+        int _score = 0;
 
         // Um das Scoreboard zubenutzen muss der Getter benutzt werden
         public int score { get { return _score; } set { _score = value; } }
@@ -530,6 +575,46 @@ namespace OOPGames
                 Properties.Settings.Default.Score = currantHigh;
                 Properties.Settings.Default.Save();
             }
+        }
+
+    }
+
+    public class Controll : Anzeige
+    {
+        public void Paint(Canvas canvas)
+        {
+            Color lineColor = Color.FromRgb(0, 0, 0);
+            Brush lineStroke = new SolidColorBrush(lineColor);
+
+            Line baseline1 = new Line() { X1 = 75, Y1 = 620, X2 = 175, Y2 = 620,Stroke = lineStroke,  StrokeThickness = 2.0 };
+            canvas.Children.Add(baseline1);
+
+            Line topline1 = new Line() { X1 = 75, Y1 = 620, X2 = 90, Y2 = 610, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(topline1);
+
+            Line bottomline1 = new Line() { X1 = 75, Y1 = 620, X2 = 90, Y2 = 630, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(bottomline1);
+
+            Line baseline2 = new Line() { X1 = 225, Y1 = 620, X2 = 325, Y2 = 620, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(baseline2);
+
+            Line topline2 = new Line() { X1 = 325, Y1 = 620, X2 = 310, Y2 = 610, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(topline2);
+
+            Line bottomline2 = new Line() { X1 = 325, Y1 = 620, X2 = 310, Y2 = 630, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(bottomline2);
+
+            TextBlock A = new TextBlock();
+            A.Text = "A";
+            canvas.Children.Add(A);
+            Canvas.SetTop(A, 605);
+            Canvas.SetLeft(A, 120);
+
+            TextBlock D = new TextBlock();
+            D.Text = "D";
+            canvas.Children.Add(D);
+            Canvas.SetTop(D, 605);
+            Canvas.SetLeft(D, 270);
         }
 
     }

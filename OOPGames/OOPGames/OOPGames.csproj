@@ -78,6 +78,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\A_Gruppe\Bernd_Lottes_Mühle.cs" />
     <Compile Include="Classes\A_Gruppe\Gerrit_Wichartz_Mühle.cs" />
     <Compile Include="Classes\B_Gruppe\4Gewinnt.cs" />
     <Compile Include="Classes\B_Gruppe\4GewinntGruppeB.cs" />

@@ -90,7 +90,7 @@ namespace OOPGames
                         canvas.Children.Add(Feld);
 
 
-                        TextBox Zahl = new TextBox
+                        TextBox Zahl = new TextBox                      //
                         {
                             Width = Breite - 3,
                             Height = Höhe - 3,
@@ -98,12 +98,52 @@ namespace OOPGames
                             FontSize = 30,
                             TextAlignment = TextAlignment.Center,
                         };
+                        byte red = 175;
+                        byte g = 175;
+                        byte b = 0;
+                        Color MyYellow = Color.FromRgb(red, g, b);
+                        SolidColorBrush MyYellowBrush = new SolidColorBrush(MyYellow); // Ändere den Namen von Brushes zu MyYellowBrush
+
+                        switch (Zahlstr)
+                        {
+                            case "1":
+                                Zahl.Foreground = Brushes.Blue;
+                                break;
+                            case "2":
+                                Zahl.Foreground = Brushes.Green;
+                                break;
+                            case "3":
+                                Zahl.Foreground = MyYellowBrush; // Verwende die erstellte MyYellowBrush für die Zahl 3
+                                break;
+                            case "4":
+                                Zahl.Foreground = Brushes.Orange;
+                                break;
+                            case "5":
+                                Zahl.Foreground = Brushes.Red;
+                                break;
+                            case "6":
+                                Zahl.Foreground = Brushes.Brown;
+                                break;
+                            case "7":
+                                Zahl.Foreground = Brushes.Magenta;
+                                break;
+                            case "8":
+                                Zahl.Foreground = Brushes.Black;
+                                break;
+                            default:
+                                Zahl.Foreground = Brushes.Black;
+                                break;
+                        }
+
+
                         Canvas.SetLeft(Zahl, s * Breite + 3);
                         Canvas.SetTop(Zahl, r * Höhe + 3);
                         canvas.Children.Add(Zahl);
 
+
+
                     }
-                    if ( currentField[r, s].Markiert == true )
+                    if ( currentField[r, s].Markiert == true )          //Malen von Flagge
                     {
                         Rectangle Flagge = new Rectangle
                         {

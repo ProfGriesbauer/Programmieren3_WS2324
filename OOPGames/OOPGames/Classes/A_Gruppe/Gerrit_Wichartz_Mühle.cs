@@ -82,89 +82,89 @@ namespace OOPGames
                 //1.Reihe
                 if (currentField[0, j] == 1)
                 {
-                    Ellipse A_E = new Ellipse() { Margin = new Thickness(20 + (j * 150), 20, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(5 + (j * 150), 5, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
                     canvas.Children.Add(A_E);
                 }
                 else if (currentField[0, j] == 2)
                 {
-                    Ellipse B_E = new Ellipse() { Margin = new Thickness(20 + (j * 150), 70, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(5 + (j * 150), 5, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
                     canvas.Children.Add(B_E);
                 }
                 //2.Reihe
                 if (currentField[1, j] == 1)
                 {
-                    Ellipse A_E = new Ellipse() { Margin = new Thickness(70 + (j * 100), 70, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(55 + (j * 100), 55, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
                     canvas.Children.Add(A_E);
                 }
                 else if (currentField[1, j] == 2)
                 {
-                    Ellipse B_E = new Ellipse() { Margin = new Thickness(70 + (j * 100), 20, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(55 + (j * 100), 55, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
                     canvas.Children.Add(B_E);
                 }
                 //3.Reihe
                 if (currentField[2, j] == 1)
                 {
-                    Ellipse A_E = new Ellipse() { Margin = new Thickness(120 + (j * 50), 120, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(105 + (j * 50), 105, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
                     canvas.Children.Add(A_E);
                 }
                 else if (currentField[2, j] == 2)
                 {
-                    Ellipse B_E = new Ellipse() { Margin = new Thickness(120 + (j * 50), 120, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(105 + (j * 50), 105, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
                     canvas.Children.Add(B_E);
                 }
                 //4.Reihe
                 if (currentField[3, j] == 1)
                 {
-                    Ellipse A_E = new Ellipse() { Margin = new Thickness(20 + (j * 50), 170, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(5 + (j * 50), 155, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
                     canvas.Children.Add(A_E);
                 }
                 else if (currentField[3, j] == 2)
                 {
-                    Ellipse B_E = new Ellipse() { Margin = new Thickness(20 + (j * 50), 170, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(5 + (j * 50), 155, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
                     canvas.Children.Add(B_E);
                 }
                 //5.Reihe
                 if (currentField[4, j] == 1)
                 {
-                    Ellipse A_E = new Ellipse() { Margin = new Thickness(220 + (j * 50), 170, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(205 + (j * 50), 155, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
                     canvas.Children.Add(A_E);
                 }
                 else if (currentField[4, j] == 2)
                 {
-                    Ellipse B_E = new Ellipse() { Margin = new Thickness(220 + (j * 50), 170, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(205 + (j * 50), 155, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
                     canvas.Children.Add(B_E);
                 }
                 //6.Reihe
                 if (currentField[5, j] == 1)
                 {
-                    Ellipse A_E = new Ellipse() { Margin = new Thickness(120 + (j * 50), 220, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(105 + (j * 50), 205, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
                     canvas.Children.Add(A_E);
                 }
                 else if (currentField[5, j] == 2)
                 {
-                    Ellipse B_E = new Ellipse() { Margin = new Thickness(120 + (j * 50), 220, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(105 + (j * 50), 205, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
                     canvas.Children.Add(B_E);
                 }
                 //7.Reihe
                 if (currentField[6, j] == 1)
                 {
-                    Ellipse A_E = new Ellipse() { Margin = new Thickness(70 + (j * 100), 270, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(55 + (j * 100), 255, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
                     canvas.Children.Add(A_E);
                 }
                 else if (currentField[6, j] == 2)
                 {
-                    Ellipse B_E = new Ellipse() { Margin = new Thickness(70 + (j * 100), 270, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(55 + (j * 100), 255, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
                     canvas.Children.Add(B_E);
                 }
                 //8.Reihe
                 if (currentField[7, j] == 1)
                 {
-                    Ellipse A_E = new Ellipse() { Margin = new Thickness(20 + (j * 150), 320, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
+                    Ellipse A_E = new Ellipse() { Margin = new Thickness(5 + (j * 150), 305, 0, 0), Width = 30, Height = 30, Stroke = A_Stroke, StrokeThickness = 3.0, Fill = A_Stroke };
                     canvas.Children.Add(A_E);
                 }
                 else if (currentField[7, j] == 2)
                 {
-                    Ellipse B_E = new Ellipse() { Margin = new Thickness(20 + (j * 150), 320, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
+                    Ellipse B_E = new Ellipse() { Margin = new Thickness(5 + (j * 150), 305, 0, 0), Width = 30, Height = 30, Stroke = B_Stroke, StrokeThickness = 3.0, Fill = B_Stroke };
                     canvas.Children.Add(B_E);
                 }
             }
@@ -208,24 +208,19 @@ namespace OOPGames
         }
     }
 
-
-    public class A_MühleMove : IA_MühleMove
+//Wir haben drei unterschiedliche Fälle: 1. Stein setzen 2. Stein verschieben 3. Setzen oder verschieben zur Mühle und Spielstein entfernen
+//Implementierung fehlt noch
+    public class A_MühleMoveSetzen : IA_MühleMove
     {
         int _Row = 0;
         int _Column = 0;
         int _PlayerNumber = 0;
-        int _oldRow = 0;
-        int _oldColumn = 0;
 
-
-        public A_MühleMove(int row, int column, int playerNumber, int oldrow, int oldcolumn)
+        public A_MühleMoveSetzen(int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
             _PlayerNumber = playerNumber;
-            //Bei verschieben der Spielsteine brauchen wir den Urprung
-            _oldRow = oldrow;
-            _oldColumn = oldcolumn;
             
         }
 
@@ -234,96 +229,117 @@ namespace OOPGames
         public int Column { get { return _Column; } }
 
         public int PlayerNumber { get { return _PlayerNumber; } }
-
-        public int OldRow { get { return _oldRow; } }
-
-        public int OldColumn { get { return _oldColumn; } }
     }
 
-    /*
-    public class A_TicTacToeHumanPlayer : X_BaseHumanTicTacToePlayer
+    
+    public class A_HumanMühlePlayer : IA_HumanMühlePlayer
     {
         int _PlayerNumber = 0;
+        int _PlayerPhase = 0;
 
-        public override string Name { get { return "A_HumanTicTacToePlayer"; } }
+        public string Name { get { return "A_HumanMühlePlayer"; } }
 
-        public override int PlayerNumber { get { return _PlayerNumber; } }
+        public int PlayerNumber { get { return _PlayerNumber; } }
 
-        public override IGamePlayer Clone()
+        public bool CanBeRuledBy(IGameRules rules)
         {
-            A_TicTacToeHumanPlayer ttthp = new A_TicTacToeHumanPlayer();
-            ttthp.SetPlayerNumber(_PlayerNumber);
-            return ttthp;
+            return rules is IA_MühleRules;
         }
 
-        public override IX_TicTacToeMove GetMove(IMoveSelection selection, IX_TicTacToeField field)
+        public IGamePlayer Clone()
+        {
+            A_TicTacToeHumanPlayer mhp = new A_TicTacToeHumanPlayer();
+            mhp.SetPlayerNumber(_PlayerNumber);
+            return mhp;
+        }
+
+        public IA_MühleMove GetMove(IMoveSelection selection, IA_MühleField field)
+        {
+        if (_PlayerPhase < 9)
         {
             if (selection is IClickSelection)
             {
                 IClickSelection sel = (IClickSelection)selection;
-                for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
                 {
-                    for (int j = 0; j < 3; j++)
+                    if (sel.XClickPos > 5 + (j * 150) && sel.XClickPos < 35 + (j * 150) &&
+                        sel.YClickPos > 5 && sel.YClickPos < 35 &&
+                        field[0, j] <= 0)
                     {
-                        if (sel.XClickPos > 20 + (j * 100) && sel.XClickPos < 120 + (j * 100) &&
-                            sel.YClickPos > 20 + (i * 100) && sel.YClickPos < 120 + (i * 100) &&
-                            field[i, j] <= 0)
-                        {
-                            return new X_TicTacToeMove(i, j, _PlayerNumber);
-                        }
+                        return new A_MühleMoveSetzen(0, j, _PlayerNumber);
+                    }
+                    //2.Reihe
+                    if (sel.XClickPos > 55 + (j * 100) && sel.XClickPos < 85 + (j * 100) &&
+                        sel.YClickPos > 55 && sel.YClickPos < 85 &&
+                        field[1, j] <= 0)
+                    {
+                        return new A_MühleMoveSetzen(1, j, _PlayerNumber);
+                    }
+                    //3.Reihe
+                    if (sel.XClickPos > 105 + (j * 50) && sel.XClickPos < 135 + (j * 50) &&
+                        sel.YClickPos > 105 && sel.YClickPos < 135 &&
+                        field[2, j] <= 0)
+                    {
+                        return new A_MühleMoveSetzen(2, j, _PlayerNumber);
+                    }
+                    //4.Reihe
+                    if (sel.XClickPos > 5 + (j * 50) && sel.XClickPos < 35 + (j * 50) &&
+                        sel.YClickPos > 155 && sel.YClickPos < 185 &&
+                        field[3, j] <= 0)
+                    {
+                        return new A_MühleMoveSetzen(3, j, _PlayerNumber);
+                    }
+                    //5.Reihe
+                    if (sel.XClickPos > 205 + (j * 50) && sel.XClickPos < 235 + (j * 50) &&
+                        sel.YClickPos > 155 && sel.YClickPos < 185 &&
+                        field[4, j] <= 0)
+                    {
+                        return new A_MühleMoveSetzen(4, j, _PlayerNumber);
+                    }
+                    //6.Reihe
+                    if (sel.XClickPos > 105 + (j * 50) && sel.XClickPos < 135 + (j * 50) &&
+                        sel.YClickPos > 205 && sel.YClickPos < 235 &&
+                        field[5, j] <= 0)
+                    {
+                        return new A_MühleMoveSetzen(5, j, _PlayerNumber);
+                    }
+                    //7.Reihe
+                    if (sel.XClickPos > 55 + (j * 100) && sel.XClickPos < 85 + (j * 10) &&
+                        sel.YClickPos > 255 && sel.YClickPos < 285 &&
+                        field[6, j] <= 0)
+                    {
+                        return new A_MühleMoveSetzen(6, j, _PlayerNumber);
+                    }
+                    //8.Reihe
+                    if (sel.XClickPos > 5 + (j * 150) && sel.XClickPos < 35 + (j * 150) &&
+                        sel.YClickPos > 305 && sel.YClickPos < 335 &&
+                        field[7, j] <= 0)
+                    {
+                        return new A_MühleMoveSetzen(7, j, _PlayerNumber);
                     }
                 }
-            }
+                _PlayerPhase = _PlayerPhase + 1;
 
+            }
+        }
+        else
+        {
+            //MühleMoveVerschieben
+        }
             return null;
         }
 
-        public override void SetPlayerNumber(int playerNumber)
+        public IPlayMove GetMove(IMoveSelection selection, IGameField field)
         {
-            _PlayerNumber = playerNumber;
-        }
-    }
-    /*
-    public class A_TicTacToeComputerPlayer : X_BaseComputerTicTacToePlayer
-    {
-        int _PlayerNumber = 0;
-
-        public override string Name { get { return "A_ComputerTicTacToePlayer"; } }
-
-        public override int PlayerNumber { get { return _PlayerNumber; } }
-
-        public override IGamePlayer Clone()
-        {
-            A_TicTacToeComputerPlayer ttthp = new A_TicTacToeComputerPlayer();
-            ttthp.SetPlayerNumber(_PlayerNumber);
-            return ttthp;
-        }
-
-        public override IX_TicTacToeMove GetMove(IX_TicTacToeField field)
-        {
-            Random rand = new Random();
-            int f = rand.Next(0, 8);
-            for (int i = 0; i < 9; i++)
+            if(field is IA_MühleField)
             {
-                int c = f % 3;
-                int r = ((f - c) / 3) % 3;
-                if (field[r, c] <= 0)
-                {
-                    return new X_TicTacToeMove(r, c, _PlayerNumber);
-                }
-                else
-                {
-                    f++;
-                }
+                this.GetMove(selection, (IA_MühleField)field);
             }
-
             return null;
         }
 
-        public override void SetPlayerNumber(int playerNumber)
+        public void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
         }
     }
-}
-    */
