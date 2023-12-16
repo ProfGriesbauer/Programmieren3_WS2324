@@ -357,7 +357,7 @@ namespace OOPGames
                     if (currentState == CellState.Covered)
                     {
                         btn.Foreground = Brushes.Red;
-                        btn.Content = "🚩";
+                        btn.Content = "F";
 
                         btn.DataContext = CellState.Flagged;
                     }
@@ -705,7 +705,7 @@ namespace OOPGames
                     if (currentState == CellState.Covered)
                     {
                         btn.Foreground = Brushes.Red;
-                        btn.Content = "🚩";
+                        btn.Content = "F";
 
 
                         btn.DataContext = CellState.Flagged;
