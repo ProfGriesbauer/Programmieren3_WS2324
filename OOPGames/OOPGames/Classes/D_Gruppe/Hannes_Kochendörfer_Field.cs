@@ -61,7 +61,7 @@ namespace OOPGames
                 }
             } 
 
-           while (MineCount < 15) 
+           while (MineCount < 10) 
             {
                 int row= rnd.Next(10);
                 int col= rnd.Next(10);

@@ -51,7 +51,7 @@ namespace OOPGames
         {
             for (int s = 0; s < 10; s++)
             {
-                if ( _Field[r, s].Mine == true && _Field[r, s].Markiert == true )
+                if ( _Field[r, s].Mine == true /*&& _Field[r, s].Markiert == true */)
                 {
                     q++;
                 }
@@ -65,7 +65,8 @@ namespace OOPGames
         }
         if (q == 100)
         {
-            return 1;
+                MessageBox.Show("You found all mines", "Gratulations");
+                return 1;                
         }
         if (GameLost == true) 
         {
