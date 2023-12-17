@@ -166,54 +166,39 @@ namespace OOPGames
             if (adjacentMines == 1)
             {
                 btn.Foreground = Brushes.Blue;
-
-
             }
             else if (adjacentMines == 2)
             {
                 btn.Foreground = Brushes.Green;
-
             }
             else if (adjacentMines == 3)
             {
                 btn.Foreground = Brushes.Red;
-
             }
             else if (adjacentMines == 4)
             {
                 btn.Foreground = Brushes.Purple;
-
             }
             else if (adjacentMines == 5)
             {
                 btn.Foreground = Brushes.Yellow;
-
             }
             else if (adjacentMines == 6)
             {
                 btn.Foreground = Brushes.Turquoise;
-
             }
             else if (adjacentMines == 7)
             {
                 btn.Foreground = Brushes.Gray;
-
             }
             else if (adjacentMines == 8)
             {
                 btn.Foreground = Brushes.Black;
-
             }
             else
             {
                 btn.Foreground = Brushes.Transparent;
-
             }
-
-
-
-
-
             // Überprüfe, ob das Feld keine benachbarten Minen hat
             if (CountAdjacentMines(row, col) == 0)
             {
@@ -237,19 +222,9 @@ namespace OOPGames
             int col = (int)((dynamic)btn.Tag).Col;
             if (!Win()&&!Lose())
             {
-                
-                
+                        
                 CellState currentState = (CellState)btn.DataContext;
                 
-
-
-
-
-
-
-
-
-
                 if (mineField[row, col]) // column (De: Spalte)
                 {
                     btn.DataContext = CellState.Uncovered;
@@ -258,13 +233,10 @@ namespace OOPGames
                     btn.Content = "☼"; // This is the mine symbol
                     timer.Stop();
                     MessageBox.Show("Game Over! You hit a mine 😝.", "Game Over");
-
                 }
                 else
                 {
                     UncoverField(row,col);
-
-
                 }
                 if (Win())
                 {
@@ -382,7 +354,7 @@ namespace OOPGames
 
         private Button[,] mineButtons;
         private bool[,] mineField;
-        // 10x10 field
+        // 20x20 field
         
         private int timeElapsed = 0;
         private TextBlock timeCounter;
@@ -478,7 +450,7 @@ namespace OOPGames
                     mineCount++;
                 }
             }
-            // 10 mines randomly placed
+            // 40 mines randomly placed
         }
 
 
@@ -489,7 +461,7 @@ namespace OOPGames
         {
 
         }
-        //raus?????????????????????????????????????????????????????????????????????????????????????????????????????????
+        
         private void UncoverField(int row, int col)
         {
             // Überprüfe, ob das Feld innerhalb der Spielfeldgrenzen liegt
@@ -766,24 +738,24 @@ namespace OOPGames
 
             return -1;
         }
-        //???????????????????????????????????????????????????????????????????????????????????????????????????????
+        
         public override void ClearField()
         {
-            for (int i = 0; i < 3; i++)
+           /* for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
                     _Field[i, j] = 0;
                 }
-            }
+            }*/
         }
 
         public override void DoTicTacToeMove(IX_TicTacToeMove move)
         {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+           /* if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
-            }
+            }*/
         }
     }
 
