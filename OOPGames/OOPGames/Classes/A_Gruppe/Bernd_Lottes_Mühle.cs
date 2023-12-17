@@ -20,6 +20,7 @@ namespace OOPGames
         IA_MühleField _Field = new A_MühleField();
         int moves = 0;
         bool mühleComp = false;
+        int phase = 0;
 
         IA_MühleField[] _FieldOld = new A_MühleField[6];
 
@@ -78,74 +79,106 @@ namespace OOPGames
 
         public int CheckIfPLayerWon()
         {
-            int sp1 = 0;
-            int sp2 = 0;
-            for (int i = 0; i < 3; i++)
+            if (phase == 0) { return -1; }
+
+            else if (phase == 1) 
             {
-                for (int j = 0; j < 8; j++)
+
+                int sp1 = 0;
+                int sp2 = 0;
+                for (int i = 0; i < 3; i++)
                 {
-                    if (_Field[i, j] == 1)
+                    for (int j = 0; j < 8; j++)
                     {
-                        sp1++;
-                    }
-                    else if (_Field[i, j] == 2)
-                    {
-                        sp2++;
+                        if (_Field[i, j] == 1)
+                        {
+                            sp1++;
+                        }
+                        else if (_Field[i, j] == 2)
+                        {
+                            sp2++;
+                        }
                     }
                 }
+
+                if (sp1 < 3) { return 2; }
+                if (sp2 < 3) { return 1; }
+
+                /*int spm1 = 0;                         Überprüft ob noch bewegungen möglich sind 
+                int spm2 = 0;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (_Field[i, j] == 1)
+                        {
+
+                        }
+                        else if (_Field[i, j] == 2)
+                        {
+                            sp2++;
+                        }
+                    }
+                }*/
             }
-
-            if (sp1 < 3) { return 2; }
-            if (sp2 < 3) { return 1; }
-
-            int spm1 = 0;
-            int spm2 = 0;
-
-            for (int i = 0; i < 3; i++)
+            else if (phase == 2)
             {
-                for (int j = 0; j < 8; j++)
+                int sp1 = 0;
+                int sp2 = 0;
+                for (int i = 0; i < 3; i++)
                 {
-                    if (_Field[i, j] == 1)
+                    for (int j = 0; j < 8; j++)
                     {
-
-                    }
-                    else if (_Field[i, j] == 2)
-                    {
-                        sp2++;
+                        if (_Field[i, j] == 1)
+                        {
+                            sp1++;
+                        }
+                        else if (_Field[i, j] == 2)
+                        {
+                            sp2++;
+                        }
                     }
                 }
+
+                if (sp1 < 3) { return 2; }
+                if (sp2 < 3) { return 1; }
             }
 
             return -1;
-        }
+        }           //Vorerst fertig überprüfung ob bewegung in zweiter Phase fehlt
 
-        public void ClearField()
+        public void ClearField()                   //ferig
         {
             for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     _Field[i, j] = 0;
                 }
             }
-        }
+        }                 
 
-        public void DoMühleMove(IA_MühleMove move)
+        public void DoMühleMoveSetzen(A_MühleMoveSetzen move)
         {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 8)
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
             }
+            moves++;
         }
 
-        public IGameField CurrentField { get { return MühleField; } }
+        public IGameField CurrentField { get { return _Field; } }
 
         public void DoMove(IPlayMove move)
         {
-            if (move is IA_MühleMove)
+            if (move is A_MühleMoveSetzen)
             {
-                DoMühleMove((IA_MühleMove)move);
+                DoMühleMoveSetzen((A_MühleMoveSetzen)move);
+                
             }
+
+            
         }
 
         public bool CheckIfDraw()
@@ -162,42 +195,14 @@ namespace OOPGames
         {
             //throw new NotImplementedException();
         }
+
+        public void DoMühleMove(IA_MühleMove move)
+        {
+            //throw new NotImplementedException();
+        }
     }
 
-    public class A_MühleField : IA_MühleField
-    {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-
-        public int this[int r, int c]
-        {
-            get
-            {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
-                {
-                    return _Field[r, c];
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-
-            set
-            {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
-                {
-                    _Field[r, c] = value;
-                }
-            }
-        }
-
-        public bool CanBePaintedBy(IPaintGame painter)
-        {
-            return painter is IX_PaintTicTacToe;
-        }
-
-       
-    }
+    
 }
 
 

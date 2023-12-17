@@ -208,8 +208,8 @@ namespace OOPGames
         }
     }
 
-//Wir haben drei unterschiedliche Fälle: 1. Stein setzen 2. Stein verschieben 3. Setzen oder verschieben zur Mühle und Spielstein entfernen
-//Implementierung fehlt noch
+            //Wir haben drei unterschiedliche Fälle: 1. Stein setzen 2. Stein verschieben 3. Setzen oder verschieben zur Mühle und Spielstein entfernen
+                //Implementierung fehlt noch
     public class A_MühleMoveSetzen : IA_MühleMove
     {
         int _Row = 0;
