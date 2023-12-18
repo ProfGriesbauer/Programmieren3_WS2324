@@ -47,7 +47,7 @@ namespace OOPGames
 
     //Extension of the rules interface games with draws.
     //DIESES INTERFACE NICHT ÄNDERN!
-    public interface IGameRules3 : IGameRules2
+    public interface IGameRules3 : IGameRules
     {
         //Returns if a game is already draw
         //RETURN TRUE IF DRAW ELSE FALSE

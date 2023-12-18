@@ -49,7 +49,7 @@ namespace OOPGames
 
         public IA_MühleField MühleField { get { return _Field; } }     //Fertig
 
-        public void setMühleField(IA_MühleField feld)                   //Fertig
+        public void SetMühleField(IA_MühleField feld)                   //Fertig
         {
             _Field = feld;
         }
@@ -58,8 +58,6 @@ namespace OOPGames
         {                                                               //Impelmentierung hier schwierig da überprüfung für jeden Spieler einzeln erfolgen muss
             get
             {
-
-
                 return true;
             }
         }
@@ -86,9 +84,9 @@ namespace OOPGames
 
                 int sp1 = 0;
                 int sp2 = 0;
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 8; i++)
                 {
-                    for (int j = 0; j < 8; j++)
+                    for (int j = 0; j < 3; j++)
                     {
                         if (_Field[i, j] == 1)
                         {
@@ -126,9 +124,9 @@ namespace OOPGames
             {
                 int sp1 = 0;
                 int sp2 = 0;
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 8; i++)
                 {
-                    for (int j = 0; j < 8; j++)
+                    for (int j = 0; j < 3; j++)
                     {
                         if (_Field[i, j] == 1)
                         {
@@ -150,9 +148,9 @@ namespace OOPGames
 
         public void ClearField()                   //ferig
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 8; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     _Field[i, j] = 0;
                 }
@@ -161,14 +159,14 @@ namespace OOPGames
 
         public void DoMühleMoveSetzen(A_MühleMoveSetzen move)
         {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 8)
+            if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 3)
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
             }
             moves++;
         }
 
-        public IGameField CurrentField { get { return _Field; } }
+        public IGameField CurrentField { get {  return _Field; } }
 
         public void DoMove(IPlayMove move)
         {
@@ -202,7 +200,60 @@ namespace OOPGames
         }
     }
 
-    
+    public class A_MühleComputerPlayer : IA_ComputerMühlePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public string Name { get { return "AComputerMühlePlayer"; } }
+
+        public int PlayerNumber { get { return _PlayerNumber; } }
+
+        public bool CanBeRuledBy(IGameRules rules)
+        {
+            return rules is IA_MühleRules;
+        }
+
+        public IGamePlayer Clone()
+        {
+            A_MühleComputerPlayer ttthp = new A_MühleComputerPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public IA_MühleMove GetMove(IA_MühleField field)
+        {
+            Random rand = new Random();
+            int f = rand.Next(0, 7);
+            int t = rand.Next(0, 2);
+
+            while (field[f,t] != 0)
+            {
+                f = rand.Next(0, 7);
+                t = rand.Next(0, 2);
+            }
+
+            return new A_MühleMoveSetzen(f, t, _PlayerNumber);
+
+            
+        }
+
+        public IPlayMove GetMove(IGameField field)
+        {
+            if (field is IA_MühleField)
+            {
+                return GetMove((IA_MühleField)field);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }
 }
 
 

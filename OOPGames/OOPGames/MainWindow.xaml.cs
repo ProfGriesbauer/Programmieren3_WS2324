@@ -81,7 +81,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterPlayer(new A_TicTacToeComputerPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new A_TicTacToeComputerPlayer2());
             OOPGamesManager.Singleton.RegisterPlayer(new A_HumanMühlePlayer());
-            //OOPGamesManager.Singleton.RegisterPlayer(new A_ComputerMühlePlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new A_MühleComputerPlayer());
 
 
 
@@ -220,15 +220,17 @@ namespace OOPGames
                 else
                 {
                     if (_CurrentRules.MovesPossible &&
-                        _CurrentPlayer is IHumanGamePlayer)
+                        _CurrentPlayer is A_HumanMühlePlayer)
                     {
-                        IPlayMove pm = ((IHumanGamePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X,
+                        IPlayMove pm = ((A_HumanMühlePlayer)_CurrentPlayer).GetMove(new ClickSelection((int)e.GetPosition(PaintCanvas).X,
                             (int)e.GetPosition(PaintCanvas).Y, (int)e.ChangedButton), _CurrentRules.CurrentField);
+                        
                         if (pm != null)
                         {
+                            MessageBox.Show("Test1");
                             _CurrentRules.DoMove(pm);
                             _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
-                            //_CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                            _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
                             Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                         }
 

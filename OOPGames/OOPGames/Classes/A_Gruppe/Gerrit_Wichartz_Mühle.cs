@@ -177,7 +177,7 @@ namespace OOPGames
     
     public class A_MühleField : IA_MühleField
 {
-        int[,] _Field = new int[8, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+    int[,] _Field = new int[8, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public int this[int r, int c]
         {
@@ -248,18 +248,20 @@ namespace OOPGames
 
         public IGamePlayer Clone()
         {
-            A_TicTacToeHumanPlayer mhp = new A_TicTacToeHumanPlayer();
+            A_HumanMühlePlayer mhp = new A_HumanMühlePlayer();
             mhp.SetPlayerNumber(_PlayerNumber);
             return mhp;
         }
 
         public IA_MühleMove GetMove(IMoveSelection selection, IA_MühleField field)
         {
+        
         if (_PlayerPhase < 9)
         {
             if (selection is IClickSelection)
             {
                 IClickSelection sel = (IClickSelection)selection;
+                //MessageBox.Show((sel.XClickPos);
                 for (int j = 0; j < 3; j++)
                 {
                     if (sel.XClickPos > 5 + (j * 150) && sel.XClickPos < 35 + (j * 150) &&
@@ -331,7 +333,7 @@ namespace OOPGames
 
         public IPlayMove GetMove(IMoveSelection selection, IGameField field)
         {
-            if(field is IA_MühleField)
+        if (field is IA_MühleField)
             {
                 this.GetMove(selection, (IA_MühleField)field);
             }
