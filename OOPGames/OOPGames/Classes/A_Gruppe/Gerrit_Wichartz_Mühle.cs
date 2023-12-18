@@ -218,7 +218,7 @@ namespace OOPGames
 
         public A_MühleMoveSetzen(int row, int column, int playerNumber)
         {
-            _Row = row;
+        _Row = row;
             _Column = column;
             _PlayerNumber = playerNumber;
             
@@ -261,7 +261,6 @@ namespace OOPGames
             if (selection is IClickSelection)
             {
                 IClickSelection sel = (IClickSelection)selection;
-                //MessageBox.Show((sel.XClickPos);
                 for (int j = 0; j < 3; j++)
                 {
                     if (sel.XClickPos > 5 + (j * 150) && sel.XClickPos < 35 + (j * 150) &&
@@ -269,6 +268,7 @@ namespace OOPGames
                         field[0, j] <= 0)
                     {
                         return new A_MühleMoveSetzen(0, j, _PlayerNumber);
+
                     }
                     //2.Reihe
                     if (sel.XClickPos > 55 + (j * 100) && sel.XClickPos < 85 + (j * 100) &&
@@ -306,7 +306,7 @@ namespace OOPGames
                         return new A_MühleMoveSetzen(5, j, _PlayerNumber);
                     }
                     //7.Reihe
-                    if (sel.XClickPos > 55 + (j * 100) && sel.XClickPos < 85 + (j * 10) &&
+                    if (sel.XClickPos > 55 + (j * 100) && sel.XClickPos < 85 + (j * 100) &&
                         sel.YClickPos > 255 && sel.YClickPos < 285 &&
                         field[6, j] <= 0)
                     {
@@ -335,7 +335,7 @@ namespace OOPGames
         {
         if (field is IA_MühleField)
             {
-                this.GetMove(selection, (IA_MühleField)field);
+                return this.GetMove(selection, (IA_MühleField)field);
             }
             return null;
         }
