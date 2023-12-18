@@ -117,7 +117,7 @@
     <Compile Include="Classes\X_Griesbauer\Josef_Griesbauer_VorlesungsTicTacToe.cs" />
     <Compile Include="Interfaces\A_Gruppe\Gerrit_Wichartz_IA_Mühle.cs" />
     <Compile Include="Interfaces\D_Gruppe\Lasse_Moeller_Interface.cs" />
-    <Compile Include="Interfaces\I_Gruppe\Michael_Zieglmeir.cs" />
+    <Compile Include="Interfaces\I_Gruppe\Interface_SpaceInvader.cs" />
     <Compile Include="Interfaces\I_Gruppe\Kevin_Schuster_ITicTacToe.cs" />
     <Compile Include="Interfaces\J_Gruppe\Vorname_Nachname_IXXX.cs" />
     <Compile Include="Interfaces\E_Gruppe\Vorname_Nachname_IXXX.cs" />
