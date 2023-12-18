@@ -91,6 +91,8 @@
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller_MinesweeperRules.cs" />
     <Compile Include="Classes\D_Gruppe\Thadeusgluck.cs" />
     <Compile Include="Classes\D_Gruppe\ThadeusPlayer.cs" />
+    <Compile Include="Classes\E_Gruppe\MAEDN2\MAEDN.cs" />
+    <Compile Include="Classes\E_Gruppe\MAEDN2\GroupE_BaseMAEDN.cs" />
     <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_TicTacToe.cs" />
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller.cs" />
     <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_BaseTicTacToe.cs" />
