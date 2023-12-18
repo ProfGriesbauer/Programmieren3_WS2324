@@ -177,7 +177,7 @@ namespace OOPGames
     
     public class A_MühleField : IA_MühleField
 {
-        int[,] _Field = new int[8, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+    int[,] _Field = new int[8, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public int this[int r, int c]
         {
@@ -208,8 +208,8 @@ namespace OOPGames
         }
     }
 
-//Wir haben drei unterschiedliche Fälle: 1. Stein setzen 2. Stein verschieben 3. Setzen oder verschieben zur Mühle und Spielstein entfernen
-//Implementierung fehlt noch
+            //Wir haben drei unterschiedliche Fälle: 1. Stein setzen 2. Stein verschieben 3. Setzen oder verschieben zur Mühle und Spielstein entfernen
+                //Implementierung fehlt noch
     public class A_MühleMoveSetzen : IA_MühleMove
     {
         int _Row = 0;
@@ -218,7 +218,7 @@ namespace OOPGames
 
         public A_MühleMoveSetzen(int row, int column, int playerNumber)
         {
-            _Row = row;
+        _Row = row;
             _Column = column;
             _PlayerNumber = playerNumber;
             
@@ -248,13 +248,14 @@ namespace OOPGames
 
         public IGamePlayer Clone()
         {
-            A_TicTacToeHumanPlayer mhp = new A_TicTacToeHumanPlayer();
+            A_HumanMühlePlayer mhp = new A_HumanMühlePlayer();
             mhp.SetPlayerNumber(_PlayerNumber);
             return mhp;
         }
 
         public IA_MühleMove GetMove(IMoveSelection selection, IA_MühleField field)
         {
+        
         if (_PlayerPhase < 9)
         {
             if (selection is IClickSelection)
@@ -267,6 +268,7 @@ namespace OOPGames
                         field[0, j] <= 0)
                     {
                         return new A_MühleMoveSetzen(0, j, _PlayerNumber);
+
                     }
                     //2.Reihe
                     if (sel.XClickPos > 55 + (j * 100) && sel.XClickPos < 85 + (j * 100) &&
@@ -304,7 +306,7 @@ namespace OOPGames
                         return new A_MühleMoveSetzen(5, j, _PlayerNumber);
                     }
                     //7.Reihe
-                    if (sel.XClickPos > 55 + (j * 100) && sel.XClickPos < 85 + (j * 10) &&
+                    if (sel.XClickPos > 55 + (j * 100) && sel.XClickPos < 85 + (j * 100) &&
                         sel.YClickPos > 255 && sel.YClickPos < 285 &&
                         field[6, j] <= 0)
                     {
@@ -331,9 +333,9 @@ namespace OOPGames
 
         public IPlayMove GetMove(IMoveSelection selection, IGameField field)
         {
-            if(field is IA_MühleField)
+        if (field is IA_MühleField)
             {
-                this.GetMove(selection, (IA_MühleField)field);
+                return this.GetMove(selection, (IA_MühleField)field);
             }
             return null;
         }

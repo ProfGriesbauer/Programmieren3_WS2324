@@ -26,6 +26,7 @@ namespace OOPGames
     {
         private const int Rows = 10;
         private const int Cols = 10;
+        
 
         private int c = 0;
 
@@ -44,12 +45,15 @@ namespace OOPGames
         {
 
             canvas.Children.Clear();
+            Color bgColor = Color.FromRgb(255, 255, 255);
+            canvas.Background = new SolidColorBrush(bgColor);
 
             // Initialize Minesweeper grid of buttons
             InitializeMineButtons(canvas);
 
             // Update button content based on the current field
             UpdateButtonContent(currentField);
+
             // Initialize the timer
 
             timer = new DispatcherTimer();
@@ -346,8 +350,6 @@ namespace OOPGames
     {
         private const int Rows = 20;
         private const int Cols = 20;
-
-        private int c = 0;
 
 
         private Button[,] mineButtons;
