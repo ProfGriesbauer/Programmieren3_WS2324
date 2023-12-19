@@ -9,9 +9,10 @@ namespace OOPGames
 {
     public interface IFieldProperties
     {
-        int Reihe_PacPosition { get; set; }
-        int Spalte_PacPosition { get; set; }
+        int Reihe { get; set; }
+        int Spalte { get; set; }
         bool Befahrbar { get;}
+
 
     }
 
@@ -20,6 +21,8 @@ namespace OOPGames
         bool Punkt { get; set; }
         bool GeistinFeld { get; set; }
         bool PacinFeld { get; set; }
+
+
     }
 
     public interface IFieldWand: IFieldProperties
@@ -38,6 +41,9 @@ namespace OOPGames
     {
 
         PacPosition PacPosition { get; set; }
+
+        GeistPosition[] GeistArray { get; set; }
+
         /*
         //Returns true, if the given this game field can be painted by the given painter
         bool CanBePaintedBy(IPaintGame painter);

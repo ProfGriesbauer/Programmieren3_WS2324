@@ -14,6 +14,21 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -63,6 +78,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\A_Gruppe\Bernd_Lottes_Mühle.cs" />
     <Compile Include="Classes\A_Gruppe\Gerrit_Wichartz_Mühle.cs" />
     <Compile Include="Classes\B_Gruppe\4Gewinnt.cs" />
     <Compile Include="Classes\B_Gruppe\4GewinntGruppeB.cs" />
@@ -71,11 +87,12 @@
     <Compile Include="Classes\A_Gruppe\Bernd_Lottes_TicTacToe.cs" />
     <Compile Include="Classes\A_Gruppe\Bernd_Lottes_BaseTicTacToe.cs" />
     <Compile Include="Classes\D_Gruppe\Hannes_Kochendörfer_Field.cs" />
-    <Compile Include="Classes\D_Gruppe\Hannes_Kochendörfer_TicTacToe Kopiert.cs" />
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller_MinesweeperPainter.cs" />
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller_MinesweeperRules.cs" />
     <Compile Include="Classes\D_Gruppe\Thadeusgluck.cs" />
     <Compile Include="Classes\D_Gruppe\ThadeusPlayer.cs" />
+    <Compile Include="Classes\E_Gruppe\MAEDN2\MAEDN.cs" />
+    <Compile Include="Classes\E_Gruppe\MAEDN2\GroupE_BaseMAEDN.cs" />
     <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_TicTacToe.cs" />
     <Compile Include="Classes\D_Gruppe\Lasse_Moeller.cs" />
     <Compile Include="Classes\E_Gruppe\TicTacToe\GroupE_BaseTicTacToe.cs" />
@@ -102,7 +119,7 @@
     <Compile Include="Classes\X_Griesbauer\Josef_Griesbauer_VorlesungsTicTacToe.cs" />
     <Compile Include="Interfaces\A_Gruppe\Gerrit_Wichartz_IA_Mühle.cs" />
     <Compile Include="Interfaces\D_Gruppe\Lasse_Moeller_Interface.cs" />
-    <Compile Include="Interfaces\I_Gruppe\Michael_Zieglmeir.cs" />
+    <Compile Include="Interfaces\I_Gruppe\Interface_SpaceInvader.cs" />
     <Compile Include="Interfaces\I_Gruppe\Kevin_Schuster_ITicTacToe.cs" />
     <Compile Include="Interfaces\J_Gruppe\Vorname_Nachname_IXXX.cs" />
     <Compile Include="Interfaces\E_Gruppe\Vorname_Nachname_IXXX.cs" />
@@ -148,6 +165,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

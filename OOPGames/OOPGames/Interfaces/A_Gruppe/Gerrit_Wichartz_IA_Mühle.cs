@@ -11,7 +11,7 @@ namespace OOPGames
     {
         //Paints the given game field on the given canvas
         //NOTE: Clearing the canvas, etc. has to be done within this function
-        void PaintTicTacToeField(Canvas canvas, IA_MühleField currentField);
+        void PaintMühleField(Canvas canvas, IA_MühleField currentField);
     }
 
     public interface IA_MühleField : IGameField
@@ -23,7 +23,7 @@ namespace OOPGames
 
     //TicTacToe specific game rules
     //DIESES INTERFACE NICHT ÄNDERN!
-    public interface IA_MühleRules : IGameRules
+    public interface IA_MühleRules : IGameRules3
     {
         //Gets the current state of the tictactoe field; the class implementing
         //this interface should hold a game field corresponding to the rules
