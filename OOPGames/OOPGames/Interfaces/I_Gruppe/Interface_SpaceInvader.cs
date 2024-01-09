@@ -38,7 +38,7 @@ namespace OOPGames
 
     public interface Anzeige
     {
-
+        void Paint(Canvas canvas);
     }
 
 }

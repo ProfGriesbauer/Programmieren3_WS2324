@@ -13,163 +13,252 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class A_TicTacToePaint : A_BaseTicTacToePaint
-    {
-        public override string Name { get { return "LottesTicTacToePaint"; } }
 
-        public override void PaintTicTacToeField(Canvas canvas, IX_TicTacToeField currentField)
+
+    public class A_MühleRules : IA_MühleRules
+    {
+        IA_MühleField _Field = new A_MühleField();
+        int moves = 0;
+        bool mühleComp = false;
+        int phase = 0;
+
+        IA_MühleField[] _FieldOld = new A_MühleField[6];
+
+        /*int[,,,] PosMoves = new int[3, 8, 5, 2];{ {  } { } { } { } { } { } { } { } } 
+                                                { {  {        }} }        
+                                                { { { } } };
+           
+        public A_MühleRules() 
         {
-            canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(255, 255, 255);
-            canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 120, 0);
-            Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = Color.FromRgb(120, 255, 0);
-            Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 120, 255);
-            Brush OStroke = new SolidColorBrush(OColor);
-
-            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l1);
-            Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l2);
-            Line l3 = new Line() { X1 = 20, Y1 = 120, X2 = 320, Y2 = 120, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l3);
-            Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
-            canvas.Children.Add(l4);
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (currentField[i, j] == 1)
-                    {
-                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X1);
-                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(X2);
-                    }
-                    else if (currentField[i, j] == 2)
-                    {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
-                        canvas.Children.Add(OE);
-                    }
-                }
-            }
+            PosMoves[0, 0] = 1;
         }
-    }
+        */
 
-    public class A_TicTacToeRules : A_BaseTicTacToeRules
-    {
-        IX_TicTacToeField _Field = new A_TicTacToeField();
+        public void SaveField()
+        {
+            for (int i = 5; i > 0; i--)
+            {
+                _FieldOld[i] = _FieldOld[i - 1];
+            }
+            _FieldOld[0] = _Field;
+        }
 
-        public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
+        public void MovePlayed() { moves++; }
 
-        public override void setTicTacToeField(IX_TicTacToeField feld)
+        public void MühleCompleted() { mühleComp = true; }
+
+        public IA_MühleField MühleField { get { return _Field; } }     //Fertig
+
+        public void SetMühleField(IA_MühleField feld)                   //Fertig
         {
             _Field = feld;
         }
 
-        public override bool MovesPossible
-        {
+        public bool MovesPossible                                       //Falls ein Spieler keinen Zug mehr machen kann hat er verloren 
+        {                                                               //Impelmentierung hier schwierig da überprüfung für jeden Spieler einzeln erfolgen muss
             get
             {
-                for (int i = 0; i < 3; i++)
+                return true;
+            }
+        }
+
+        public string Name { get { return "AMühleRules"; } }
+
+        /*public bool CkeckIfDraw()
+        {
+            if (moves >= 20 && mühleComp == false)
+            {
+                return true;
+            }
+            if (_FieldOld[3] == _FieldOld[1] == _Field)
+
+                return false;
+        }*/
+
+        public int CheckIfPLayerWon()
+        {
+            if (phase == 0) { return -1; }
+
+            else if (phase == 1) 
+            {
+
+                int sp1 = 0;
+                int sp2 = 0;
+                for (int i = 0; i < 8; i++)
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        if (_Field[i, j] == 0)
+                        if (_Field[i, j] == 1)
                         {
-                            return true;
+                            sp1++;
+                        }
+                        else if (_Field[i, j] == 2)
+                        {
+                            sp2++;
                         }
                     }
                 }
 
-                return false;
-            }
-        }
+                if (sp1 < 3) { return 2; }
+                if (sp2 < 3) { return 1; }
 
-        public override string Name { get { return "LottesTicTacToeRules"; } }
+                /*int spm1 = 0;                         Überprüft ob noch bewegungen möglich sind 
+                int spm2 = 0;
 
-        public override int CheckIfPLayerWon()
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                for (int i = 0; i < 3; i++)
                 {
-                    return _Field[i, 0];
-                }
-                else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
-                {
-                    return _Field[0, i];
-                }
-            }
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (_Field[i, j] == 1)
+                        {
 
-            if (_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2])
-            {
-                return _Field[0, 0];
+                        }
+                        else if (_Field[i, j] == 2)
+                        {
+                            sp2++;
+                        }
+                    }
+                }*/
             }
-            else if (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0])
+            else if (phase == 2)
             {
-                return _Field[0, 2];
+                int sp1 = 0;
+                int sp2 = 0;
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (_Field[i, j] == 1)
+                        {
+                            sp1++;
+                        }
+                        else if (_Field[i, j] == 2)
+                        {
+                            sp2++;
+                        }
+                    }
+                }
+
+                if (sp1 < 3) { return 2; }
+                if (sp2 < 3) { return 1; }
             }
 
             return -1;
-        }
+        }           //Vorerst fertig überprüfung ob bewegung in zweiter Phase fehlt
 
-        public override void ClearField()
+        public void ClearField()                   //ferig
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
                     _Field[i, j] = 0;
                 }
             }
-        }
+        }                 
 
-        public override void DoTicTacToeMove(IX_TicTacToeMove move)
+        public void DoMühleMoveSetzen(A_MühleMoveSetzen move)
         {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            if (move.Row >= 0 && move.Row < 8 && move.Column >= 0 && move.Column < 3)
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
             }
+            moves++;
+        }
+
+        public IGameField CurrentField { get {  return _Field; } }
+
+        public void DoMove(IPlayMove move)
+        {
+            if (move is A_MühleMoveSetzen)
+            {
+                DoMühleMoveSetzen((A_MühleMoveSetzen)move);
+                
+            }
+
+            
+        }
+
+        public bool CheckIfDraw()
+        {
+            return false;
+        }
+
+        public void StartedGameCall()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void TickGameCall()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void DoMühleMove(IA_MühleMove move)
+        {
+            //throw new NotImplementedException();
         }
     }
 
-    public class A_TicTacToeField : IX_TicTacToeField
+    public class A_MühleComputerPlayer : IA_ComputerMühlePlayer
     {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        int _PlayerNumber = 0;
 
-        public  int this[int r, int c]
+        public string Name { get { return "AComputerMühlePlayer"; } }
+
+        public int PlayerNumber { get { return _PlayerNumber; } }
+
+        public bool CanBeRuledBy(IGameRules rules)
         {
-            get
+            return rules is IA_MühleRules;
+        }
+
+        public IGamePlayer Clone()
+        {
+            A_MühleComputerPlayer ttthp = new A_MühleComputerPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public IA_MühleMove GetMove(IA_MühleField field)
+        {
+            Random rand = new Random();
+            int f = rand.Next(0, 7);
+            int t = rand.Next(0, 2);
+
+            while (field[f,t] != 0)
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
-                {
-                    return _Field[r, c];
-                }
-                else
-                {
-                    return -1;
-                }
+                f = rand.Next(0, 7);
+                t = rand.Next(0, 2);
             }
 
-            set
+            return new A_MühleMoveSetzen(f, t, _PlayerNumber);
+
+            
+        }
+
+        public IPlayMove GetMove(IGameField field)
+        {
+            if (field is IA_MühleField)
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
-                {
-                    _Field[r, c] = value;
-                }
+                return GetMove((IA_MühleField)field);
+            }
+            else
+            {
+                return null;
             }
         }
 
-        public bool CanBePaintedBy(IPaintGame painter)
+        public void SetPlayerNumber(int playerNumber)
         {
-            return painter is IX_PaintTicTacToe;
+            _PlayerNumber = playerNumber;
         }
     }
+}
 
+
+
+    /*
     public class A_TicTacToeMove : IX_TicTacToeMove
     {
         int _Row = 0;
@@ -441,4 +530,4 @@ namespace OOPGames
     }
 }
 
-
+    */

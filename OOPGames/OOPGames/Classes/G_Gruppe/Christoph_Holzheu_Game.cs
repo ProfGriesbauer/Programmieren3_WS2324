@@ -96,7 +96,7 @@ namespace OOPGames
             Canvas.SetTop(checkBox1, 320);
             Canvas.SetLeft(checkBox1Text, 35);
             Canvas.SetTop(checkBox1Text, 320);
-
+            
             canvas.Children.Add(checkBox1);
             canvas.Children.Add(checkBox1Text);
 

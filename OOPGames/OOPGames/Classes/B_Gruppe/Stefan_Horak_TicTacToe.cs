@@ -84,9 +84,9 @@ namespace OOPGames
 
         public override IX_TicTacToeField TicTacToeField { get { return _Field; } }
 
-        public override bool MovesPossible 
-        { 
-            get 
+        public override bool MovesPossible
+        {
+            get
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -99,8 +99,8 @@ namespace OOPGames
                     }
                 }
 
-                return false; 
-            } 
+                return false;
+            }
         }
 
         public override string Name { get { return "HorakTicTacToeRules"; } }
@@ -153,7 +153,7 @@ namespace OOPGames
 
     public class X_TicTacToeFieldSH : X_BaseTicTacToeFieldSH
     {
-        int[,] _FieldSH = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
+        int[,] _FieldSH = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public override int this[int r, int c]
         {
@@ -185,7 +185,7 @@ namespace OOPGames
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public X_TicTacToeMoveSH (int row, int column, int playerNumber)
+        public X_TicTacToeMoveSH(int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -278,9 +278,11 @@ namespace OOPGames
             return null;
         }
 
+
         public override void SetPlayerNumber(int playerNumber)
         {
             _PlayerNumber = playerNumber;
+
         }
     }
 }

@@ -34,7 +34,9 @@ namespace OOPGames
 
     public abstract class A_BaseTicTacToeRules : IX_TicTacToeRules
     {
-        public abstract IX_TicTacToeField TicTacToeField { get; }
+        public abstract IX_TicTacToeField TicTacToeField { get;}
+
+        public abstract void setTicTacToeField(IX_TicTacToeField feld);
 
         public abstract bool MovesPossible { get; }
 

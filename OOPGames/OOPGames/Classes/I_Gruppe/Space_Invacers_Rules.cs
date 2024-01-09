@@ -6,6 +6,7 @@ using System.Runtime.DesignerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -16,7 +17,6 @@ using static System.Net.Mime.MediaTypeNames;
 
 // TO DO
 /*
-    - Kometen Array auf 40 und zwei kometen simultan (kleiner abstand /großer abstand ) möglich mit Kometenindex % 2
     - lampen für UFO (8)
     - Interfaces anpassen
 
@@ -56,7 +56,13 @@ namespace OOPGames
 
         public void ClearField()
         {
-            
+            I_Field = new Game_Field();
+            I_Field.KometenFolge.KometArray[39].fällt = true; // test
+            I_Field.KometenFolge.KometArray[0].Komet_halt_all = false; //test
+            I_Field.KometenFolge.KometArray[0].CountKometen = 0; //test
+            //test I_Field.scoreboard.score = 0;
+
+
         }
 
         public void DoMove(IPlayMove move)
@@ -71,26 +77,26 @@ namespace OOPGames
 
         public void StartedGameCall()
         {
-            I_Field.Kometen[19].fällt = true;
+            
         }
 
         public void TickGameCall()
         {
 
             //führt für jeden Kometen eine Bewegung aus
-            foreach (Komet a in I_Field.Kometen)
+            foreach (Komet a in I_Field.KometenFolge.KometArray)
             {
                 a.Komet_Move();
             }
 
             //Hat michi Abgeändert (Kometen Bestehen jetzt aus einem Array)
-            I_Field.UFO.hit(I_Field.Kometen);
+            I_Field.UFO.hit(I_Field.KometenFolge.KometArray);
 
-            I_Field.KometenStart(I_Field.Kometen);
+            I_Field.KometenFolge.KometenStart();
 
 
             // Übergabe von Score durch einen bestimmten Kometen aber Varable ist bei allen Kometen gleich
-            I_Field.scoreboard.score = I_Field.Kometen[1].CountKometen;
+            I_Field.scoreboard.score = I_Field.KometenFolge.KometArray[1].CountKometen;
 
             I_Field.gameend.newHigh(I_Field.scoreboard);
         }
@@ -104,27 +110,27 @@ namespace OOPGames
 
     public class Game_Field : IGameField
     {
+        
         //intitialiesiert Komet und Raumschiff und Hintergrund
-        Komet[] kometen = InitializiereKometenArray(20);     //erstellt array auf 20 Kometen
-        static int KometenIndex = 0;
+        Kometen _KometenFolge = new Kometen();     //erstellt array auf 40 Kometen
         Ship _UFO = new Ship();
 
 
         public Ship UFO { get { return _UFO; } }
-        public Komet[] Kometen { get { return kometen; } } //Macht die Kometen Lesbar
-
+        public Kometen KometenFolge { get { return _KometenFolge; } } //Macht die Kometen Lesbar
+        
 
         public bool CanBePaintedBy(IPaintGame painter)
         {
-            if (painter is I_Space_Invader_Painter) 
+            if (painter is I_Space_Invader_Painter)
             {
                 return true;
             }
             else { return false; }
         }
-        
 
-        
+
+
 
         Background _Background = new Background(0, 0, 400, 600, 0);
         public Background Background { get { return _Background; } }
@@ -132,7 +138,7 @@ namespace OOPGames
         Background _Background_u = new Background(600, 0, 400, 100, 1);
         public Background Background_u { get { return _Background_u; } }
 
-        Background _Background_o = new Background(-50, 0, 400, 100, 1);
+        Background _Background_o = new Background(-50, 0, 400, 100, 2);
         public Background Background_o { get { return _Background_o; } }
 
         // test Background _Background_rest = new Background(0, 0, 1000, 1000, 2);
@@ -144,51 +150,24 @@ namespace OOPGames
         Gameend _gameend = new Gameend();
         public Gameend gameend { get { return _gameend; } }
 
+        Controll _steuerung = new Controll();    
+        public Controll steuerung { get { return _steuerung; } }
+
 
         //erstellt ein Array mit der länge anzähl aus kometen
-        static Komet[] InitializiereKometenArray(int anzahl)
-        {
-            Random rnd = new Random(); 
-            Komet[] objektArray = new Komet[anzahl];
 
-            for (int i = 0; i < anzahl; i++)
-            {
-                objektArray[i] = new Komet(0, rnd.Next(0, 340));
-                 
-            }
-
-            return objektArray;
-        }
-
-        public void KometenStart(Komet[] KometenArray)
-        {
-            if (KometenIndex == 0)
-            {
-                if (KometenArray[19].Positiony >= KometenArray[0].Startabstand && KometenArray[19].Positiony <= KometenArray[0].Startabstand + 30)
-                {
-                    KometenArray[0].fällt = true;
-                    KometenIndex++;
-                }
-            }
-            else if (KometenArray[KometenIndex - 1].Positiony >= KometenArray[KometenIndex].Startabstand && KometenArray[KometenIndex - 1].Positiony <= KometenArray[KometenIndex].Startabstand + 30)
-            {
-                KometenArray[KometenIndex].fällt = true;
-                KometenIndex ++;
-            }
-            if (KometenIndex == 20)
-            {
-                KometenIndex = 0;
-            }
-        }
 
     }
+        
+        
 
     
 
+
+
     public class Komet : II_Komet
     {
-        
-        int _StartAbstand = 100;
+        //Variablen
         int _y_pos = 0;
         int _x_pos = 0;
         static int _countKometen = 0;
@@ -198,9 +177,9 @@ namespace OOPGames
         //wird verwendet für Game Over (Objekt übergreifend)
         static bool _Komet_halt_all = false;
 
+        //Getter Setter
         public bool Komet_halt_all { get { return _Komet_halt_all; } set { _Komet_halt_all = value; } }
-        public int CountKometen { get { return _countKometen; } }
-        public int Startabstand { get { return _StartAbstand; } set { _StartAbstand = value; } }
+        public int CountKometen { get { return _countKometen; } set { _countKometen = value; } }
         public bool fällt { set { _fällt = value; } get { return _fällt; } }
         public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
         public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
@@ -252,7 +231,6 @@ namespace OOPGames
             this.Positiony = 0;
             this.Positionx = random.Next(0, 340);
             this.fällt = false;
-            this.Startabstand = random.Next(20, 180);
             _countKometen++;
             GeschwindigkeitErhöhen();
         }
@@ -268,13 +246,85 @@ namespace OOPGames
         }
     }
 
+    public class Kometen
+    {
+
+        //variablen
+        //Random rand = new Random();
+        int _Startabstand = 100;
+        int _KometenIndex = 0;
+        Random rnd = new Random();
+        Komet[] _KometArray = new Komet[40];
+
+
+
+        //Getter Setter
+        public Komet[] KometArray { get { return _KometArray; }  } 
+
+            public Kometen()
+            {
+                
+                Komet[] objektArray = new Komet[40];
+
+                for (int i = 0; i < 40; i++)
+                {
+                    objektArray[i] = new Komet(0, rnd.Next(0, 340));
+
+                }
+                objektArray[39].fällt = true;
+                _KometArray = objektArray;
+            }
+
+
+        public void KometenStart()
+        {
+            if (_KometenIndex == 0)
+            {
+                if (KometArray[39].Positiony >= _Startabstand && 
+                    KometArray[39].Positiony <= _Startabstand + 30)
+                {
+                    _KometArray[0].fällt = true;
+                    _Startabstand = Abstand(_KometenIndex);
+                    _KometenIndex++;
+                }
+            }
+            else if (KometArray[_KometenIndex - 1].Positiony >= _Startabstand && 
+                     KometArray[_KometenIndex - 1].Positiony <= _Startabstand + 30)
+            {
+                KometArray[_KometenIndex].fällt = true;
+                _Startabstand = Abstand(_KometenIndex);
+                _KometenIndex++;
+            }
+            if (_KometenIndex == 40)
+            {
+                _KometenIndex = 0;
+            }
+        }
+
+        int Abstand(int i)
+        {
+            if (i % 2 == 0)
+            {
+                return rnd.Next(100, 180);
+            }
+            else
+            {
+                return rnd.Next(50, 60);
+            }
+        }
+
+    
+    }
+
     public class Ship
     {
+        //Variablen
         int _y_pos = 550;
-        int _x_pos = 20;
+        int _x_pos = 185;
         static int _Geschwindigkeit = 5;
         int _hit = 0;
 
+        //Getter Setter
         public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
         public int Positiony { get { return _y_pos; } }
         public int Geschwindigkeit { get { return _Geschwindigkeit; } }
@@ -294,6 +344,11 @@ namespace OOPGames
             Glas.Height = 10; // Durchmesser von 10 Pixeln
             Glas.Fill = Brushes.Silver;
             canvas.Children.Add(Glas);
+            Ellipse Alien = new Ellipse();
+            Alien.Width = 4; // Durchmesser von 4 Pixeln
+            Alien.Height = 4; // Durchmesser von 4 Pixeln
+            Alien.Fill = Brushes.LimeGreen;
+            canvas.Children.Add(Alien);
             Ellipse Lightv = new Ellipse();
             Lightv.Width = 2; // Durchmesser von 2 Pixeln
             Lightv.Height = 2; // Durchmesser von 2 Pixeln
@@ -314,6 +369,26 @@ namespace OOPGames
             Lightr.Height = 2; // Durchmesser von 2 Pixeln
             Lightr.Fill = Brushes.Yellow;
             canvas.Children.Add(Lightr);
+            Ellipse Lightvl = new Ellipse();
+            Lightvl.Width = 2; // Durchmesser von 2 Pixeln
+            Lightvl.Height = 2; // Durchmesser von 2 Pixeln
+            Lightvl.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lightvl);
+            Ellipse Lightvr = new Ellipse();
+            Lightvr.Width = 2; // Durchmesser von 2 Pixeln
+            Lightvr.Height = 2; // Durchmesser von 2 Pixeln
+            Lightvr.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lightvr);
+            Ellipse Lighthl = new Ellipse();
+            Lighthl.Width = 2; // Durchmesser von 2 Pixeln
+            Lighthl.Height = 2; // Durchmesser von 2 Pixeln
+            Lighthl.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lighthl);
+            Ellipse Lighthr = new Ellipse();
+            Lighthr.Width = 2; // Durchmesser von 2 Pixeln
+            Lighthr.Height = 2; // Durchmesser von 2 Pixeln
+            Lighthr.Fill = Brushes.Yellow;
+            canvas.Children.Add(Lighthr);
 
 
             //Setzt den alle Formen auf Position
@@ -321,6 +396,8 @@ namespace OOPGames
             Canvas.SetLeft(Ship, _x_pos);
             Canvas.SetTop(Glas, _y_pos + 10);
             Canvas.SetLeft(Glas, _x_pos + 10);
+            Canvas.SetTop(Alien, _y_pos + 14);
+            Canvas.SetLeft(Alien, _x_pos + 13);
             Canvas.SetTop(Lightv, _y_pos + 3);
             Canvas.SetLeft(Lightv, _x_pos + 14);
             Canvas.SetTop(Lightl, _y_pos + 14);
@@ -329,6 +406,14 @@ namespace OOPGames
             Canvas.SetLeft(Lighth, _x_pos + 14);
             Canvas.SetTop(Lightr, _y_pos + 14);
             Canvas.SetLeft(Lightr, _x_pos + 25);
+            Canvas.SetTop(Lightvl, _y_pos + 6);
+            Canvas.SetLeft(Lightvl, _x_pos + 6);
+            Canvas.SetTop(Lightvr, _y_pos + 6);
+            Canvas.SetLeft(Lightvr, _x_pos + 22);
+            Canvas.SetTop(Lighthl, _y_pos + 22);
+            Canvas.SetLeft(Lighthl, _x_pos + 6);
+            Canvas.SetTop(Lighthr, _y_pos + 22);
+            Canvas.SetLeft(Lighthr, _x_pos + 22);
 
         }
 
@@ -365,6 +450,7 @@ namespace OOPGames
 
     public class Background
     {
+        //variable
         int _y_pos = 0;
         int _x_pos = 0;
         int _width = 0;
@@ -390,11 +476,11 @@ namespace OOPGames
             else {
                 if (_color == 1)
                 {
-                    Background.Fill = Brushes.Blue;
+                    Background.Fill = Brushes.White;
                 }
                 else
                 {
-                    Background.Fill = Brushes.Pink;
+                    Background.Fill = Brushes.DarkGray;
                 }
             }
             canvas.Children.Add(Background);
@@ -406,9 +492,7 @@ namespace OOPGames
 
     public class Scoreboard : Anzeige
     {
-        int _score = 123;
-
-        // Ziegt aktuell auf grund von Fehrbehebung den Abstand zu dem Nähesten Komenten an
+        int _score = 0;
 
         // Um das Scoreboard zubenutzen muss der Getter benutzt werden
         public int score { get { return _score; } set { _score = value; } }
@@ -462,7 +546,7 @@ namespace OOPGames
                 canvas.Children.Add(Highscore);
 
                 TextBlock Text = new TextBlock();
-                Text.Text = "YOU LOSE";
+                Text.Text = "GAME OVER!";
                 Text.FontSize = 25;
                 canvas.Children.Add(Text);
 
@@ -470,7 +554,7 @@ namespace OOPGames
                 Canvas.SetTop(Tafel, 275);
                 Canvas.SetLeft(Tafel, 100);
                 Canvas.SetTop(Text, 275);
-                Canvas.SetLeft(Text, 145);
+                Canvas.SetLeft(Text, 130);
                 Canvas.SetTop(Highscore, 305);
                 Canvas.SetLeft(Highscore, 165);
             }
@@ -491,6 +575,46 @@ namespace OOPGames
                 Properties.Settings.Default.Score = currantHigh;
                 Properties.Settings.Default.Save();
             }
+        }
+
+    }
+
+    public class Controll : Anzeige
+    {
+        public void Paint(Canvas canvas)
+        {
+            Color lineColor = Color.FromRgb(0, 0, 0);
+            Brush lineStroke = new SolidColorBrush(lineColor);
+
+            Line baseline1 = new Line() { X1 = 75, Y1 = 620, X2 = 175, Y2 = 620,Stroke = lineStroke,  StrokeThickness = 2.0 };
+            canvas.Children.Add(baseline1);
+
+            Line topline1 = new Line() { X1 = 75, Y1 = 620, X2 = 90, Y2 = 610, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(topline1);
+
+            Line bottomline1 = new Line() { X1 = 75, Y1 = 620, X2 = 90, Y2 = 630, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(bottomline1);
+
+            Line baseline2 = new Line() { X1 = 225, Y1 = 620, X2 = 325, Y2 = 620, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(baseline2);
+
+            Line topline2 = new Line() { X1 = 325, Y1 = 620, X2 = 310, Y2 = 610, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(topline2);
+
+            Line bottomline2 = new Line() { X1 = 325, Y1 = 620, X2 = 310, Y2 = 630, Stroke = lineStroke, StrokeThickness = 2.0 };
+            canvas.Children.Add(bottomline2);
+
+            TextBlock A = new TextBlock();
+            A.Text = "A";
+            canvas.Children.Add(A);
+            Canvas.SetTop(A, 605);
+            Canvas.SetLeft(A, 120);
+
+            TextBlock D = new TextBlock();
+            D.Text = "D";
+            canvas.Children.Add(D);
+            Canvas.SetTop(D, 605);
+            Canvas.SetLeft(D, 270);
         }
 
     }
