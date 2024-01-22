@@ -162,7 +162,14 @@ namespace OOPGames
                 Status.Text = "Player " + _CurrentPlayer.PlayerNumber + "'s turn!";
                 _CurrentRules.ClearField();
                 _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+                //try {
                 DoComputerMoves();
+                //}
+
+                /*
+                catch (Exception e) {}      fängt die Exception und tut nichts
+                                            setz bei Try wieder ein
+                */
             }
         }
 

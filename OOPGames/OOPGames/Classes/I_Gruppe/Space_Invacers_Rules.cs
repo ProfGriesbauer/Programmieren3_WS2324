@@ -69,7 +69,7 @@ Objekt Kontrakte
         -Fehlercode rückgabe
         -Exception-Safe: wenn Programm nach exception in sicher Zustand
         -Tote Programme lügen nicht
-        -catch kann Exceptions abfangen (ignorieren)
+        -catch (exception e) kann Exceptions abfangen (ignorieren)
         -durch Programmierfehler oder bekannte Fehlersituation
 Klasse
     -beschreibt gemeinsame Eigenschaften und Methoden ihrer Instanzen
