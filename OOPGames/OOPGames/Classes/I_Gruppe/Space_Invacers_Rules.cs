@@ -15,17 +15,122 @@ using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 
 
-// TO DO
-/*
-    - lampen für UFO (8)
-    - Interfaces anpassen
 
-Für Später
-    
-    - Kometenschweif (mit polygonlinie)
-    - Kometen Farben Random (grautöne)
-    - evtl highscore überarbeiten
-    - maximalgeschwindigkeit
+/*
+SCRUM
+    -Empirisch(Erfahrung), Inkrementell(aufeinander aufbauend),Iterativ(kleine Schirtte)
+    -Transparent, Überprüfbarkeit, Anpassbar
+    -Productowner
+    -SCRUM Master
+    -Entwicklungsteam
+Issue Tracking (Was,Wo, Wann und Wie)
+Verionsverwaltung
+    -Protokol von Änderungen, Wiederherstellbar, Archivierung, Koordinierung der Zugriffs
+    -Trunk/Branch/Tag
+    -Arten
+        -lokale Verwaltung
+        -Zentrale Verwaltung (SVN, Repository einmal zentral, muss dort zusammen laufen und Funktionieren) 
+            -Lock Modify Write
+    -Verteilte Verwaltung (GIT, Summe aller Versionen, alle haben lokales Repo -> zusammenbau von Remote Repo) 
+        -Copy Nodify Merge
+        - ->Add,Comit,push    <-Pull (workspace   Remote Repo)
+Objektorienterte Sprache
+    -Vorteile: Wiederverwertbarkeit, Übersichtlichkeit, Wartbarkeit und Arbietsverteilung
+    -Prinzipien:
+        -Einzige Verantwortungn 
+            -Kohäsion maximieren (zusammengehörige Aufgaben zusammenberingen)
+            -Kopplung minimieren (was nicht zusammen gehört kann nicht komunizieren)
+        -Trennung von Anliegen (in einem Objekt vereint)
+        -Wiederholung vermeiden
+        -Open-Closed-Principle (offen für Erweiterung, geschlossen für Änderung)
+        -Trennung Schnittstellen Impelmentierung (Komunikation nur über Schnittstelle)
+        -Umkehr der Abhängikeit (Darstellung nutzt Daten stelltbereit(umgekehrt) Datenbank/HTTP-Modul)
+        -Umkehr des Kontrollflusses (Framework ruft Objekte auf [Objekt enscheidet nicht selbst])
+        -Testbarkeit
+Datenkappselung (Zugriff auf bestimmte Daten des Objekts nur von innen möglich)
+Polymorpie (einzelne Elemente können getauscht werden ohne Codeveränderung)
+Vererbung (Spezifikationen und Umsetzung könne geerbt werden)
+Objekt
+    -innen (Zustände und Methoden)
+    -außen (Eigenschaften und Operationen)
+    -Schinittstelle (Definition von außen)
+Interaktionen unv Abläufe
+    -Diagramme (Aktivitäts-, Zustands- und Sequenzdiagramm)
+    -Iterator (Objekt zur verwaltung von Sammlungen von Objekten)
+        -Eigenschaften/Methoden zum Lesen von Listen
+        -Liste muss die Schnittstellenklasse implementieren
+    -Komperator (Schnittstellenklass die Instanzen von sich vergleichen kann)
+        -Klasse des Objekts muss Komperatorklasse implementieren
+    -Eventhandler (Methode die durch beliebiges Ereigniss aufgerufen wird)
+Objekt Kontrakte
+    -Assertions (überprüfung von Kontrakten, wenn nicht erfüllt -> Fehler)
+    -Exceptions (Verlassen des Programmflusses durch bestimmte Bed.)
+        -nur für nicht erwartete Ereignisse
+        -Fehlercode rückgabe
+        -Exception-Safe: wenn Programm nach exception in sicher Zustand
+        -Tote Programme lügen nicht
+        -catch kann Exceptions abfangen (ignorieren)
+        -durch Programmierfehler oder bekannte Fehlersituation
+Klasse
+    -beschreibt gemeinsame Eigenschaften und Methoden ihrer Instanzen
+    -Instanz (Objekt einer Klasse)
+    -Konzeptions(unabhänig von der Programmiersprache)- ,
+        Implementierungsmodell(konkrete Umsetzung in der Sprache)
+    -definiert Vor-, Nachbedinung und Invarianten
+        -Vor (Aufrufendes Objekt), Nach (ausführendes Objekt), Invariante (allg. gültig für Objekt)
+    -Statischen und Dyamisches Typensystem
+    -Sichtbarkeit (öffentlich [Zugriff von allen], Privat [Klassenbasiert: alle Insanzen, Objektbasiert: nur das Objekt])
+    -Konstruktoren (Operation die eine Instanz erzeugt)
+        -Standart (alle Daten auf Standart)
+        -mit Initialisierung (Parameter können übergeben werden)
+        -Copy (Vorlage kann übernommen werden)
+        -Entscheidung hängt vom Typ des Übergabeparameters ab
+    -Arten:
+        -Konkrete (Methoden/Eigenschaften alle implementiert, Instanzen möglich)
+        -Schnittstellen (Spezifikation von Methoden/Eigenschaften, keine Implementierung, keine Instanzen)
+        -Abstrakte (mein eine Methode/Eigenschaft implementiert, rest nicht, keine Instanzen nur von Unterklassen)
+Beziehungen
+    -Assotionen (Multizipltät. mögliche Anzahl an Instanzen, Kardinalität: tatsächliche Anzahl)
+    -Aggregation (Teil von )
+    -Komposition (Besteht aus)  Leserichtung in Pfeilrichtung
+Vererbung
+    -Unterklassen übernehmen verpflichtungen der Oberklasse
+    -Instanzen einer Unterklasse ist auch eine der Oberklasse
+    -Unterklasse hat alles was Oberklasse hat und mehr
+        -bei Implementierung in beiden wird Unterklasse ausgeführt
+        -Unterklassen können Vorbedingungen nur abschwächen und Nachbedinungen verstärken
+    -Downcast (Objekt vom Typ Oberklasse kann af den Typ der Unterklasse gecastet werden)
+    -statische Polymorphie (Überladung von Methoden, Compiler entscheidet welche Fkt. besser zu den Übergabepara. passt)
+    -dynamische Polymorphie (einer Var können während des Ablaufs Objekte verschiedenen Typs zugewiesen werden)
+    -Demeter-Prinzip: Aufrufen kann nur
+        -Objekt selbst
+        -Objekt vom aufrufenden referenziert
+        -Objekt, dem aufrufenden als Parameter übergeben worden
+        -Objekt, vom aufrufenden selbst angelegt worden
+    -Besucher (Methode wird als Objekt an andere Objekte übergeben)
+    -Fragile Binary Interface Problem (Oberklasse in Bib geändert, Unterklasse muss angepasst werden)
+    -Überprüfung auf gleichheit (Instanzen versschiedener Klassen sind ungeleich, Kriterium der Oberklasse ist allg.)
+        - muss icomperable enthalten
+    -Mehrfach Erbung (nur bei Interfaceklassen)
+Speicherung
+    -Persistenz (Speicherung über die Programmlaufzeit)
+    -Serialisierung (Alle Daten werden nach einander in eine Datei geschrieben)
+    -in relationalen Datenbanken (Objekt horizontal, Datenpunkte vertikal)
+Speicherbereich
+    -Statischer Speicher (speicher über gesamte Laufzeit)
+    -Stack (Speicher über Lebensdauer
+    -Heap (Speicherung bis explizit gelöscht)
+        -Garbage Collection (löscht nicht genutzt Objekte)
+            -Zählen der Referenzen auf jedes Objekt
+            -Markieren von referenzierten Objekten (löscht Rest)
+            -Kopieren aller referenzierten Objekten in neuen Bereich
+Prototypen (ähnlich wie copy Konstruktor)
+Statische Fabrik (erzeugt je nach Bedarf eine Objekt einer bestimmten Klasse)
+Abstakte Fabrik (konkrete Fabriken leiten von Abstrakt ab und erzeugen Instanzen)
+Fabrikmethoden (erzeugt innerhalb klassenhierarchie, klassenspez. Objekte)
+Singelton (Klasse in der in einer Anwendung nur eine Instanz sein kann [OOPGamesManager])
+    - Funktion ähnlich wie globale Var (erzeugt starke Abhänigkeit zwischen Objekten)
+    -Klassen brauchen genaue Kenntniss und können ausversehen gekoppelt werden
 */
 
 namespace OOPGames
@@ -178,13 +283,15 @@ namespace OOPGames
         static bool _Komet_halt_all = false;
 
         //Getter Setter
-        public bool Komet_halt_all { get { return _Komet_halt_all; } set { _Komet_halt_all = value; } }
+        public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
+        public int Positiony { 
+            get { return _y_pos; } 
+            set { _y_pos = value; } }
         public int CountKometen { get { return _countKometen; } set { _countKometen = value; } }
         public bool fällt { set { _fällt = value; } get { return _fällt; } }
-        public int Positionx { get { return _x_pos; } set { _x_pos = value; } }
-        public int Positiony { get { return _y_pos; } set { _y_pos = value; } }
+        public bool Komet_halt_all { get { return _Komet_halt_all; } set { _Komet_halt_all = value; } }
 
-        public Komet(int y_pos, int x_pos)
+        public Komet(int y_pos, int x_pos)                     // Konstruktor mit Initialisierung
         {
             this._y_pos = y_pos;
             this._x_pos = x_pos;
@@ -448,7 +555,7 @@ namespace OOPGames
     }
 
 
-    public class Background
+    public class Background 
     {
         //variable
         int _y_pos = 0;
@@ -487,6 +594,11 @@ namespace OOPGames
             //Setzt den Kreis auf Position
             Canvas.SetTop(Background, _y_pos);
             Canvas.SetLeft(Background, _x_pos);        
+        }
+
+        public void löst_eine_Exeption_aus(Canvas canvas)  // Exception Anwendung wird komplett gestoppt
+        {
+            throw new NotImplementedException();
         }
     }
 
