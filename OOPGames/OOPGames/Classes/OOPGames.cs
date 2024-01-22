@@ -14,7 +14,7 @@ namespace OOPGames
         IList<IGamePlayer> _Players;
         IList<IGameRules> _Rules;
 
-        IList<IGamePlayer> _activePlayers;
+        IList<IGamePlayer> _activePlayers;   //erstellung einer Liste des Typs IGamePlayer
         IPaintGame _activePainter;
         IGameRules _activeRules;
 
@@ -62,7 +62,7 @@ namespace OOPGames
         public void RegisterActivePlayers(IList<IGamePlayer> activePlayers)
         {
             _activePlayers.Clear();
-            foreach (IGamePlayer player in activePlayers)
+            foreach (IGamePlayer player in activePlayers)  // Liste wird durchgegangen 
             {
                 _activePlayers.Add(player);
             }

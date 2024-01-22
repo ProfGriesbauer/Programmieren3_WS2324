@@ -654,7 +654,7 @@ namespace OOPGames
                 canvas.Children.Add(Tafel);
 
                 TextBlock Highscore = new TextBlock();
-                Highscore.Text = "High_Score: " + _Highscore;
+                Highscore.Text = "High_Score: " + _Highscore;  //hier wird ein String erzeugt
                 canvas.Children.Add(Highscore);
 
                 TextBlock Text = new TextBlock();
